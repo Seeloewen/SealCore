@@ -16,8 +16,8 @@ public class Client
     {
         System.out.println("Connecting...");
         socket = new Socket("localhost", 5000);
-        writer = new PrintWriter(socket.getOutputStream());
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        writer = new PrintWriter(socket.getOutputStream(), true);
 
         System.out.println("Connected to server!");
 
