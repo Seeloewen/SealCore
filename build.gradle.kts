@@ -1,3 +1,8 @@
+group = "de.sealcore"
+version = "1.0-SNAPSHOT"
+val lwjglVersion = "3.3.6"
+val lwjglNatives = "natives-windows"
+
 plugins {
     id("java")
     application
@@ -7,10 +12,9 @@ application {
     mainClass = "de.sealcore.Main"
 }
 
-group = "de.sealcore"
-version = "1.0-SNAPSHOT"
-val lwjglVersion = "3.3.6"
-val lwjglNatives = "natives-windows"
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
 
 repositories {
     mavenCentral()
