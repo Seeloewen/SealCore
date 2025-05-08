@@ -38,3 +38,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/.run/Run Client.run.xml
+/.run/Run Server.run.xml
