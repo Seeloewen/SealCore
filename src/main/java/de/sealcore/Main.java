@@ -1,4 +1,5 @@
 package de.sealcore;
+import de.sealcore.client.Client;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 
@@ -10,13 +11,18 @@ public class Main {
         System.out.println("Hello World!");
         Scanner scanner = new Scanner(System.in);
 
-        NetworkHandler.init(getNetworkType(args[0]));
+        switch(getNetworkType(args[0])) {
+            case NetworkType.CLIENT -> Client.main();
+            case NetworkType.SERVER -> {
 
-        while(true)
-        {
-            String input = scanner.nextLine();
-            NetworkHandler.send(input);
+                NetworkHandler.init(getNetworkType(args[0]));
+                while (true) {
+                    String input = scanner.nextLine();
+                    NetworkHandler.send(input);
+                }
+            }
         }
+
     }
 
     public static NetworkType getNetworkType(String arg)
