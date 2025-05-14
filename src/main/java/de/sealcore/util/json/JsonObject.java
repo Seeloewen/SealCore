@@ -3,31 +3,38 @@ package de.sealcore.util.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.io.IOException;
 
 public class JsonObject
 {
-    private JsonNode node; //The actual json object as defined by Jackson lib
-    private ObjectMapper mapper;
+    protected final ObjectNode node; //The actual json object as defined by Jackson lib
+    private final ObjectMapper mapper;
 
     protected JsonObject(String content, ObjectMapper mapper) throws JsonProcessingException
     {
         this.mapper = mapper;
-        node = mapper.readTree(content);
+        node = (ObjectNode)mapper.readTree(content);
     }
 
     protected JsonObject(File f, ObjectMapper mapper) throws IOException
     {
         this.mapper = mapper;
-        node = mapper.readTree(f);
+        node = (ObjectNode)mapper.readTree(f);
     }
 
     protected JsonObject(JsonNode node, ObjectMapper mapper)
     {
         this.mapper = mapper;
-        this.node = node;
+        this.node = (ObjectNode)node;
+    }
+
+    protected JsonObject(ObjectMapper mapper)
+    {
+        node = mapper.createObjectNode();
+        this.mapper = mapper;
     }
 
     public static JsonObject fromString(String content)
@@ -56,6 +63,19 @@ public class JsonObject
         }
     }
 
+    public static JsonObject fromScratch()
+    {
+        //Creates a new json object with a new mapper
+        try
+        {
+            return new JsonObject(new ObjectMapper());
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
     public JsonObject getObject(String identifier)
     {
         //Try to get an object from the given identifier, may return null
@@ -72,19 +92,50 @@ public class JsonObject
     public int getInt(String identifier)
     {
         //Gets the value from the identifier and try's to parse it, assuming it's an int. If not, an exception get's thrown
-        return Integer.parseInt(node.get(identifier).toString());
+        return node.get(identifier).asInt(0);
     }
 
     public String getString(String identifier)
     {
-        //Gets the value from the identifier and removes the quotation marks, as they are part of the value for some reason
-        return node.get(identifier).toString().replace("\"", "");
+        //Gets the value from the identifier
+        return node.get(identifier).asText();
+    }
+
+    public double getDouble(String identifier)
+    {
+        //Gets the value from the identifier
+        return node.get(identifier).asDouble(0);
     }
 
     public boolean getBool(String identifier)
     {
         //Gets the value from the identifier and try's to convert it to a boolean. Returns false if no good value is given
-        return Boolean.getBoolean(node.get(identifier).toString());
+        return node.get(identifier).asBoolean(false);
+    }
+
+    public void addBool(String identifier, boolean value)
+    {
+        node.put(identifier, value);
+    }
+
+    public void addInt(String identifier, int value)
+    {
+        node.put(identifier, value);
+    }
+
+    public void addString(String identifier, String value)
+    {
+        node.put(identifier, value);
+    }
+
+    public void addDouble(String identifier, double value)
+    {
+        node.put(identifier, value);
+    }
+
+    public void addObject(String identifier, JsonObject object)
+    {
+        node.put(identifier, object.node);
     }
 
     @Override
