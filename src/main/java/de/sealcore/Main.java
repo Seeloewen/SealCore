@@ -2,6 +2,8 @@ package de.sealcore;
 import de.sealcore.client.Client;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
+import de.sealcore.networking.packets.ExamplePacket;
+import de.sealcore.server.Server;
 
 import java.util.Scanner;
 
@@ -13,14 +15,7 @@ public class Main {
 
         switch(getNetworkType(args[0])) {
             case NetworkType.CLIENT -> Client.main();
-            case NetworkType.SERVER -> {
-
-                NetworkHandler.init(getNetworkType(args[0]));
-                while (true) {
-                    String input = scanner.nextLine();
-                    NetworkHandler.send(input);
-                }
-            }
+            case NetworkType.SERVER -> Server.main();
         }
 
     }
