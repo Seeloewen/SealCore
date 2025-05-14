@@ -1,5 +1,11 @@
 package de.sealcore.networking;
 
+import de.sealcore.networking.packets.ExamplePacket;
+import de.sealcore.networking.packets.Packet;
+import de.sealcore.networking.packets.PacketHandler;
+import de.sealcore.networking.packets.PacketType;
+import de.sealcore.util.json.JsonObject;
+
 public class NetworkHandler
 {
     public static TcpServer server;
@@ -27,24 +33,35 @@ public class NetworkHandler
         }
     }
 
-    public static void send(String mes)
+    public static void send(Packet packet)
     {
         //Send message depending on the instance
         if (isServer())
         {
-            server.send(mes);
+            server.send(packet.toJson());
         }
         else if (isClient())
         {
-            client.send(mes);
+            client.send(packet.toJson());
         }
     }
 
     public static void parseData(String data)
     {
-        //TODO:
-        //Parse json string to get type
-        //Add new packet to queue based on type
+        //Convert data to json object and get type
+        JsonObject obj = JsonObject.fromString(data);
+        PacketType type = PacketType.values()[obj.getInt("type")];
+
+        //Construct packet from type
+        Packet p = null;
+        switch(type)
+        {
+            case PacketType.EXAMPLE:
+                p = ExamplePacket.fromJson(obj.getObject("args").toString());
+                break;
+        }
+
+        if(p != null) PacketHandler.addToQueue(p);
     }
 
     public static boolean isClient()

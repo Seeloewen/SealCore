@@ -1,11 +1,13 @@
 package de.sealcore.networking.packets;
 
+import de.sealcore.util.json.JsonObject;
+
 public class ExamplePacket extends Packet
 {
-    String s;
-    int i;
+    public String s;
+    public int i;
 
-    private ExamplePacket(String s, int i)
+    public ExamplePacket(String s, int i)
     {
         super(PacketType.EXAMPLE);
 
@@ -13,22 +15,33 @@ public class ExamplePacket extends Packet
         this.i = i;
     }
 
-    public Packet fromJson(String json)
+    public static Packet fromJson(String json)
     {
-        //TODO: parse attributes from json object
+        //Parse attributes from json object
+        JsonObject args = JsonObject.fromString(json);
+        String s = args.getString("s");
+        int i = args.getInt("i");
 
-        return new ExamplePacket("", 0);
+        return new ExamplePacket(s, i);
     }
 
     public String toJson()
     {
-        //TODO: create json string from attributes
+        //Create json string from attributes
+        JsonObject obj = JsonObject.fromScratch();
+        obj.addInt("type", type.ordinal());
 
-        return "";
+        JsonObject args = JsonObject.fromScratch();
+        args.addString("s", s);
+        args.addInt("i", i);
+
+        obj.addObject("args", args);
+
+        return obj.toString();
     }
 
     public void handle()
     {
-        //Do something
+        System.out.println(s + i);
     }
 }

@@ -86,7 +86,7 @@ public class TcpServer
             try
             {
                 String data = client.reader.readLine();
-                System.out.println(data); //TODO: replace with proper packet handling
+                NetworkHandler.parseData(data); //Parse data to packet
                 sendExcept(client, data); //Forward data to other clients
             }
             catch (Exception ex)

@@ -55,7 +55,7 @@ public class TcpClient
             try
             {
                 String data = reader.readLine();
-                System.out.println(data); //TODO: replace with proper packet handling
+                NetworkHandler.parseData(data); //Parse data to packet
             }
             catch (Exception ex)
             {
