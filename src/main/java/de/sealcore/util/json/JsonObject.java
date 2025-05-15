@@ -135,7 +135,7 @@ public class JsonObject
 
     public void addObject(String identifier, JsonObject object)
     {
-        node.put(identifier, object.node);
+        node.set(identifier, object.node);
     }
 
     @Override

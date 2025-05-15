@@ -5,6 +5,7 @@ import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.ExamplePacket;
 import de.sealcore.networking.packets.Packet;
 import de.sealcore.networking.packets.PacketHandler;
+import de.sealcore.util.commands.CommandHandler;
 
 import java.util.Scanner;
 
@@ -13,6 +14,17 @@ public class Server
     private Server()
     {
         NetworkHandler.init(NetworkType.SERVER);
+    }
+
+    public static void main()
+    {
+        //Thread for command handling
+        Thread t = new Thread(() -> getCommands());
+        t.start();
+
+        //Actual server main loop
+        Server server = new Server();
+        server.loop();
     }
 
     private void loop()
@@ -35,17 +47,9 @@ public class Server
         {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
-            NetworkHandler.send(new ExamplePacket(input, 187));
+
+            CommandHandler.parse(input);
+            //NetworkHandler.send(new ExamplePacket(input, 187));
         }
-    }
-
-    public static void main()
-    {
-        //TODO: seperate thread for command handling
-        Thread t = new Thread(() -> getCommands());
-        t.start();
-
-        Server server = new Server();
-        server.loop();
     }
 }
