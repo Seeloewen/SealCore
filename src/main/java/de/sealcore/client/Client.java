@@ -1,5 +1,6 @@
 package de.sealcore.client;
 
+import de.sealcore.client.rendering.renderer.Renderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
@@ -22,6 +23,8 @@ public class Client {
 
     private final long window;
 
+    private Renderer renderer;
+
     private Client() {
 
         NetworkHandler.init(NetworkType.CLIENT);
@@ -42,11 +45,14 @@ public class Client {
         glfwShowWindow(window);
 
         GL.createCapabilities();
+
+        renderer = new Renderer();
+
     }
 
     private void loop() {
 
-        glClearColor(0.2f, 0.9f, 0.2f, 0.0f);
+        glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
 
         while ( !glfwWindowShouldClose(window) ) {
             int queueSize = PacketHandler.getQueueSize();
@@ -55,8 +61,11 @@ public class Client {
                 PacketHandler.handleNext();
             }
 
+
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
+
+            renderer.render();
             glfwSwapBuffers(window); // swap the color buffers
 
             // Poll for window events. The key callback above will only be
