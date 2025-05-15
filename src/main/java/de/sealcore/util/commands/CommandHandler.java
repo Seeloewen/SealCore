@@ -1,5 +1,9 @@
 package de.sealcore.util.commands;
 
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogLevel;
+import de.sealcore.util.logging.LogType;
+
 public class CommandHandler
 {
     public static void parse(String input)
@@ -20,7 +24,7 @@ public class CommandHandler
                 Commands.HandlePong(args);
                 break;
             default:
-                System.out.println("Unknown Command.");
+                Log.write(LogType.MAIN, LogLevel.INFO, "Unknown Command.");
         }
     }
 }
