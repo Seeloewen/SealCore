@@ -25,5 +25,16 @@ public class DeltaTimer {
         return GLFW.glfwGetTime()-timeStart;
     }
 
+    public static boolean blockToTarget(double targetDeltaTime) {
+        double target = timeLast + targetDeltaTime;
+        timeLast = target;
+
+        if(target < GLFW.glfwGetTime()) {
+            return false;
+        }
+
+        while(target > GLFW.glfwGetTime());
+        return true;
+    }
 
 }
