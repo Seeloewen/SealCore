@@ -2,6 +2,8 @@ package de.sealcore.client.rendering.renderer;
 
 
 import de.sealcore.client.rendering.abstractions.*;
+import de.sealcore.util.timing.DeltaTimer;
+
 import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer {
@@ -26,6 +28,9 @@ public class Renderer {
     public void render() {
         buffer.bind();
         shader.use();
+
+        shader.setUniformFloat("brightness", (float) Math.sin(DeltaTimer.getCurrentTime()));
+
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 

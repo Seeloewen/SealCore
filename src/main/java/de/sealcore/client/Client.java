@@ -4,6 +4,7 @@ import de.sealcore.client.rendering.renderer.Renderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
+import de.sealcore.util.timing.DeltaTimer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 
 import org.lwjgl.*;
@@ -46,6 +47,8 @@ public class Client {
 
         GL.createCapabilities();
 
+        glfwSwapInterval(0);
+
         renderer = new Renderer();
 
     }
@@ -54,7 +57,12 @@ public class Client {
 
         glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
 
+        DeltaTimer.start();
+
         while ( !glfwWindowShouldClose(window) ) {
+
+            double dt = DeltaTimer.getDeltaTime();
+
             int queueSize = PacketHandler.getQueueSize();
             for(int i = 0; i < queueSize; i++)
             {

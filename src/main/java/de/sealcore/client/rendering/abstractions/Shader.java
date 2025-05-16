@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import static org.lwjgl.opengl.GL33.*;
@@ -15,9 +16,23 @@ import static org.lwjgl.opengl.GL33.*;
 public class Shader {
 
     private int program;
-    public Shader(String srcFolder) {
 
+    private HashMap<String, Integer> uniformCache;
+
+    public Shader(String srcFolder) {
         init(srcFolder);
+
+        uniformCache = new HashMap<>();
+    }
+
+    public void setUniformFloat(String name, float value) {
+        if(uniformCache.containsKey(name)) {
+            glUniform1f(uniformCache.get(name), value);
+        } else {
+            int l = glGetUniformLocation(program, name);
+            glUniform1f(l, value);
+            uniformCache.put(name, l);
+        }
     }
 
     public void use() {
