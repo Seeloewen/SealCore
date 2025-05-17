@@ -3,6 +3,7 @@ package de.sealcore.client.rendering.renderer;
 
 import de.sealcore.client.rendering.abstractions.*;
 import de.sealcore.util.timing.DeltaTimer;
+import org.joml.Vector3f;
 
 import static org.lwjgl.opengl.GL33.*;
 
@@ -29,7 +30,10 @@ public class Renderer {
         buffer.bind();
         shader.use();
 
-        shader.setUniformFloat("brightness", (float) Math.sin(DeltaTimer.getCurrentTime()));
+        shader.setUniformFloat("brightness", 0.5f + (float)(0.5*Math.sin(0.4 * DeltaTimer.getCurrentTime())));
+
+        float o = 0.4f * (float)Math.sin(DeltaTimer.getCurrentTime());
+        shader.setUniformVec3("offset", new Vector3f(o, o, 0f));
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }

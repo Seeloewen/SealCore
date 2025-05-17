@@ -1,5 +1,6 @@
 package de.sealcore.client.rendering.abstractions;
 
+import org.joml.Vector3f;
 import org.lwjgl.system.*;
 
 import java.io.BufferedReader;
@@ -25,15 +26,27 @@ public class Shader {
         uniformCache = new HashMap<>();
     }
 
-    public void setUniformFloat(String name, float value) {
+
+    private int getUniformLocation(String name) {
         if(uniformCache.containsKey(name)) {
-            glUniform1f(uniformCache.get(name), value);
+            return uniformCache.get(name);
         } else {
             int l = glGetUniformLocation(program, name);
-            glUniform1f(l, value);
             uniformCache.put(name, l);
+            return l;
         }
     }
+
+    public void setUniformFloat(String name, float value) {
+        glUniform1f(getUniformLocation(name), value);
+    }
+
+    public void setUniformVec3(String name, Vector3f value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            glUniform3fv(getUniformLocation(name), value.get(stack.mallocFloat(3)));
+        }
+    }
+
 
     public void use() {
         glUseProgram(program);
