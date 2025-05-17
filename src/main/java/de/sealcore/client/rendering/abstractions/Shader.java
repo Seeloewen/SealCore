@@ -1,5 +1,6 @@
 package de.sealcore.client.rendering.abstractions;
 
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.system.*;
 
@@ -45,6 +46,12 @@ public class Shader {
     public void setUniformVec3(String name, Vector3f value) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             glUniform3fv(getUniformLocation(name), value.get(stack.mallocFloat(3)));
+        }
+    }
+
+    public void setUniformMat4(String name, Matrix4f value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            glUniformMatrix4fv(getUniformLocation(name), false, value.get(stack.mallocFloat(16)));
         }
     }
 
