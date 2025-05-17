@@ -1,6 +1,8 @@
 package de.sealcore.networking.packets;
 
 import de.sealcore.util.json.JsonObject;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 
 public class ExamplePacket extends Packet
 {
@@ -42,6 +44,6 @@ public class ExamplePacket extends Packet
 
     public void handle()
     {
-        System.out.println(s + i);
+        Log.info(LogType.MAIN, s + i);
     }
 }

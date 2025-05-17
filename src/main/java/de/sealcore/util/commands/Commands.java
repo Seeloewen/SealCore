@@ -1,5 +1,8 @@
 package de.sealcore.util.commands;
 
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
+
 public class Commands
 {
     public static void HandlePong(String[] args) //Args amount
@@ -8,7 +11,7 @@ public class Commands
 
         for(int i = 0; i < amount; i++)
         {
-            System.out.println("PONG");
+            Log.info(LogType.MAIN, "PONG");
         }
     }
 }

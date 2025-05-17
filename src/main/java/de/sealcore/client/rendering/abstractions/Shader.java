@@ -1,5 +1,7 @@
 package de.sealcore.client.rendering.abstractions;
 
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 import org.joml.Vector3f;
 import org.lwjgl.system.*;
 
@@ -67,8 +69,8 @@ public class Shader {
             glGetProgramiv(program, GL_LINK_STATUS, buffer);
             int linked = buffer.get(0);
             if(linked != GL_TRUE) {
-                System.out.println(glGetProgramInfoLog(program));
-                throw new RuntimeException();
+                Log.error(LogType.RENDERING, glGetProgramInfoLog(program));
+                throw new RuntimeException("Shader linking failed");
             }
         }
 
