@@ -29,6 +29,11 @@ public class Log
         write(type, LogLevel.ERROR, message);
     }
 
+    public static void debug(String message)
+    {
+        write(LogType.MAIN, LogLevel.DEBUG, message);
+    }
+
     public static String getLine(int index)
     {
         return entries.get(index).getMessage();
