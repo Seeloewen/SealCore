@@ -14,6 +14,21 @@ public class Log
         System.out.println(e.getMessage());
     }
 
+    public static void info(LogType type, String message)
+    {
+        write(type, LogLevel.INFO, message);
+    }
+
+    public static void warn(LogType type, String message)
+    {
+        write(type, LogLevel.WARNING, message);
+    }
+
+    public static void error(LogType type, String message)
+    {
+        write(type, LogLevel.ERROR, message);
+    }
+
     public static String getLine(int index)
     {
         return entries.get(index).getMessage();
