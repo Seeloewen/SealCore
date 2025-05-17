@@ -32,6 +32,7 @@ public class Shader {
             return uniformCache.get(name);
         } else {
             int l = glGetUniformLocation(program, name);
+            if(l == -1) throw new IllegalArgumentException(String.format("uniform name \"%s\"  does not exist", name));
             uniformCache.put(name, l);
             return l;
         }
