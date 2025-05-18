@@ -1,6 +1,7 @@
 package de.sealcore.client.rendering.renderer;
 
 
+import de.sealcore.client.Camera;
 import de.sealcore.client.rendering.abstractions.*;
 import de.sealcore.client.rendering.objects.MeshRenderer;
 import de.sealcore.util.timing.DeltaTimer;
@@ -26,10 +27,14 @@ public class Renderer {
     }
 
 
-    public void render() {
+    public void render(Camera camera) {
 
-        meshRenderer.render();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+
+
+        meshRenderer.render(camera);
 
     }
 

@@ -1,5 +1,7 @@
 package de.sealcore.client;
 
+import de.sealcore.client.input.CamMoveInput;
+import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.rendering.renderer.Renderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
@@ -25,6 +27,7 @@ public class Client {
     private final long window;
 
     private Renderer renderer;
+    private Camera camera;
 
     private Client() {
 
@@ -45,11 +48,15 @@ public class Client {
 
         glfwShowWindow(window);
 
+        InputHandler.init(window);
+
         GL.createCapabilities();
 
         glfwSwapInterval(0);
 
         renderer = new Renderer();
+
+        camera = new Camera();
 
     }
 
@@ -69,11 +76,10 @@ public class Client {
                 PacketHandler.handleNext();
             }
 
+            camera.update(CamMoveInput.generate(), dt);
 
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
-
-            renderer.render();
+            renderer.render(camera);
             glfwSwapBuffers(window); // swap the color buffers
 
             // Poll for window events. The key callback above will only be
