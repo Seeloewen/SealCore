@@ -5,6 +5,8 @@ import de.sealcore.networking.packets.Packet;
 import de.sealcore.networking.packets.PacketHandler;
 import de.sealcore.networking.packets.PacketType;
 import de.sealcore.util.json.JsonObject;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 
 public class NetworkHandler
 {
@@ -29,7 +31,7 @@ public class NetworkHandler
         }
         catch (Exception ex)
         {
-            System.out.println("Could not initialize networking: " + ex.getMessage());
+            Log.error(LogType.NETWORKING, "Could not initialize networking: " + ex.getMessage());
         }
     }
 

@@ -24,7 +24,7 @@ public class CommandHandler
                 Commands.HandlePong(args);
                 break;
             default:
-                Log.write(LogType.MAIN, LogLevel.INFO, "Unknown Command.");
+                Log.info(LogType.MAIN, "Unknown Command.");
         }
     }
 }

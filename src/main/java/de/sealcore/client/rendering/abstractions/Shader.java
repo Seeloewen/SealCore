@@ -1,5 +1,7 @@
 package de.sealcore.client.rendering.abstractions;
 
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 import org.joml.Vector3f;

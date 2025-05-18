@@ -1,6 +1,8 @@
 package de.sealcore.networking;
 
 import com.sun.source.tree.TryTree;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 import jdk.jshell.spi.ExecutionControlProvider;
 
 import java.io.BufferedReader;
@@ -21,9 +23,9 @@ public class TcpServer
     public void start(int port) throws IOException
     {
         //Setup the socket and start receiving connections
-        System.out.println("Starting server...");
+        Log.info(LogType.NETWORKING, "Starting server...");
         socket = new ServerSocket(port);
-        System.out.println("Server started, waiting for client connection...");
+        Log.info(LogType.NETWORKING, "Server started, waiting for client connections...");
 
         Thread t = new Thread(() -> awaitConnections());
         t.start();
@@ -42,11 +44,11 @@ public class TcpServer
 
             //Close the server socket
             socket.close();
-            System.out.println("Stopped server.");
+            Log.info(LogType.NETWORKING, "Stopped server.");
         }
         catch(Exception ex)
         {
-            System.out.println("Could not stop the server: " + ex.getMessage());
+            Log.error(LogType.NETWORKING, "Could not stop the server: " + ex.getMessage());
         }
     }
 
@@ -67,11 +69,11 @@ public class TcpServer
                 Thread t = new Thread(() -> readStream(client));
                 t.start();
 
-                System.out.println("Connection with client #" + client.id + " established");
+                Log.info(LogType.NETWORKING, "Connection with client #" + client.id + " established");
             }
             catch(Exception ex)
             {
-                System.out.println("Error while awaiting new connections: " + ex.getMessage());
+                Log.error(LogType.NETWORKING, "Error while awaiting new connections: " + ex.getMessage());
                 stop();
                 break;
             }
@@ -91,7 +93,7 @@ public class TcpServer
             }
             catch (Exception ex)
             {
-                System.err.println("Could not read from client #" + client.id + ":  " + ex.getMessage());
+                Log.error(LogType.NETWORKING, "Could not read from client #" + client.id + ":  " + ex.getMessage());
                 client.disconnect();
                 break;
             }
