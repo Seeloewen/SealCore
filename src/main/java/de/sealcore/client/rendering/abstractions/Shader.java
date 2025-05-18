@@ -2,6 +2,7 @@ package de.sealcore.client.rendering.abstractions;
 
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.system.*;
 
@@ -50,6 +51,12 @@ public class Shader {
         }
     }
 
+    public void setUniformMat4(String name, Matrix4f value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            glUniformMatrix4fv(getUniformLocation(name), false, value.get(stack.mallocFloat(16)));
+        }
+    }
+
 
     public void use() {
         glUseProgram(program);
@@ -69,8 +76,8 @@ public class Shader {
             glGetProgramiv(program, GL_LINK_STATUS, buffer);
             int linked = buffer.get(0);
             if(linked != GL_TRUE) {
-                Log.error(LogType.RENDERING, glGetProgramInfoLog(program));
-                throw new RuntimeException("Shader linking failed");
+                System.out.println(glGetProgramInfoLog(program));
+                throw new RuntimeException();
             }
         }
 
