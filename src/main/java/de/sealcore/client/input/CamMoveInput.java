@@ -6,7 +6,7 @@ import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
 public record CamMoveInput(
-        boolean forward, boolean back, boolean left, boolean right, boolean up, boolean down
+        boolean forward, boolean back, boolean left, boolean right, boolean up, boolean down, double dx, double dy
 ) {
 
     public static CamMoveInput generate() {
@@ -16,7 +16,9 @@ public record CamMoveInput(
                 InputHandler.isPressed(KeyBinds.MOVE_LEFT),
                 InputHandler.isPressed(KeyBinds.MOVE_RIGHT),
                 InputHandler.isPressed(KeyBinds.MOVE_UP),
-                InputHandler.isPressed(KeyBinds.MOVE_DOWN)
+                InputHandler.isPressed(KeyBinds.MOVE_DOWN),
+                InputHandler.useMouseDeltaX(),
+                InputHandler.useMouseDeltaY()
         );
     }
 
