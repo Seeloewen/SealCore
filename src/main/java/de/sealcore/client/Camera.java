@@ -9,24 +9,23 @@ public class Camera {
 
     private static final float MOVE_SPEED = 0.3f;
 
-    private Matrix4f view;
+    private Matrix4f camera;
 
     public Camera() {
-        view = new Matrix4f().lookAt(
-                new Vector3f(5, 3, 5),
-                new Vector3f(-0.5f,1,0),
-                new Vector3f(0, 1, 0)
-        );
+
+        camera = new Matrix4f();
+        camera.translate(-5f,0f,0f);
+
     }
 
     void update(CamMoveInput input, double dt) {
-        Matrix4f movement = new Matrix4f(input.calc());
-        movement.scale((float)dt).scale(MOVE_SPEED);
-        //view.mul(movement);
+        Vector3f movement = new Vector3f(input.getTranslation());
+        movement.mul((float)dt).mul(MOVE_SPEED);
+        camera.translate(movement);
     }
 
     public Matrix4fc getView() {
-        return view;
+        return camera;
     }
 
 }
