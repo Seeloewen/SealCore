@@ -5,4 +5,5 @@ public enum LogType
     MAIN,
     RENDERING,
     NETWORKING,
+    DEBUGRENDERER
 }

@@ -6,7 +6,7 @@ public class TypeParser
     {
         try
         {
-            Integer.parseInt(s); //Try to parse, if no exception is thrown it will return true
+            Integer.parseInt(s); //Try to parseInput, if no exception is thrown it will return true
             return true;
         }
         catch(Exception ex)
@@ -24,7 +24,7 @@ public class TypeParser
     public int GetInt(String s)
     {
         //Returns 0 by default. To avoid mistaking this 0 as
-        //the actual result of the parse, it's recommended to check first if it's parseable
+        //the actual result of the parseInput, it's recommended to check first if it's parseable
         try
         {
             return Integer.parseInt(s);

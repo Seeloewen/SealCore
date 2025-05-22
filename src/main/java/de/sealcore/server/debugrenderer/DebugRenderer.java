@@ -1,0 +1,136 @@
+package de.sealcore.server.debugrenderer;
+
+import de.sealcore.game.Chunk;
+import de.sealcore.game.blocks.Block;
+import de.sealcore.game.floors.Floor;
+import de.sealcore.server.Server;
+import de.sealcore.server.commands.CommandHandler;
+import de.sealcore.server.commands.InputMode;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
+
+public class DebugRenderer
+{
+    public static DebugRenderMode mode = DebugRenderMode.FLOOR;
+
+    public static int curX = 0;
+    public static int curY = 0;
+
+    public static void start()
+    {
+        Log.info(LogType.DEBUGRENDERER, "Started Debug Renderer.\n" +
+                "Type \"help\" for a list of commands\n" +
+                "Type \"exit\" to return to command handler");
+
+        renderChunk(0, 0);
+    }
+
+    public static void parseInput(String input)
+    {
+        String[] cmd = input.split(" "); //Split input into parts
+
+        switch (cmd[0])
+        {
+            //Inputs to "move" around
+            case "w" -> renderChunk(curX, curY + 1);
+            case "a" -> renderChunk(curX - 1, curY);
+            case "s" -> renderChunk(curX, curY - 1);
+            case "d" -> renderChunk(curX + 1, curY);
+
+            case "exit" ->
+            {
+                //Exit Debug Renderer
+                Log.info(LogType.DEBUGRENDERER, "Exiting Debug Renderer");
+                CommandHandler.mode = InputMode.COMMANDS;
+            }
+            case "c" -> //Render chunk
+            {
+                if (!sufficientArgs(cmd, 3)) return;
+                renderChunk(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]));
+            }
+            case "cinfo" -> //Display info about chunk
+            {
+                if (!sufficientArgs(cmd, 3)) return;
+                showChunkInfo(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]));
+            }
+            case "finfo" -> //Display info about floor
+            {
+                if (!sufficientArgs(cmd, 3)) return;
+                showFloorInfo(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]));
+            }
+            case "binfo" -> //Display info about block
+            {
+                if (!sufficientArgs(cmd, 3)) return;
+                showBlockInfo(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]));
+            }
+            case "help" ->
+            {
+                //TODO
+            }
+        }
+    }
+
+    public static void renderChunk(int x, int y)
+    {
+        curX = x;
+        curY = y;
+        Chunk c = Server.game.getCurrentMap().getChunk(x, y);
+
+        //Display the entire chunk
+        for (int i = 0; i < c.LENGTH; i++)
+        {
+            for (int j = 0; j < c.WIDTH; j++)
+            {
+                //Log the first letter of the block/floor (depending on mode)
+                if (mode == DebugRenderMode.FLOOR)
+                {
+                    Log.info(LogType.DEBUGRENDERER, c.getFloor(i, j).name.substring(0, 0));
+                } else if (mode == DebugRenderMode.BLOCK)
+                {
+                    Log.info(LogType.DEBUGRENDERER, c.getBlock(i, j).name.substring(0, 0));
+                }
+            }
+
+            Log.info(LogType.DEBUGRENDERER, "\n");
+        }
+    }
+
+    public static void showBlockInfo(int x, int y)
+    {
+        Block b = Server.game.getCurrentMap().getChunk(curX, curY).getBlock(x, y);
+
+        //Display info about the block specified in the currently selected chunk
+        Log.info(LogType.DEBUGRENDERER, "=> Info for Block at x" + x + " y" + y);
+        Log.info(LogType.DEBUGRENDERER, "Name: " + b.name);
+        Log.info(LogType.DEBUGRENDERER, "Id: " + b.id);
+    }
+
+    public static void showFloorInfo(int x, int y)
+    {
+        Floor f = Server.game.getCurrentMap().getChunk(curX, curY).getFloor(x, y);
+
+        //Display info about the floor specified in the currently selected chunk
+        Log.info(LogType.DEBUGRENDERER, "=> Info for Floor at x" + x + " y" + y);
+        Log.info(LogType.DEBUGRENDERER, "Name: " + f.name);
+        Log.info(LogType.DEBUGRENDERER, "Id: " + f.id);
+    }
+
+    public static void showChunkInfo(int x, int y)
+    {
+        Chunk c = Server.game.getCurrentMap().getChunk(curX, curY);
+        Log.info(LogType.DEBUGRENDERER, "=> Info for Chunk at x" + x + " y" + y);
+        Log.info(LogType.DEBUGRENDERER, "(None available)");
+    }
+
+    private static boolean sufficientArgs(String[] cmd, int expectedArgs)
+    {
+        //Check if the amount of arguments in the command matches the expected amount
+        if (cmd.length - 1 != expectedArgs) //Don't count the first string in array since it's the command
+        {
+            Log.error(LogType.DEBUGRENDERER, "Insufficient arguments provided");
+            return false;
+        }
+
+        return true;
+    }
+}

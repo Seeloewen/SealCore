@@ -91,7 +91,7 @@ public class JsonObject
 
     public int getInt(String identifier)
     {
-        //Gets the value from the identifier and try's to parse it, assuming it's an int. If not, an exception get's thrown
+        //Gets the value from the identifier and try's to parseInput it, assuming it's an int. If not, an exception get's thrown
         return node.get(identifier).asInt(0);
     }
 

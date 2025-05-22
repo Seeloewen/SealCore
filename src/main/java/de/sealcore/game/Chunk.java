@@ -7,14 +7,16 @@ import de.sealcore.game.floors.FloorRegister;
 
 public class Chunk
 {
-    final int WIDTH = 8;
-    final int LENGTH = 8;
+    private final int index;
+    public final int WIDTH = 8;
+    public final int LENGTH = 8;
 
     private Floor[] floors = new Floor[64];
     private Block[] blocks = new Block[64];
 
-    Chunk()
+    Chunk(int index)
     {
+        this.index = index;
         generate();
     }
 

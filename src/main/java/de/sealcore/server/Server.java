@@ -1,16 +1,17 @@
 package de.sealcore.server;
 
+import de.sealcore.game.Game;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
-import de.sealcore.networking.packets.ExamplePacket;
-import de.sealcore.networking.packets.Packet;
 import de.sealcore.networking.packets.PacketHandler;
-import de.sealcore.util.commands.CommandHandler;
+import de.sealcore.server.commands.CommandHandler;
 
 import java.util.Scanner;
 
 public class Server
 {
+    public static Game game;
+
     private Server()
     {
         NetworkHandler.init(NetworkType.SERVER);
