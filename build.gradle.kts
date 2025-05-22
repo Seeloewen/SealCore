@@ -14,6 +14,7 @@ application {
 
 tasks.named<JavaExec>("run") {
     standardInput = System.`in`
+    enableAssertions = true
 }
 
 repositories {

@@ -39,4 +39,38 @@ public class ChunkIndex {
         }
     }
 
+    public static int toI(int x, int y) {
+        int rl = -x;
+        int rr = x-1;
+        int ru = y;
+        int rd = -y-1;
+
+        int r = max(rl, rr, ru, rd);
+
+        int s = 4 * r * r;
+        int q = 2*r + 1;
+
+        if(ru == r) {
+            return s + r + x;
+        } else if(rr == r) {
+            return s + q - y + r;
+        } else if(rd == r){
+            return s + 2 * q - x + 1 + r;
+        } else {
+            return s + 3*q + y + r + 1;
+        }
+
+    }
+
+
+    private static int max(int... values) {
+        int max = 0;
+        for(int v : values) {
+            if(v > max) {
+                max = v;
+            }
+        }
+        return max;
+    }
+
 }
