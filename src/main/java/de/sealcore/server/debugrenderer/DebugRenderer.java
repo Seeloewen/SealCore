@@ -65,7 +65,11 @@ public class DebugRenderer
             }
             case "help" ->
             {
-                //TODO
+                Log.info(LogType.DEBUGRENDERER, helpMsg);
+            }
+            default ->
+            {
+                Log.info(LogType.DEBUGRENDERER, "Unknown command. Type /help for a list.");
             }
         }
     }
@@ -118,6 +122,8 @@ public class DebugRenderer
     public static void showChunkInfo(int x, int y)
     {
         Chunk c = Server.game.getCurrentMap().getChunk(curX, curY);
+
+        //Display info about the given chunk
         Log.info(LogType.DEBUGRENDERER, "=> Info for Chunk at x" + x + " y" + y);
         Log.info(LogType.DEBUGRENDERER, "(None available)");
     }
@@ -133,4 +139,16 @@ public class DebugRenderer
 
         return true;
     }
+
+    private final static String helpMsg = "Available inputs for Debug Renderer:\n" +
+            "w - Move one chunk up\n" +
+            "a - Move one chunk left\n" +
+            "s - Move one chunk down\n" +
+            "d - Move one chunk right\n" +
+            "exit - Exit the Debug Renderer\n" +
+            "c <x> <y> - Render the specified chunk\n" +
+            "cinfo <x> <y> - Show info about the specified chunk\n" +
+            "binfo <x> <y> - Show info about the specified block in the currently loaded chunk\n" +
+            "finfo <x> <y> - Show info about the specified floor in the currently loaded floor\n" +
+            "help - Shows this menu\n";
 }
