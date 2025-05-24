@@ -8,7 +8,7 @@ import org.joml.Vector3f;
 
 public class Camera {
 
-    private static final float MOVE_SPEED = 3f;
+    private static final float MOVE_SPEED = 8f;
     private static final float ROT_FACTOR = 0.003f;
     private static final float PI = 3.14159265358979f;
 
