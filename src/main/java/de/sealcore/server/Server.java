@@ -14,7 +14,11 @@ public class Server
 
     private Server()
     {
+        //Initialize networking
         NetworkHandler.init(NetworkType.SERVER);
+
+        //Initialize game
+        game = new Game();
     }
 
     public static void main()

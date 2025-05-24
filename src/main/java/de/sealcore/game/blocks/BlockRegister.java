@@ -2,15 +2,14 @@ package de.sealcore.game.blocks;
 
 public class BlockRegister
 {
-    public static Block genBlock(String id)
+    public static Block getBlock(String id)
     {
         //Go through the register and return a new instance of the specified block
-        switch(id)
+        return switch(id)
         {
             case "b:rock" -> new Rock();
             case "b:tree" -> new Tree();
-        }
-
-        return null;
+            default -> null;
+        };
     }
 }

@@ -1,6 +1,6 @@
 package de.sealcore.server.debugrenderer;
 
-import de.sealcore.game.Chunk;
+import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.blocks.Block;
 import de.sealcore.game.floors.Floor;
 import de.sealcore.server.Server;
@@ -78,24 +78,30 @@ public class DebugRenderer
     {
         curX = x;
         curY = y;
+
+        //Get the chunk - generate it if it doesn't exist
         Chunk c = Server.game.getCurrentMap().getChunk(x, y);
+        if(c == null) c = Server.game.getCurrentMap().genChunk(x, y);
 
         //Display the entire chunk
+        Log.info(LogType.DEBUGRENDERER, "Displaying chunk x" + x + " y" + y);
         for (int i = 0; i < c.LENGTH; i++)
         {
+            StringBuilder s = new StringBuilder();
+
             for (int j = 0; j < c.WIDTH; j++)
             {
                 //Log the first letter of the block/floor (depending on mode)
                 if (mode == DebugRenderMode.FLOOR)
                 {
-                    Log.info(LogType.DEBUGRENDERER, c.getFloor(i, j).name.substring(0, 0));
+                    s.append(c.getFloor(i, j).name.substring(0, 1));
                 } else if (mode == DebugRenderMode.BLOCK)
                 {
-                    Log.info(LogType.DEBUGRENDERER, c.getBlock(i, j).name.substring(0, 0));
+                    s.append(c.getFloor(i, j).name.substring(0, 1));
                 }
             }
 
-            Log.info(LogType.DEBUGRENDERER, "\n");
+            Log.info(LogType.DEBUGRENDERER, s.toString());
         }
     }
 
