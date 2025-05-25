@@ -2,15 +2,16 @@ package de.sealcore.game.floors;
 
 public class FloorRegister
 {
-    public static Floor genFloor(String id)
+    public static Floor getFloor(String id)
     {
         //Go through the register and return a new instance of the specified floor
-        switch(id)
+        return switch(id)
         {
-            case "f:ground" -> new Ground();
+            case "f:grass" -> new Grass();
             case "f:water" -> new Water();
-        }
-
-        return null;
+            case "f:stone" -> new Stone();
+            case "f:stone_bricks" -> new StoneBricks();
+            default -> null;
+        };
     }
 }

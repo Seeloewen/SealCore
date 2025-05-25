@@ -1,5 +1,9 @@
 package de.sealcore.game.blocks;
 
-public class Rock
+public class Rock extends Block
 {
+    public Rock()
+    {
+        super("b:rock", "Rock");
+    }
 }

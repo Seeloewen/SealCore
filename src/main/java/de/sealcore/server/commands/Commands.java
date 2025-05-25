@@ -1,5 +1,6 @@
-package de.sealcore.util.commands;
+package de.sealcore.server.commands;
 
+import de.sealcore.server.debugrenderer.DebugRenderer;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -13,5 +14,11 @@ public class Commands
         {
             Log.info(LogType.MAIN, "PONG");
         }
+    }
+
+    public static void HandleDebugRenderer()
+    {
+        CommandHandler.mode = InputMode.DEBUGRENDERER;
+        DebugRenderer.start();
     }
 }

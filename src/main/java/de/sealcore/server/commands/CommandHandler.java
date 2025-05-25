@@ -1,13 +1,22 @@
-package de.sealcore.util.commands;
+package de.sealcore.server.commands;
 
+import de.sealcore.server.debugrenderer.DebugRenderer;
 import de.sealcore.util.logging.Log;
-import de.sealcore.util.logging.LogLevel;
 import de.sealcore.util.logging.LogType;
 
 public class CommandHandler
 {
+    public static InputMode mode;
+
     public static void parse(String input)
     {
+        if(mode == InputMode.DEBUGRENDERER)
+        {
+            //If the mode is set to debug renderer, it should catch the input and handle it separately
+            DebugRenderer.parseInput(input);
+            return;
+        }
+
         String[] cmd = input.replace("/", "").split(" "); //Split command into parts
 
         //Copy only the args into a new array
@@ -22,6 +31,9 @@ public class CommandHandler
         {
             case "ping":
                 Commands.HandlePong(args);
+                break;
+            case "debugrenderer":
+                Commands.HandleDebugRenderer();
                 break;
             default:
                 Log.info(LogType.MAIN, "Unknown Command.");
