@@ -10,7 +10,7 @@ public class Mesh {
     public Matrix4f position;
 
     private VertexBuffer buffer;
-
+    private final int size;
 
     protected Mesh(MeshSide[] sides) {
 
@@ -24,11 +24,16 @@ public class Mesh {
 
         VertexArrayLayout layout = new VertexArrayLayout().add(3).add(3);
         buffer = new VertexBuffer(vertices, layout);
+        size = vertices.length;
 
         position = new Matrix4f();
     }
 
-    public Mesh() {
+    int size() {
+        return size;
+    }
+
+    /*public Mesh() {
         this(
                 new MeshSide[]{
                         new MeshSide(
@@ -75,7 +80,7 @@ public class Mesh {
                         )
                 }
         );
-    }
+    }*/
 
     public void bind() {
         buffer.bind();
