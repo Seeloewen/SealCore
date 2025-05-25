@@ -41,7 +41,7 @@ public class Map
         int i = ChunkIndex.toI(x, y);
 
         //Generate a new chunk and add it to the register
-        Chunk c = generator.genChunk(ChunkIndex.toI(x, y));
+        Chunk c = generator.genChunk(x, y);
         chunks[i] = c;
 
         //Returns the chunk in case further action should be applied
