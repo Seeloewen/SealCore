@@ -81,23 +81,24 @@ public class DebugRenderer
 
         //Get the chunk - generate it if it doesn't exist
         Chunk c = Server.game.getCurrentMap().getChunk(x, y);
-        if(c == null) c = Server.game.getCurrentMap().genChunk(x, y);
+        if (c == null) c = Server.game.getCurrentMap().genChunk(x, y);
 
         //Display the entire chunk
         Log.info(LogType.DEBUGRENDERER, "Displaying chunk x" + x + " y" + y);
-        for (int i = 0; i < c.LENGTH; i++)
+        for (int i = Chunk.LENGTH - 1; i >= 0; i--)
         {
             StringBuilder s = new StringBuilder();
 
-            for (int j = 0; j < c.WIDTH; j++)
+            for (int j = 0; j < Chunk.WIDTH; j++)
             {
                 //Log the first letter of the block/floor (depending on mode)
                 if (mode == DebugRenderMode.FLOOR)
                 {
-                    s.append(c.getFloor(i, j).name.substring(0, 1));
-                } else if (mode == DebugRenderMode.BLOCK)
+                    s.append(c.getFloor(j, i).name.substring(0, 1));
+                }
+                else if (mode == DebugRenderMode.BLOCK)
                 {
-                    s.append(c.getFloor(i, j).name.substring(0, 1));
+                    s.append(c.getFloor(j, i).name.substring(0, 1));
                 }
             }
 
