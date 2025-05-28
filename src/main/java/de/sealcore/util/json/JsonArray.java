@@ -42,6 +42,14 @@ public class JsonArray extends JsonObject implements Iterable<JsonObject>
         objects = getObjects(node);
     }
 
+    protected JsonArray(ObjectMapper mapper)
+    {
+        super(mapper);
+        this.mapper = mapper;
+        this.node = mapper.createArrayNode();
+        objects = getObjects(node);
+    }
+
     public static JsonArray fromString(String content)
     {
         //Creates a json array from string with a new mapper
@@ -61,6 +69,19 @@ public class JsonArray extends JsonObject implements Iterable<JsonObject>
         try
         {
             return new JsonArray(file, new ObjectMapper());
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
+    public static JsonArray fromScratch()
+    {
+        //Creates a json object from file with a new mapper
+        try
+        {
+            return new JsonArray(new ObjectMapper());
         }
         catch (Exception ex)
         {
@@ -107,7 +128,7 @@ public class JsonArray extends JsonObject implements Iterable<JsonObject>
         throw new UnsupportedOperationException("Cannot get int from JsonArray");
     }
 
-    @Override
+    /*@Override
     public String getString(String identifier)
     {
         throw new UnsupportedOperationException("Cannot get string from JsonArray");
@@ -147,7 +168,7 @@ public class JsonArray extends JsonObject implements Iterable<JsonObject>
     public void addDouble(String identifier, double value)
     {
         throw new UnsupportedOperationException("Cannot add values to JsonArray");
-    }
+    }*/
 
     @Override
     public void addObject(String identifier, JsonObject value)

@@ -2,6 +2,8 @@ package de.sealcore.game.maps;
 
 import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.chunks.ChunkGenerator;
+import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.ChunkAddPacket;
 import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
@@ -43,6 +45,8 @@ public class Map
         //Generate a new chunk and add it to the register
         Chunk c = generator.genChunk(ChunkIndex.toI(x, y));
         chunks[i] = c;
+
+        c.sendAddPacket();
 
         //Returns the chunk in case further action should be applied
         return c;
