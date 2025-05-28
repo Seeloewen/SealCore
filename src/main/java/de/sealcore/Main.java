@@ -20,6 +20,8 @@ public class Main
         Log.info(LogType.MAIN, "SealCore Development Build");
         Scanner scanner = new Scanner(System.in);
 
+        parseArgs(args);
+
         switch (getNetworkType(args[0]))
         {
             case NetworkType.CLIENT -> Client.main();
@@ -37,6 +39,18 @@ public class Main
         if (arg.equals("c")) return NetworkType.CLIENT;
 
         return null;
+    }
+
+    public static void parseArgs(String[] args)
+    {
+        //Cycle through all args and handle them
+        for(String arg : args)
+        {
+            if(arg.equals("verbose"))
+            {
+                NetworkHandler.verboseLogging = true;
+            }
+        }
     }
 
 }

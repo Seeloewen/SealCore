@@ -13,6 +13,8 @@ public class NetworkHandler
     public static TcpServer server;
     public static TcpClient client;
 
+    public static boolean verboseLogging = false; //Debug switch, shows all sent and received packets when toggled on
+
     public static void init(NetworkType instance)
     {
         try
@@ -37,6 +39,9 @@ public class NetworkHandler
 
     public static void send(Packet packet)
     {
+        //Verbose logging
+        if(verboseLogging) Log.info(LogType.NETWORKING, "Sent packet: " + packet.toJson());
+
         //Send message depending on the instance
         if (isServer())
         {
@@ -50,7 +55,7 @@ public class NetworkHandler
 
     public static void parseData(String data)
     {
-        Log.info(LogType.NETWORKING, data);
+        if(verboseLogging) Log.info(LogType.NETWORKING, "Received packet: " + data);
 
         //Convert data to json object and get type
         JsonObject obj = JsonObject.fromString(data);
