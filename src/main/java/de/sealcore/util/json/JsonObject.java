@@ -3,6 +3,7 @@ package de.sealcore.util.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
@@ -136,6 +137,11 @@ public class JsonObject
     public void addObject(String identifier, JsonObject object)
     {
         node.set(identifier, object.node);
+    }
+
+    public void addArray(String identifier, JsonArray array)
+    {
+        node.set(identifier, array.node);
     }
 
     @Override
