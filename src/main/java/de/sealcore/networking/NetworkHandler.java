@@ -1,9 +1,6 @@
 package de.sealcore.networking;
 
-import de.sealcore.networking.packets.ExamplePacket;
-import de.sealcore.networking.packets.Packet;
-import de.sealcore.networking.packets.PacketHandler;
-import de.sealcore.networking.packets.PacketType;
+import de.sealcore.networking.packets.*;
 import de.sealcore.util.json.JsonObject;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
@@ -63,10 +60,15 @@ public class NetworkHandler
 
         //Construct packet from type
         Packet p = null;
+        String args = obj.getObject("args").toString();
+
         switch(type)
         {
             case PacketType.EXAMPLE:
-                p = ExamplePacket.fromJson(obj.getObject("args").toString());
+                p = ExamplePacket.fromJson(args);
+                break;
+            case PacketType.CHUNKADD:
+                p = ChunkAddPacket.fromJson(args);
                 break;
         }
 

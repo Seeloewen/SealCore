@@ -49,6 +49,12 @@ public class TcpServer
         catch(Exception ex)
         {
             Log.error(LogType.NETWORKING, "Could not stop the server: " + ex.getMessage());
+
+            //Log stack trace if verbose logging is enabled
+            for(StackTraceElement e : ex.getStackTrace())
+            {
+                if(NetworkHandler.verboseLogging) Log.error(LogType.NETWORKING, e.toString());
+            }
         }
     }
 
@@ -74,6 +80,13 @@ public class TcpServer
             catch(Exception ex)
             {
                 Log.error(LogType.NETWORKING, "Error while awaiting new connections: " + ex.getMessage());
+
+                //Log stack trace if verbose logging is enabled
+                for(StackTraceElement e : ex.getStackTrace())
+                {
+                    if(NetworkHandler.verboseLogging) Log.error(LogType.NETWORKING, e.toString());
+                }
+
                 stop();
                 break;
             }
@@ -94,6 +107,13 @@ public class TcpServer
             catch (Exception ex)
             {
                 Log.error(LogType.NETWORKING, "Could not read from client #" + client.id + ":  " + ex.getMessage());
+
+                //Log stack trace if verbose logging is enabled
+                for(StackTraceElement e : ex.getStackTrace())
+                {
+                    if(NetworkHandler.verboseLogging) Log.error(LogType.NETWORKING, e.toString());
+                }
+
                 client.disconnect();
                 break;
             }

@@ -1,5 +1,6 @@
 package de.sealcore.networking.packets;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 import de.sealcore.util.logging.Log;
@@ -13,7 +14,7 @@ public class ChunkAddPacket extends Packet
 
     public ChunkAddPacket(String[] f)
     {
-        super(PacketType.EXAMPLE);
+        super(PacketType.CHUNKADD);
 
         floors = f;
     }
@@ -25,9 +26,10 @@ public class ChunkAddPacket extends Packet
         JsonArray floorObjects = args.getArray("floors");
 
         ArrayList<String> floors = new ArrayList<String>();
-        for(JsonObject o : floorObjects)
+        for(Object o : floorObjects)
         {
-            floors.add(o.getString("id"));
+            //o is only string in this case
+            //floors.add((String) o);
         }
 
         return new ChunkAddPacket(floors.toArray(new String[0]));
@@ -44,10 +46,10 @@ public class ChunkAddPacket extends Packet
 
         for(String s : this.floors)
         {
-            floors.addString("id", s);
+            floors.addString(s);
         }
 
-        args.addObject("floors", floors);
+        args.addArray("floors", floors);
 
         obj.addObject("args", args);
 

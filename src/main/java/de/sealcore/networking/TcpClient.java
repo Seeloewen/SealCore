@@ -47,6 +47,12 @@ public class TcpClient
         catch(Exception ex)
         {
             Log.error(LogType.NETWORKING, "Could not close connection to server: " + ex.getMessage());
+
+            //Log stack trace if verbose logging is enabled
+            for(StackTraceElement e : ex.getStackTrace())
+            {
+                if(NetworkHandler.verboseLogging) Log.error(LogType.NETWORKING, e.toString());
+            }
         }
     }
 
@@ -63,6 +69,13 @@ public class TcpClient
             catch (Exception ex)
             {
                 Log.error(LogType.NETWORKING, "Could not read stream from server: " + ex.getMessage());
+
+                //Log stack trace if verbose logging is enabled
+                for(StackTraceElement e : ex.getStackTrace())
+                {
+                    if(NetworkHandler.verboseLogging) Log.error(LogType.NETWORKING, e.toString());
+                }
+
                 disconnect();
                 break;
             }
