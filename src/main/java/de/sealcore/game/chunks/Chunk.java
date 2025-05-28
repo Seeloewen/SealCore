@@ -4,6 +4,10 @@ import de.sealcore.game.blocks.Block;
 import de.sealcore.game.floors.Floor;
 import de.sealcore.game.floors.FloorRegister;
 import de.sealcore.util.ChunkIndex;
+import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.ChunkAddPacket;
+
+import java.util.ArrayList;
 
 public class Chunk
 {
@@ -59,6 +63,17 @@ public class Chunk
     {
         //Get floor from specified location
         return blocks[coordsToIndex(x, y)];
+    }
+
+    public void sendAddPacket()
+    {
+        ArrayList<String> s = new ArrayList<String>();
+        for(Floor f : floors)
+        {
+            s.add(f.id);
+        }
+
+        NetworkHandler.send(new ChunkAddPacket(s.toArray(new String[0])));
     }
 
     public static int coordsToIndex(int x, int y)

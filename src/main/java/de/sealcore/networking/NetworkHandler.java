@@ -50,6 +50,8 @@ public class NetworkHandler
 
     public static void parseData(String data)
     {
+        Log.info(LogType.NETWORKING, data);
+
         //Convert data to json object and get type
         JsonObject obj = JsonObject.fromString(data);
         PacketType type = PacketType.values()[obj.getInt("type")];
