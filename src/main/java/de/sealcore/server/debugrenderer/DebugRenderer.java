@@ -37,6 +37,12 @@ public class DebugRenderer
             case "s" -> renderChunk(curX, curY - 1);
             case "d" -> renderChunk(curX + 1, curY);
 
+            case "m" ->
+            {
+                mode = mode == DebugRenderMode.FLOOR ? DebugRenderMode.BLOCK : DebugRenderMode.FLOOR; //Toggle the render mode
+                Log.info(LogType.DEBUGRENDERER, "Toggled render mode to " + mode);
+                renderChunk(curX, curY);
+            }
             case "exit" ->
             {
                 //Exit Debug Renderer
@@ -94,11 +100,12 @@ public class DebugRenderer
                 //Log the first letter of the block/floor (depending on mode)
                 if (mode == DebugRenderMode.FLOOR)
                 {
-                    s.append(c.getFloor(j, i).name.substring(0, 1));
+                    s.append(c.getFloor(j, i).name.charAt(0));
                 }
                 else if (mode == DebugRenderMode.BLOCK)
                 {
-                    s.append(c.getFloor(j, i).name.substring(0, 1));
+                    Block b = c.getBlock(j, i);
+                    s.append(b != null ? b.name.charAt(0) : "-"); //Append the name when there is a block, otherwise a minus
                 }
             }
 
