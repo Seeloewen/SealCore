@@ -15,7 +15,7 @@ public class Chunk
     public final int y;
     public final int index;
     public static final int WIDTH = 8;
-    public static final int LENGTH = 8;
+    public static final int HEIGHT = 8;
 
     private Floor[] floors = new Floor[64];
     private Block[] blocks = new Block[64];

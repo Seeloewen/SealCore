@@ -85,7 +85,7 @@ public class DebugRenderer
 
         //Display the entire chunk
         Log.info(LogType.DEBUGRENDERER, "Displaying chunk x" + x + " y" + y);
-        for (int i = Chunk.LENGTH - 1; i >= 0; i--)
+        for (int i = Chunk.HEIGHT - 1; i >= 0; i--)
         {
             StringBuilder s = new StringBuilder();
 

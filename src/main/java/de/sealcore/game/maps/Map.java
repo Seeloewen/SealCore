@@ -16,7 +16,7 @@ public class Map
     private final ChunkGenerator generator;
 
     public final int id;
-    private final long seed;
+    private final int seed;
     private final MapLayout layout;
 
     private Chunk[] chunks = new Chunk[256 * 256];
@@ -27,7 +27,7 @@ public class Map
         this.layout = layout;
 
         //Setup chunk generation
-        seed = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        seed = (int)(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
         generator = new ChunkGenerator(seed, layout);
 
         //Generate the first four chunks (spawn chunks)
@@ -43,7 +43,7 @@ public class Map
         int i = ChunkIndex.toI(x, y);
 
         //Generate a new chunk and add it to the register
-        Chunk c = generator.genChunk(x, y);
+        Chunk c = generator.getChunk(x, y);
         chunks[i] = c;
 
         c.sendAddPacket();
