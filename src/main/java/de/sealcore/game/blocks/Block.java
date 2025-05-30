@@ -2,13 +2,11 @@ package de.sealcore.game.blocks;
 
 public abstract class Block
 {
-    public String id;
-    public String name;
+    public BlockInfo info;
 
-    protected Block(String id, String name)
+    protected Block(String id, String name, boolean isSolid)
     {
-        this.id = id;
-        this.name = name;
+        info = new BlockInfo(id, name, isSolid);
     }
 
     public int onLeftClick()

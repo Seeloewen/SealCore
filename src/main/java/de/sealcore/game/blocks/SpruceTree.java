@@ -4,6 +4,6 @@ public class SpruceTree extends Block
 {
     public SpruceTree()
     {
-        super("b:spruce_tree", "Spruce Tree");
+        super("b:spruce_tree", "Spruce Tree", true);
     }
 }

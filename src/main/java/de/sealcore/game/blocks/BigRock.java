@@ -4,6 +4,6 @@ public class BigRock extends Block
 {
     public BigRock()
     {
-        super("b:big_rock", "Big Rock");
+        super("b:big_rock", "Big Rock", true);
     }
 }
