@@ -1,6 +1,8 @@
 package de.sealcore.networking.packets;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
+import de.sealcore.client.Client;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 import de.sealcore.util.logging.Log;
@@ -10,13 +12,15 @@ import java.util.ArrayList;
 
 public class ChunkAddPacket extends Packet
 {
+    private int id;
     private String[] floors;
 
-    public ChunkAddPacket(String[] f)
+    public ChunkAddPacket(String[] f, int id)
     {
         super(PacketType.CHUNKADD);
 
         floors = f;
+        this.id = id;
     }
 
     public static Packet fromJson(String json)
@@ -26,13 +30,15 @@ public class ChunkAddPacket extends Packet
         JsonArray floorObjects = args.getArray("floors");
 
         ArrayList<String> floors = new ArrayList<String>();
-        for(Object o : floorObjects)
+        for (Object o : floorObjects)
         {
             //o is only string in this case
-            //floors.add((String) o);
+            floors.add(((TextNode) o).asText());
         }
 
-        return new ChunkAddPacket(floors.toArray(new String[0]));
+        int id = args.getInt("id");
+
+        return new ChunkAddPacket(floors.toArray(new String[0]), id);
     }
 
     public String toJson()
@@ -44,11 +50,12 @@ public class ChunkAddPacket extends Packet
         JsonObject args = JsonObject.fromScratch();
         JsonArray floors = JsonArray.fromScratch();
 
-        for(String s : this.floors)
+        for (String s : this.floors)
         {
             floors.addString(s);
         }
 
+        args.addInt("id", id);
         args.addArray("floors", floors);
 
         obj.addObject("args", args);
@@ -59,5 +66,6 @@ public class ChunkAddPacket extends Packet
     public void handle()
     {
 
+        Client.instance.gameState.loadChunk(id, floors);
     }
 }

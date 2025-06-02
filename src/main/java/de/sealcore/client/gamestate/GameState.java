@@ -15,13 +15,13 @@ public class GameState {
     public GameState() {
         loadedChunks = new HashMap<>();
 
-        loadChunk(0);
+        /*loadChunk(0);
         loadChunk(1);
         loadChunk(2);
         loadChunk(4);
         loadChunk(3);
         loadChunk(5);
-
+*/
     }
 
 
@@ -34,8 +34,8 @@ public class GameState {
 
 
     //chunk creation parameters have to be added
-    public void loadChunk(int id) {
-        loadedChunks.put(id, new ChunkState(id));
+    public void loadChunk(int id, String[] floors) {
+        loadedChunks.put(id, new ChunkState(id, floors));
     }
 
 

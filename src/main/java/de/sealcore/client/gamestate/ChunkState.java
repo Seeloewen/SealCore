@@ -13,10 +13,10 @@ class ChunkState {
 
     FloorMesh floorMesh;
 
-    ChunkState(int index) {
-        floors = new FloorState[64];
+    ChunkState(int index, String[] floors) {
+        this.floors = new FloorState[64];
         for(int i = 0; i < 64; i++) {
-            floors[i] = new FloorState(Math.random() < 0.3 ? new Color(0.1f,0.1f,0.9f) : new Color(0.1f,0.9f,0.1f));
+            this.floors[i] = new FloorState(floors[i]);
         }
         this.index = index;
     }

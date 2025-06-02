@@ -20,14 +20,15 @@ public class Renderer {
 
     GameState game;
 
-    public Renderer() {
+    public Renderer(GameState gameState) {
         glEnable(GL_DEPTH_TEST);
+
+        this.game = gameState;
 
         shader = new Shader("test_shader");
 
         meshRenderer = new MeshRenderer();
 
-        game = new GameState();
 
     }
 

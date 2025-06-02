@@ -100,12 +100,12 @@ public class DebugRenderer
                 //Log the first letter of the block/floor (depending on mode)
                 if (mode == DebugRenderMode.FLOOR)
                 {
-                    s.append(c.getFloor(j, i).name.charAt(0));
+                    s.append(c.getFloor(j, i).info.name().charAt(0));
                 }
                 else if (mode == DebugRenderMode.BLOCK)
                 {
                     Block b = c.getBlock(j, i);
-                    s.append(b != null ? b.name.charAt(0) : "-"); //Append the name when there is a block, otherwise a minus
+                    s.append(b != null ? b.info.name().charAt(0) : "-"); //Append the name when there is a block, otherwise a minus
                 }
             }
 
@@ -119,8 +119,8 @@ public class DebugRenderer
 
         //Display info about the block specified in the currently selected chunk
         Log.info(LogType.DEBUGRENDERER, "=> Info for Block at x" + x + " y" + y);
-        Log.info(LogType.DEBUGRENDERER, "Name: " + b.name);
-        Log.info(LogType.DEBUGRENDERER, "Id: " + b.id);
+        Log.info(LogType.DEBUGRENDERER, "Name: " + b.info.name());
+        Log.info(LogType.DEBUGRENDERER, "Id: " + b.info.id());
     }
 
     public static void showFloorInfo(int x, int y)
@@ -129,8 +129,8 @@ public class DebugRenderer
 
         //Display info about the floor specified in the currently selected chunk
         Log.info(LogType.DEBUGRENDERER, "=> Info for Floor at x" + x + " y" + y);
-        Log.info(LogType.DEBUGRENDERER, "Name: " + f.name);
-        Log.info(LogType.DEBUGRENDERER, "Id: " + f.id);
+        Log.info(LogType.DEBUGRENDERER, "Name: " + f.info.name());
+        Log.info(LogType.DEBUGRENDERER, "Id: " + f.info.id());
     }
 
     public static void showChunkInfo(int x, int y)

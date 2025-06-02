@@ -70,10 +70,10 @@ public class Chunk
         ArrayList<String> s = new ArrayList<String>();
         for(Floor f : floors)
         {
-            s.add(f.id);
+            s.add(f.info.id());
         }
 
-        NetworkHandler.send(new ChunkAddPacket(s.toArray(new String[0])));
+        NetworkHandler.send(new ChunkAddPacket(s.toArray(new String[0]), index));
     }
 
     public static int coordsToIndex(int x, int y)
