@@ -12,7 +12,7 @@ public class Mesh {
     private VertexBuffer buffer;
     private final int size;
 
-    protected Mesh(MeshSide[] sides) {
+    public Mesh(MeshSide[] sides) {
 
         float[] vertices = new float[36 * sides.length];
         for(int i = 0; i < sides.length; i++) {
@@ -33,54 +33,6 @@ public class Mesh {
         return size;
     }
 
-    /*public Mesh() {
-        this(
-                new MeshSide[]{
-                        new MeshSide(
-                                new MeshVertex(0f, 0f, 0f),
-                                new MeshVertex(0f, 0f, 1f),
-                                new MeshVertex(0f, 1f, 1f),
-                                new MeshVertex(0f, 1f, 0f),
-                                new Color(0.3f,0f,0f)
-                        ),
-                        new MeshSide(
-                                new MeshVertex(1f, 0f, 0f),
-                                new MeshVertex(1f, 0f, 1f),
-                                new MeshVertex(1f, 1f, 1f),
-                                new MeshVertex(1f, 1f, 0f),
-                                new Color(0.7f,0f,0f)
-                        ),
-                        new MeshSide(
-                                new MeshVertex(0f, 0f, 0f),
-                                new MeshVertex(0f, 0f, 1f),
-                                new MeshVertex(1f, 0f, 1f),
-                                new MeshVertex(1f, 0f, 0f),
-                                new Color(0f,0.3f,0f)
-                        ),
-                        new MeshSide(
-                                new MeshVertex(0f, 1f, 0f),
-                                new MeshVertex(0f, 1f, 1f),
-                                new MeshVertex(1f, 1f, 1f),
-                                new MeshVertex(1f, 1f, 0f),
-                                new Color(0f,0.7f,0f)
-                        ),
-                        new MeshSide(
-                                new MeshVertex(0f, 0f, 0f),
-                                new MeshVertex(0f, 1f, 0f),
-                                new MeshVertex(1f, 1f, 0f),
-                                new MeshVertex(1f, 0f, 0f),
-                                new Color(0f,0f,0.3f)
-                        ),
-                        new MeshSide(
-                                new MeshVertex(0f, 0f, 1f),
-                                new MeshVertex(0f, 1f, 1f),
-                                new MeshVertex(1f, 1f, 1f),
-                                new MeshVertex(1f, 0f, 1f),
-                                new Color(0f,0f,0.7f)
-                        )
-                }
-        );
-    }*/
 
     public void bind() {
         buffer.bind();

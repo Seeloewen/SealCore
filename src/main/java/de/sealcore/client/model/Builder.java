@@ -14,13 +14,13 @@ public class Builder {
     private int offsetY;
     private int offsetZ;
 
-    private int minX;
-    private int minY;
-    private int minZ;
+    int minX;
+    int minY;
+    int minZ;
 
-    private int maxX;
-    private int maxY;
-    private int maxZ;
+    int maxX;
+    int maxY;
+    int maxZ;
 
 
     public Builder(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
