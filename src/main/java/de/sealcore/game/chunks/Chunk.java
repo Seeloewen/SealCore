@@ -3,19 +3,28 @@ package de.sealcore.game.chunks;
 import de.sealcore.game.blocks.Block;
 import de.sealcore.game.floors.Floor;
 import de.sealcore.game.floors.FloorRegister;
+import de.sealcore.util.ChunkIndex;
+import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.ChunkAddPacket;
+
+import java.util.ArrayList;
 
 public class Chunk
 {
-    private final int index;
+    public final int x;
+    public final int y;
+    public final int index;
     public static final int WIDTH = 8;
-    public static final int LENGTH = 8;
+    public static final int HEIGHT = 8;
 
     private Floor[] floors = new Floor[64];
     private Block[] blocks = new Block[64];
 
-    private Chunk(int index)
+    private Chunk(int x, int y)
     {
-        this.index = index;
+        this.x = x;
+        this.y = y;
+        index = ChunkIndex.toI(x, y);
 
         //Fill all chunks with grass by default to avoid null pointers later on
         for(int i = 0; i < floors.length; i++)
@@ -24,12 +33,12 @@ public class Chunk
         }
     }
 
-    public static Chunk getEmptyChunk(int index)
+    public static Chunk getEmptyChunk(int x, int y)
     {
         //This method only exists so I can make the constructor private
         //The constructor does NOT do the generation, so just calling "Chunk" could be confusing
         //getEmptyChunk does imply that generation is still needed, so here it is :)
-        return new Chunk(index);
+        return new Chunk(x, y);
     }
 
     public void setFloor(int x, int y, Floor f)
@@ -54,6 +63,17 @@ public class Chunk
     {
         //Get floor from specified location
         return blocks[coordsToIndex(x, y)];
+    }
+
+    public void sendAddPacket()
+    {
+        ArrayList<String> s = new ArrayList<String>();
+        for(Floor f : floors)
+        {
+            s.add(f.info.id());
+        }
+
+        NetworkHandler.send(new ChunkAddPacket(s.toArray(new String[0]), index));
     }
 
     public static int coordsToIndex(int x, int y)

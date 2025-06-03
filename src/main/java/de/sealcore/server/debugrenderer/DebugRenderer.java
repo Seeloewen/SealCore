@@ -37,6 +37,12 @@ public class DebugRenderer
             case "s" -> renderChunk(curX, curY - 1);
             case "d" -> renderChunk(curX + 1, curY);
 
+            case "m" ->
+            {
+                mode = mode == DebugRenderMode.FLOOR ? DebugRenderMode.BLOCK : DebugRenderMode.FLOOR; //Toggle the render mode
+                Log.info(LogType.DEBUGRENDERER, "Toggled render mode to " + mode);
+                renderChunk(curX, curY);
+            }
             case "exit" ->
             {
                 //Exit Debug Renderer
@@ -81,23 +87,25 @@ public class DebugRenderer
 
         //Get the chunk - generate it if it doesn't exist
         Chunk c = Server.game.getCurrentMap().getChunk(x, y);
-        if(c == null) c = Server.game.getCurrentMap().genChunk(x, y);
+        if (c == null) c = Server.game.getCurrentMap().genChunk(x, y);
 
         //Display the entire chunk
         Log.info(LogType.DEBUGRENDERER, "Displaying chunk x" + x + " y" + y);
-        for (int i = 0; i < c.LENGTH; i++)
+        for (int i = Chunk.HEIGHT - 1; i >= 0; i--)
         {
             StringBuilder s = new StringBuilder();
 
-            for (int j = 0; j < c.WIDTH; j++)
+            for (int j = 0; j < Chunk.WIDTH; j++)
             {
                 //Log the first letter of the block/floor (depending on mode)
                 if (mode == DebugRenderMode.FLOOR)
                 {
-                    s.append(c.getFloor(i, j).name.substring(0, 1));
-                } else if (mode == DebugRenderMode.BLOCK)
+                    s.append(c.getFloor(j, i).info.name().charAt(0));
+                }
+                else if (mode == DebugRenderMode.BLOCK)
                 {
-                    s.append(c.getFloor(i, j).name.substring(0, 1));
+                    Block b = c.getBlock(j, i);
+                    s.append(b != null ? b.info.name().charAt(0) : "-"); //Append the name when there is a block, otherwise a minus
                 }
             }
 
@@ -111,8 +119,8 @@ public class DebugRenderer
 
         //Display info about the block specified in the currently selected chunk
         Log.info(LogType.DEBUGRENDERER, "=> Info for Block at x" + x + " y" + y);
-        Log.info(LogType.DEBUGRENDERER, "Name: " + b.name);
-        Log.info(LogType.DEBUGRENDERER, "Id: " + b.id);
+        Log.info(LogType.DEBUGRENDERER, "Name: " + b.info.name());
+        Log.info(LogType.DEBUGRENDERER, "Id: " + b.info.id());
     }
 
     public static void showFloorInfo(int x, int y)
@@ -121,8 +129,8 @@ public class DebugRenderer
 
         //Display info about the floor specified in the currently selected chunk
         Log.info(LogType.DEBUGRENDERER, "=> Info for Floor at x" + x + " y" + y);
-        Log.info(LogType.DEBUGRENDERER, "Name: " + f.name);
-        Log.info(LogType.DEBUGRENDERER, "Id: " + f.id);
+        Log.info(LogType.DEBUGRENDERER, "Name: " + f.info.name());
+        Log.info(LogType.DEBUGRENDERER, "Id: " + f.info.id());
     }
 
     public static void showChunkInfo(int x, int y)

@@ -4,6 +4,6 @@ public class StoneBricks extends Floor
 {
     public StoneBricks()
     {
-        super("f:stone_bricks", "StoneBricks");
+        super("f:stone_bricks", "StoneBricks", true);
     }
 }

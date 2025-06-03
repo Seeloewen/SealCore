@@ -2,6 +2,8 @@ package de.sealcore.game.maps;
 
 import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.chunks.ChunkGenerator;
+import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.ChunkAddPacket;
 import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
@@ -14,7 +16,7 @@ public class Map
     private final ChunkGenerator generator;
 
     public final int id;
-    private final long seed;
+    private final int seed;
     private final MapLayout layout;
 
     private Chunk[] chunks = new Chunk[256 * 256];
@@ -25,7 +27,7 @@ public class Map
         this.layout = layout;
 
         //Setup chunk generation
-        seed = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        seed = (int)(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
         generator = new ChunkGenerator(seed, layout);
 
         //Generate the first four chunks (spawn chunks)
@@ -41,8 +43,10 @@ public class Map
         int i = ChunkIndex.toI(x, y);
 
         //Generate a new chunk and add it to the register
-        Chunk c = generator.genChunk(ChunkIndex.toI(x, y));
+        Chunk c = generator.getChunk(x, y);
         chunks[i] = c;
+
+        c.sendAddPacket();
 
         //Returns the chunk in case further action should be applied
         return c;

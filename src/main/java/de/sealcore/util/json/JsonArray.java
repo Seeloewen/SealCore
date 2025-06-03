@@ -4,18 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import de.sealcore.util.logging.Log;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class JsonArray extends JsonObject implements Iterable<JsonObject>
+public class JsonArray extends JsonObject implements Iterable<Object>
 {
     protected ArrayNode node;
     private final ObjectMapper mapper;
-    private ArrayList<JsonObject> objects = new ArrayList<JsonObject>(); //List of json objects
+    private ArrayList<Object> objects = new ArrayList<Object>(); //List of json objects
 
 
     private JsonArray(String content, ObjectMapper mapper) throws JsonProcessingException
@@ -36,9 +37,17 @@ public class JsonArray extends JsonObject implements Iterable<JsonObject>
 
     protected JsonArray(JsonNode node, ObjectMapper mapper)
     {
-        super(node, mapper);
+        super(mapper);
         this.mapper = mapper;
         this.node = (ArrayNode)node;
+        objects = getObjects(node);
+    }
+
+    protected JsonArray(ObjectMapper mapper)
+    {
+        super(mapper);
+        this.mapper = mapper;
+        this.node = mapper.createArrayNode();
         objects = getObjects(node);
     }
 
@@ -68,97 +77,137 @@ public class JsonArray extends JsonObject implements Iterable<JsonObject>
         }
     }
 
-    private ArrayList<JsonObject> getObjects(JsonNode node)
+    public static JsonArray fromScratch()
+    {
+        //Creates a json object from file with a new mapper
+        try
+        {
+            return new JsonArray(new ObjectMapper());
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
+    private ArrayList<Object> getObjects(JsonNode node)
     {
         //Return a list of all json objects (wrapper object) in a Jackson node
-        ArrayList<JsonObject> objects = new ArrayList<JsonObject>();
+            ArrayList<Object> objects = new ArrayList<Object>();
 
         for (JsonNode n : node)
         {
-            //Returns either array or Object, depending on what the node identifies itself as
+            //Adds either array or Object or primitive type, depending on what the node identifies itself as
             if (n.isArray())
             {
                 objects.add(new JsonArray(n, mapper));
-            } else
+            }
+            else if(n.isObject())
             {
                 objects.add(new JsonObject(n, mapper));
+            }
+            else
+            {
+                objects.add(n);
             }
         }
 
         return objects;
     }
 
-    public JsonObject getObject(int index)
+    public Object get(int index)
     {
         //Return a specific object at the given index
         return objects.get(index);
     }
 
-    public void addObjectOrArray(JsonObject object)
+    public void addObject(JsonObject obj)
     {
         //Add object to array node and JsonObject to iterated list
-        node.add(object.node);
-        objects.add(object);
+        node.add(obj.node);
+        objects.add(obj);
     }
 
-    @Override
-    public int getInt(String identifier)
+    public void addArray(JsonArray arr)
     {
-        throw new UnsupportedOperationException("Cannot get int from JsonArray");
+        //Add object to array node and JsonObject to iterated list
+        node.add(arr.node);
+        objects.add(arr);
     }
 
-    @Override
-    public String getString(String identifier)
+    public void addInt(int i)
     {
-        throw new UnsupportedOperationException("Cannot get string from JsonArray");
+        //Add object to array node and JsonObject to iterated list
+        node.add(i);
+        objects.add(i);
     }
 
-    @Override
-    public boolean getBool(String identifier)
+    public void addDouble(double d)
     {
-        throw new UnsupportedOperationException("Cannot get bool from JsonArray");
+        //Add object to array node and JsonObject to iterated list
+        node.add(d);
+        objects.add(d);
     }
 
-    @Override
-    public double getDouble(String identifier)
+    public void addBool(boolean b)
     {
-        throw new UnsupportedOperationException("Cannot get double from JsonArray");
+        //Add object to array node and JsonObject to iterated list
+        node.add(b);
+        objects.add(b);
     }
 
-    @Override
-    public void addBool(String identifier, boolean value)
+    public void addString(String s)
     {
-        throw new UnsupportedOperationException("Cannot add values to JsonArray");
+        //Add object to array node and JsonObject to iterated list
+        node.add(s);
+        objects.add(s);
     }
 
-    @Override
-    public void addInt(String identifier, int value)
-    {
-        throw new UnsupportedOperationException("Cannot add values to JsonArray");
-    }
-
-    @Override
-    public void addString(String identifier, String value)
-    {
-        throw new UnsupportedOperationException("Cannot add values to JsonArray");
-    }
-
-    @Override
-    public void addDouble(String identifier, double value)
-    {
-        throw new UnsupportedOperationException("Cannot add values to JsonArray");
-    }
-
-    @Override
-    public void addObject(String identifier, JsonObject value)
-    {
-        //Redirects to the correct method for arrays
-        addObjectOrArray(value);
-    }
-
-    public Iterator<JsonObject> iterator()
+    @NotNull
+    public Iterator<Object> iterator()
     {
         //Allows iteration over the objects in the object list
         return objects.iterator();
+    }
+
+    /* The following part contains redirects to the correct methods
+       While the ones below can be used, it's an unnecessary extra parameter
+       and can lead to confusion when the identifier is missing in the end
+     */
+
+    @Override @Deprecated
+    public void addObject(String identifier, JsonObject obj)
+    {
+        addObject(obj);
+    }
+
+    @Override @Deprecated
+    public void addArray(String identifier, JsonArray arr)
+    {
+        addObject(arr);
+    }
+
+    @Override @Deprecated
+    public void addInt(String identifier, int i)
+    {
+        addInt(i);
+    }
+
+    @Override @Deprecated
+    public void addString(String identifier, String s)
+    {
+        addString(s);
+    }
+
+    @Override @Deprecated
+    public void addDouble(String identifier, double d)
+    {
+        addDouble(d);
+    }
+
+    @Override
+    public void addBool(String identifier, boolean b)
+    {
+        addBool(b);
     }
 }

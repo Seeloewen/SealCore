@@ -1,9 +1,6 @@
 package de.sealcore.networking;
 
-import de.sealcore.networking.packets.ExamplePacket;
-import de.sealcore.networking.packets.Packet;
-import de.sealcore.networking.packets.PacketHandler;
-import de.sealcore.networking.packets.PacketType;
+import de.sealcore.networking.packets.*;
 import de.sealcore.util.json.JsonObject;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
@@ -12,6 +9,8 @@ public class NetworkHandler
 {
     public static TcpServer server;
     public static TcpClient client;
+
+    public static boolean verboseLogging = false; //Debug switch, shows all sent and received packets when toggled on
 
     public static void init(NetworkType instance)
     {
@@ -37,6 +36,9 @@ public class NetworkHandler
 
     public static void send(Packet packet)
     {
+        //Verbose logging
+        if(verboseLogging) Log.info(LogType.NETWORKING, "Sent packet: " + packet.toJson());
+
         //Send message depending on the instance
         if (isServer())
         {
@@ -50,16 +52,23 @@ public class NetworkHandler
 
     public static void parseData(String data)
     {
+        if(verboseLogging) Log.info(LogType.NETWORKING, "Received packet: " + data);
+
         //Convert data to json object and get type
         JsonObject obj = JsonObject.fromString(data);
         PacketType type = PacketType.values()[obj.getInt("type")];
 
         //Construct packet from type
         Packet p = null;
+        String args = obj.getObject("args").toString();
+
         switch(type)
         {
             case PacketType.EXAMPLE:
-                p = ExamplePacket.fromJson(obj.getObject("args").toString());
+                p = ExamplePacket.fromJson(args);
+                break;
+            case PacketType.CHUNKADD:
+                p = ChunkAddPacket.fromJson(args);
                 break;
         }
 

@@ -4,6 +4,6 @@ public class Grass extends Floor
 {
     public Grass()
     {
-        super("f:grass", "Grass");
+        super("f:grass", "Grass", true);
     }
 }

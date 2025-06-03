@@ -1,74 +1,66 @@
 package de.sealcore.game.chunks;
 
-import de.sealcore.game.floors.FloorRegister;
 import de.sealcore.game.maps.MapLayout;
+
+import java.util.Random;
 
 public class ChunkGenerator
 {
-    private final long seed;
+    private final TerrainGenerator terrainGenerator;
+    private final BlockGenerator blockGenerator;
+
+    private final int seed;
     private final MapLayout layout;
 
-    public ChunkGenerator(long seed, MapLayout layout)
+    public ChunkGenerator(int seed, MapLayout layout)
     {
-        this.seed = seed;
+        terrainGenerator = new TerrainGenerator(seed);
+        blockGenerator = new BlockGenerator(seed);
+
         this.layout = layout;
+        this.seed = seed;
     }
 
-    public Chunk genChunk(int index)
+    public Chunk getChunk(int cX, int cY)
     {
-        return switch(layout)
-        {
-            case NORMAL -> genNormalChunk(index);
-            case CAVE -> genCaveChunk(index);
-            case DUNGEON -> genDungeonChunk(index);
-        };
-    }
+        //Creates a new chunk, generates the terrain and blocks (structures)
+        Chunk c = Chunk.getEmptyChunk(cX, cY);
 
-    public Chunk genNormalChunk(int index)
-    {
-        Chunk c = Chunk.getEmptyChunk(index);
-
-        //Fill normal chunk with floors
-        for(int i = 0; i < Chunk.LENGTH; i++)
-        {
-            for(int j = 0; j < Chunk.WIDTH; j++)
-            {
-                c.setFloor(i, j, FloorRegister.getFloor("f:grass"));
-            }
-        }
+        genTerrain(c);
+        genBlocks(c);
 
         return c;
     }
 
-    public Chunk genCaveChunk(int index)
+    public void genTerrain(Chunk c)
     {
-        Chunk c = Chunk.getEmptyChunk(index);
-
-        //Fill cave chunk with floors
-        for(int i = 0; i < Chunk.LENGTH; i++)
+        //Generate the chunk based on the layout
+        switch (layout)
         {
-            for(int j = 0; j < Chunk.WIDTH; j++)
-            {
-                c.setFloor(i, j, FloorRegister.getFloor("f:stone"));
-            }
+            case NORMAL -> terrainGenerator.genNormalChunk(c);
+            case CAVE -> terrainGenerator.genCaveChunk(c);
+            case DUNGEON -> terrainGenerator.genDungeonChunk(c);
         }
-
-        return c;
     }
 
-    public Chunk genDungeonChunk(int index)
+    private void genBlocks(Chunk c)
     {
-        Chunk c = Chunk.getEmptyChunk(index);
+        Random rnd = new Random(seed);
 
-        //Fill dungeon chunk with floors
-        for(int i = 0; i < Chunk.LENGTH; i++)
+        //Generate structures based on the layout
+        for (int x = 0; x < Chunk.WIDTH; x++)
         {
-            for(int j = 0; j < Chunk.WIDTH; j++)
+            for (int y = 0; y < Chunk.HEIGHT; y++)
             {
-                c.setFloor(i, j, FloorRegister.getFloor("f:stone_bricks"));
+                if (!blockGenerator.isLocalMaxNoise(c.index, x, y)) continue; //Only generate structures at local max points, ensures even distribution
+
+                //Roll the structure to generate
+                int structure = rnd.nextInt(0, 1);
+
+                if (structure == 0) blockGenerator.genTree(c, x, y); //Trees
+                else if(structure == 1) blockGenerator.genRock(c, x, y); //Rocks
+
             }
         }
-
-        return c;
     }
 }

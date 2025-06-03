@@ -1,5 +1,6 @@
 package de.sealcore.client;
 
+import de.sealcore.client.gamestate.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.rendering.renderer.Renderer;
@@ -24,12 +25,17 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 public class Client {
 
+    public static Client instance;
+
     private final long window;
 
     private Renderer renderer;
     private Camera camera;
+    public GameState gameState;
 
     private Client() {
+
+        Client.instance = this;
 
         NetworkHandler.init(NetworkType.CLIENT);
 
@@ -54,9 +60,13 @@ public class Client {
 
         glfwSwapInterval(0);
 
-        renderer = new Renderer();
+        gameState = new GameState();
+
+        renderer = new Renderer(gameState);
 
         camera = new Camera();
+
+
 
     }
 

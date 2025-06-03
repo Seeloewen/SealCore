@@ -1,12 +1,12 @@
-package de.sealcore.game.blocks;
+package de.sealcore.game.items;
 
-public abstract class Block
+public abstract class Item
 {
-    public BlockInfo info;
+    public ItemInfo info;
 
-    protected Block(String id, String name, boolean isSolid)
+    protected Item(String id, String name, ItemType type, int maxAmount)
     {
-        info = new BlockInfo(id, name, isSolid);
+        info = new ItemInfo(id, name, type, maxAmount);
     }
 
     public int onLeftClick()
