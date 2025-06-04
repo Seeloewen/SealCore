@@ -2,7 +2,7 @@ package de.sealcore.game.items;
 
 public class ItemRegister
 {
-    public Item getItem(String id)
+    public static Item getItem(String id)
     {
         return switch(id)
         {
