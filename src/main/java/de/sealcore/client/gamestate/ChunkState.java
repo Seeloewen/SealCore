@@ -9,6 +9,7 @@ import org.joml.Matrix4f;
 class ChunkState {
 
     FloorState[] floors;
+    BlockState[] blocks;
     final int index;
 
     FloorMesh floorMesh;

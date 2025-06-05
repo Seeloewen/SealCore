@@ -33,6 +33,9 @@ public class Mesh {
         return size;
     }
 
+    public void setPosition(double x, double y, double z) {
+        position = new Matrix4f().translate((float) x, (float)y, (float)z);
+    }
 
     public void bind() {
         buffer.bind();
