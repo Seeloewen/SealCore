@@ -23,7 +23,7 @@ public class Camera {
     }
 
     void update(CamMoveInput input, double dt) {
-        if( InputHandler.modeMouseMove) updateRotation(input.dx(), input.dy());
+        if( InputHandler.camMode) updateRotation(input.dx(), input.dy());
         Vector3f movement = new Vector3f(input.getTranslation());
         movement.mul((float)dt).mul(MOVE_SPEED);
         movement.rotateZ((float)angleHor);
