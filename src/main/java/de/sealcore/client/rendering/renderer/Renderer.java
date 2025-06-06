@@ -4,11 +4,7 @@ package de.sealcore.client.rendering.renderer;
 import de.sealcore.client.Camera;
 import de.sealcore.client.gamestate.GameState;
 import de.sealcore.client.rendering.abstractions.*;
-import de.sealcore.client.rendering.objects.Mesh;
-import de.sealcore.client.rendering.objects.MeshRenderer;
-import de.sealcore.util.timing.DeltaTimer;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import de.sealcore.client.rendering.meshes.MeshRenderer;
 
 import static org.lwjgl.opengl.GL33.*;
 

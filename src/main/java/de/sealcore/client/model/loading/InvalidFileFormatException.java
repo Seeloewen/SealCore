@@ -1,4 +1,4 @@
-package de.sealcore.client.model;
+package de.sealcore.client.model.loading;
 
 public class InvalidFileFormatException extends Exception {
     private int line;

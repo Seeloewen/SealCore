@@ -1,12 +1,11 @@
-package de.sealcore.client.model;
+package de.sealcore.client.model.loading;
 
-import de.sealcore.client.rendering.objects.Mesh;
-import de.sealcore.client.rendering.objects.MeshSide;
+import de.sealcore.client.model.mesh.Mesh;
+import de.sealcore.client.model.mesh.MeshSide;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class ModelLoader {
 

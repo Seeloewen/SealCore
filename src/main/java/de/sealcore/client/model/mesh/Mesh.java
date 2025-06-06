@@ -1,8 +1,7 @@
-package de.sealcore.client.rendering.objects;
+package de.sealcore.client.model.mesh;
 
 import de.sealcore.client.rendering.abstractions.VertexArrayLayout;
 import de.sealcore.client.rendering.abstractions.VertexBuffer;
-import de.sealcore.util.Color;
 import org.joml.Matrix4f;
 
 public class Mesh {
@@ -29,7 +28,7 @@ public class Mesh {
         position = new Matrix4f();
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 

@@ -1,4 +1,4 @@
-package de.sealcore.client.rendering.objects;
+package de.sealcore.client.model.mesh;
 
 public record MeshVertex(float x, float y, float z) {
 

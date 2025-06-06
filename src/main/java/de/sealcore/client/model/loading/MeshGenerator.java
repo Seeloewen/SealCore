@@ -1,8 +1,7 @@
-package de.sealcore.client.model;
+package de.sealcore.client.model.loading;
 
-import de.sealcore.client.rendering.objects.Mesh;
-import de.sealcore.client.rendering.objects.MeshSide;
-import de.sealcore.client.rendering.objects.MeshVertex;
+import de.sealcore.client.model.mesh.MeshSide;
+import de.sealcore.client.model.mesh.MeshVertex;
 import de.sealcore.util.Color;
 
 import java.util.ArrayList;

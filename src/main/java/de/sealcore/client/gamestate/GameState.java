@@ -1,14 +1,16 @@
 package de.sealcore.client.gamestate;
 
 
-import de.sealcore.client.model.*;
-import de.sealcore.client.rendering.objects.Mesh;
-import de.sealcore.client.rendering.objects.MeshRenderer;
+import de.sealcore.client.model.loading.Builder;
+import de.sealcore.client.model.loading.MeshGenerator;
+import de.sealcore.client.model.loading.ModelLoader;
+import de.sealcore.client.model.loading.Parser;
+import de.sealcore.client.model.mesh.Mesh;
+import de.sealcore.client.rendering.meshes.MeshRenderer;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class GameState {

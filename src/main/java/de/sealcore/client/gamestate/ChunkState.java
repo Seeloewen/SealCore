@@ -1,9 +1,8 @@
 package de.sealcore.client.gamestate;
 
 import de.sealcore.client.rendering.ground.FloorMesh;
-import de.sealcore.client.rendering.objects.MeshRenderer;
+import de.sealcore.client.rendering.meshes.MeshRenderer;
 import de.sealcore.util.ChunkIndex;
-import de.sealcore.util.Color;
 import org.joml.Matrix4f;
 
 class ChunkState {

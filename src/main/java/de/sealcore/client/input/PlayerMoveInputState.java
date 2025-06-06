@@ -5,6 +5,7 @@ public record PlayerMoveInputState (int x, int y, boolean sprint) {
     static private PlayerMoveInputState state;
 
     public static void update() {
+        if(state == null) state = generate();
         var newState = generate();
         if(!state.equals(newState)) newState.send();
         state = newState;

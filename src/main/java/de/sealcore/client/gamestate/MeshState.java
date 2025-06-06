@@ -1,6 +1,6 @@
 package de.sealcore.client.gamestate;
 
-import de.sealcore.client.rendering.objects.Mesh;
+import de.sealcore.client.model.mesh.Mesh;
 
 public class MeshState {
 

@@ -1,11 +1,10 @@
-package de.sealcore.client.rendering.objects;
+package de.sealcore.client.rendering.meshes;
 
 import de.sealcore.client.Camera;
+import de.sealcore.client.model.mesh.Mesh;
 import de.sealcore.client.rendering.abstractions.Shader;
-import de.sealcore.util.timing.DeltaTimer;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL33;
 
 public class MeshRenderer {
