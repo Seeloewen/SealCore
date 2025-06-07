@@ -5,12 +5,13 @@ import de.sealcore.client.Camera;
 import de.sealcore.client.gamestate.GameState;
 import de.sealcore.client.rendering.abstractions.*;
 import de.sealcore.client.rendering.meshes.MeshRenderer;
+import de.sealcore.client.rendering.ui.primitives.PrimitiveRenderer;
+import de.sealcore.client.rendering.ui.primitives.Rectangle;
+import de.sealcore.util.Color;
 
 import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer {
-
-    Shader shader;
 
     MeshRenderer meshRenderer;
 
@@ -21,7 +22,7 @@ public class Renderer {
 
         this.game = gameState;
 
-        shader = new Shader("test_shader");
+        PrimitiveRenderer.init();
 
         meshRenderer = new MeshRenderer();
 
@@ -33,10 +34,12 @@ public class Renderer {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
         meshRenderer.setCamera(camera);
 
         game.render(meshRenderer);
+
+
+        PrimitiveRenderer.drawRectangle(new Rectangle(100, 100, 200, 200), new Color(0.7f, 0.3f, 0.1f), 0f);
 
     }
 

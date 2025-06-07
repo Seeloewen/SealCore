@@ -17,7 +17,7 @@ public class MeshRenderer {
 
 
     public MeshRenderer() {
-        shader = new Shader("test_shader");
+        shader = new Shader("shaders/mesh");
 
 
 
