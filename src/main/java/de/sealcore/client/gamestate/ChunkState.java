@@ -28,9 +28,9 @@ class ChunkState {
         floorMesh.position = new Matrix4f().translate(8f*x, 8f*y, 0);
     }
 
-    void renderFloor(MeshRenderer renderer) {
+    void renderFloor() {
         if(floorMesh == null) generateFloorMesh();
-        renderer.render(floorMesh);
+        MeshRenderer.render(floorMesh);
     }
 
 

@@ -49,12 +49,12 @@ public class GameState {
 
 
 
-    public void render(MeshRenderer renderer) {
+    public void render() {
         for(var state : loadedChunks.values()) {
-            state.renderFloor(renderer);
+            state.renderFloor();
         }
         for(var mesh : loadedMeshes.values()) {
-            renderer.render(mesh);
+            MeshRenderer.render(mesh);
         }
 
     }

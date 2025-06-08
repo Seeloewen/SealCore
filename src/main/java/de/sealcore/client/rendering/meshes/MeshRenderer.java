@@ -1,22 +1,25 @@
 package de.sealcore.client.rendering.meshes;
 
 import de.sealcore.client.Camera;
+import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.model.mesh.Mesh;
+import de.sealcore.client.rendering.Resolution;
 import de.sealcore.client.rendering.abstractions.Shader;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL33;
 
 public class MeshRenderer {
 
-    private Shader shader;
+    private static Shader shader;
 
-    Matrix4f perspective;
+    private static Matrix4f perspective;
 
-    Matrix4f viewRot;
+    private static Matrix4f viewRot;
 
 
-    public MeshRenderer() {
+    public static void init() {
         shader = new Shader("shaders/mesh");
 
 
@@ -32,7 +35,7 @@ public class MeshRenderer {
 
     }
 
-    public void setCamera(Camera camera) {
+    public static void setCamera(Camera camera) {
         shader.use();
 
         shader.setUniformMat4("perspective", perspective);
@@ -40,7 +43,7 @@ public class MeshRenderer {
         shader.setUniformMat4("view_rot", viewRot);
     }
 
-    public void render(Mesh mesh) {
+    public static void render(Mesh mesh) {
 
         mesh.bind();
 
@@ -50,7 +53,15 @@ public class MeshRenderer {
 
     }
 
-
+    public static Vector3f getMouseRayDir() {
+        Vector4f ray_clip = new Vector4f(
+                Resolution.xToScreen((int) InputHandler.mouseX),
+                Resolution.yToScreen((int) InputHandler.mouseY),
+                -1f, 1f
+        );
+        Vector4f ray_eye = new Matrix4f(perspective).invert().transform(ray_clip);
+        return null;
+    }
 
 
 

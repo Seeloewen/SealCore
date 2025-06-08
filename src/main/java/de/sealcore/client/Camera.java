@@ -12,7 +12,6 @@ public class Camera {
     private static final float ROT_FACTOR = 0.003f;
     private static final float PI = 3.14159265358979f;
 
-    private Matrix4f camera;
     private Vector3f position;
     private double angleHor;
     private double angleVert;

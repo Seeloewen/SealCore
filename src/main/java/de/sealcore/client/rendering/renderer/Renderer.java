@@ -33,8 +33,7 @@ public class Renderer {
         TextureRenderer.init();
         PrimitiveRenderer.init();
         TextRenderer.init();
-
-        meshRenderer = new MeshRenderer();
+        MeshRenderer.init();
 
         try {
             TextureRenderer.loadTexture("missing_texture", "Missing_Texture.png");
@@ -49,9 +48,9 @@ public class Renderer {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        meshRenderer.setCamera(camera);
+        MeshRenderer.setCamera(camera);
 
-        game.render(meshRenderer);
+        game.render();
 
 
         PrimitiveRenderer.drawRectangle(new Rectangle(100, 100, 200, 200), new Color(0.7f, 0.3f, 0.1f), 0f);

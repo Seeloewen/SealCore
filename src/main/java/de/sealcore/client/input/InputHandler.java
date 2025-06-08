@@ -15,8 +15,8 @@ public class InputHandler {
     private static long window;
 
     private static boolean init = false;
-    private static double mouseX;
-    private static double mouseY;
+    public static double mouseX;
+    public static double mouseY;
 
     private static double mouseDeltaX;
     private static double mouseDeltaY;
