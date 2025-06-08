@@ -1,9 +1,9 @@
 package de.sealcore.client.rendering.ground;
 
 import de.sealcore.client.gamestate.FloorState;
-import de.sealcore.client.rendering.objects.Mesh;
-import de.sealcore.client.rendering.objects.MeshSide;
-import de.sealcore.client.rendering.objects.MeshVertex;
+import de.sealcore.client.model.mesh.Mesh;
+import de.sealcore.client.model.mesh.MeshSide;
+import de.sealcore.client.model.mesh.MeshVertex;
 
 public class FloorMesh extends Mesh {
 

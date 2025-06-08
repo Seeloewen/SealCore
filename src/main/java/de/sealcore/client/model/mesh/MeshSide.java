@@ -1,4 +1,4 @@
-package de.sealcore.client.rendering.objects;
+package de.sealcore.client.model.mesh;
 
 import de.sealcore.util.Color;
 

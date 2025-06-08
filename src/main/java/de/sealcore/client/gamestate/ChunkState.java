@@ -1,14 +1,14 @@
 package de.sealcore.client.gamestate;
 
 import de.sealcore.client.rendering.ground.FloorMesh;
-import de.sealcore.client.rendering.objects.MeshRenderer;
+import de.sealcore.client.rendering.meshes.MeshRenderer;
 import de.sealcore.util.ChunkIndex;
-import de.sealcore.util.Color;
 import org.joml.Matrix4f;
 
 class ChunkState {
 
     FloorState[] floors;
+    BlockState[] blocks;
     final int index;
 
     FloorMesh floorMesh;
@@ -28,9 +28,9 @@ class ChunkState {
         floorMesh.position = new Matrix4f().translate(8f*x, 8f*y, 0);
     }
 
-    void renderFloor(MeshRenderer renderer) {
+    void renderFloor() {
         if(floorMesh == null) generateFloorMesh();
-        renderer.render(floorMesh);
+        MeshRenderer.render(floorMesh);
     }
 
 

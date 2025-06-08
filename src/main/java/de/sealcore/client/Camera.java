@@ -12,7 +12,6 @@ public class Camera {
     private static final float ROT_FACTOR = 0.003f;
     private static final float PI = 3.14159265358979f;
 
-    private Matrix4f camera;
     private Vector3f position;
     private double angleHor;
     private double angleVert;
@@ -23,11 +22,13 @@ public class Camera {
     }
 
     void update(CamMoveInput input, double dt) {
-        if( InputHandler.modeMouseMove) updateRotation(input.dx(), input.dy());
-        Vector3f movement = new Vector3f(input.getTranslation());
-        movement.mul((float)dt).mul(MOVE_SPEED);
-        movement.rotateZ((float)angleHor);
-        position.add(movement);
+        if( InputHandler.camMode) {
+            updateRotation(input.dx(), input.dy());
+            Vector3f movement = new Vector3f(input.getTranslation());
+            movement.mul((float)dt).mul(MOVE_SPEED);
+            movement.rotateZ((float)angleHor);
+            position.add(movement);
+        }
     }
 
     private void updateRotation(double dx, double dy) {

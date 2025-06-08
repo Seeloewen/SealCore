@@ -1,7 +1,5 @@
 package de.sealcore.client.input;
 
-import org.joml.Matrix4f;
-import org.joml.Matrix4fc;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
@@ -13,8 +11,8 @@ public record CamMoveInput(
         return new CamMoveInput(
                 InputHandler.isPressed(KeyBinds.MOVE_FORWARD),
                 InputHandler.isPressed(KeyBinds.MOVE_BACK),
-                InputHandler.isPressed(KeyBinds.MOVE_LEFT),
-                InputHandler.isPressed(KeyBinds.MOVE_RIGHT),
+                InputHandler.isPressed(KeyBinds.CAM_MOVE_LEFT),
+                InputHandler.isPressed(KeyBinds.CAM_MOVE_RIGHT),
                 InputHandler.isPressed(KeyBinds.MOVE_UP),
                 InputHandler.isPressed(KeyBinds.MOVE_DOWN),
                 InputHandler.useMouseDeltaX(),

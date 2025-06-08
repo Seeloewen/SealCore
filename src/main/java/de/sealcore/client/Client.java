@@ -3,6 +3,7 @@ package de.sealcore.client;
 import de.sealcore.client.gamestate.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
+import de.sealcore.client.input.PlayerMoveInputState;
 import de.sealcore.client.rendering.renderer.Renderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
@@ -87,7 +88,7 @@ public class Client {
             }
 
             camera.update(CamMoveInput.generate(), dt);
-
+            if(!InputHandler.camMode) PlayerMoveInputState.update();
 
             renderer.render(camera);
             glfwSwapBuffers(window); // swap the color buffers

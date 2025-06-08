@@ -1,15 +1,14 @@
-package de.sealcore.client.model;
+package de.sealcore.client.model.loading;
 
-import de.sealcore.client.rendering.objects.Mesh;
-import de.sealcore.client.rendering.objects.MeshSide;
-import de.sealcore.client.rendering.objects.MeshVertex;
+import de.sealcore.client.model.mesh.MeshSide;
+import de.sealcore.client.model.mesh.MeshVertex;
 import de.sealcore.util.Color;
 
 import java.util.ArrayList;
 
 public class MeshGenerator {
 
-    public static Mesh generate(Builder b, float s) {
+    public static MeshSide[] generate(Builder b, float s) {
         ArrayList<MeshSide> sides = new ArrayList<>();
         for(int x = b.minX; x <= b.maxX; x++) {
             for(int y = b.minY; y <= b.maxY; y++) {
@@ -47,7 +46,7 @@ public class MeshGenerator {
             }
         }
 
-        return new Mesh(sides.toArray(new MeshSide[0]));
+        return sides.toArray(new MeshSide[0]);
 
     }
 

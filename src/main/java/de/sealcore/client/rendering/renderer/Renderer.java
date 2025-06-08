@@ -4,17 +4,18 @@ package de.sealcore.client.rendering.renderer;
 import de.sealcore.client.Camera;
 import de.sealcore.client.gamestate.GameState;
 import de.sealcore.client.rendering.abstractions.*;
-import de.sealcore.client.rendering.objects.Mesh;
-import de.sealcore.client.rendering.objects.MeshRenderer;
-import de.sealcore.util.timing.DeltaTimer;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import de.sealcore.client.rendering.meshes.MeshRenderer;
+import de.sealcore.client.rendering.ui.primitives.PrimitiveRenderer;
+import de.sealcore.client.rendering.ui.primitives.Rectangle;
+import de.sealcore.client.rendering.ui.text.TextRenderer;
+import de.sealcore.client.rendering.ui.texture.TextureRenderer;
+import de.sealcore.util.Color;
+
+import java.io.IOException;
 
 import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer {
-
-    Shader shader;
 
     MeshRenderer meshRenderer;
 
@@ -23,12 +24,22 @@ public class Renderer {
     public Renderer(GameState gameState) {
         glEnable(GL_DEPTH_TEST);
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
         this.game = gameState;
 
-        shader = new Shader("test_shader");
+        TextureRenderer.init();
+        PrimitiveRenderer.init();
+        TextRenderer.init();
+        MeshRenderer.init();
 
-        meshRenderer = new MeshRenderer();
-
+        try {
+            TextureRenderer.loadTexture("missing_texture", "Missing_Texture.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -37,10 +48,16 @@ public class Renderer {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        MeshRenderer.setCamera(camera);
 
-        meshRenderer.setCamera(camera);
+        game.render();
 
-        game.render(meshRenderer);
+
+        PrimitiveRenderer.drawRectangle(new Rectangle(100, 100, 200, 200), new Color(0.7f, 0.3f, 0.1f), 0f);
+
+
+        TextRenderer.drawString(200, 200, 3, "Berr Hert", 0f);
+
 
     }
 

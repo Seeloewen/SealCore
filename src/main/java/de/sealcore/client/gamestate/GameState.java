@@ -1,17 +1,16 @@
 package de.sealcore.client.gamestate;
 
 
-import de.sealcore.client.model.Builder;
-import de.sealcore.client.model.InvalidFileFormatException;
-import de.sealcore.client.model.MeshGenerator;
-import de.sealcore.client.model.Parser;
-import de.sealcore.client.rendering.objects.Mesh;
-import de.sealcore.client.rendering.objects.MeshRenderer;
+import de.sealcore.client.model.loading.Builder;
+import de.sealcore.client.model.loading.MeshGenerator;
+import de.sealcore.client.model.loading.ModelLoader;
+import de.sealcore.client.model.loading.Parser;
+import de.sealcore.client.model.mesh.Mesh;
+import de.sealcore.client.rendering.meshes.MeshRenderer;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class GameState {
@@ -40,20 +39,22 @@ public class GameState {
             e.printStackTrace();
         }
         var mesh = MeshGenerator.generate(builder, 1/8f);
-        addMesh(0, mesh);
+        loadedMeshes.put(0, new Mesh(mesh));
 
+
+        addMesh(1, "e:grass", 1, 2, 0);
 
 
     }
 
 
 
-    public void render(MeshRenderer renderer) {
+    public void render() {
         for(var state : loadedChunks.values()) {
-            state.renderFloor(renderer);
+            state.renderFloor();
         }
         for(var mesh : loadedMeshes.values()) {
-            renderer.render(mesh);
+            MeshRenderer.render(mesh);
         }
 
     }
@@ -65,9 +66,29 @@ public class GameState {
         Log.info(LogType.RENDERING, "loaded chunk " + id);
     }
 
-    public void addMesh(int id, Mesh mesh) {
-        loadedMeshes.put(id, mesh);
+    public void updateFloorChunk(int id, String floorID, int index) {
+        loadedChunks.get(id).floors[index] = new FloorState(floorID);
     }
+
+    public void updateBlockChunk(int id, String blockID, int index) {
+        loadedChunks.get(id).blocks[index] = new BlockState(blockID);
+    }
+
+
+    public void addMesh(int id, String entityID, double x, double y, double z) {
+        Mesh m = ModelLoader.loadMesh(entityID);
+        loadedMeshes.put(id, m);
+        m.setPosition(x, y, z);
+    }
+
+    public void updateMeshPos(int id, double x, double y, double z) {
+        loadedMeshes.get(id).setPosition(x, y, z);
+    }
+
+    public void removeMesh(int id) {
+        loadedMeshes.remove(id);
+    }
+
 
 
 

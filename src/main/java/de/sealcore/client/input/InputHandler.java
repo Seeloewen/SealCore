@@ -8,15 +8,15 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class InputHandler {
 
-    public static boolean modeMouseMove = true; //will be changed to false in init
+    public static boolean camMode = true; //will be changed to false in init
 
     private static  HashMap<Integer, Boolean> pressedKeys;
 
     private static long window;
 
     private static boolean init = false;
-    private static double mouseX;
-    private static double mouseY;
+    public static double mouseX;
+    public static double mouseY;
 
     private static double mouseDeltaX;
     private static double mouseDeltaY;
@@ -39,12 +39,12 @@ public class InputHandler {
 
 
     private static void changeMouseMode() {
-        if(modeMouseMove) {
+        if(camMode) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         } else {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
-        modeMouseMove = !modeMouseMove;
+        camMode = !camMode;
     }
 
 
