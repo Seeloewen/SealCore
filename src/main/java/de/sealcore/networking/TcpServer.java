@@ -18,7 +18,7 @@ public class TcpServer
     public static int nextId = 0;
 
     private ServerSocket socket;
-    private final ArrayList<TcpClient> clients = new ArrayList<TcpClient>();
+    final ArrayList<TcpClient> clients = new ArrayList<TcpClient>();
 
     public void start(int port) throws IOException
     {
@@ -101,7 +101,7 @@ public class TcpServer
             try
             {
                 String data = client.reader.readLine();
-                NetworkHandler.parseData(data); //Parse data to packet
+                NetworkHandler.parseData(this, data); //Parse data to packet
                 sendExcept(client, data); //Forward data to other clients
             }
             catch (Exception ex)

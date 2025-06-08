@@ -50,7 +50,7 @@ public class NetworkHandler
         }
     }
 
-    public static void parseData(String data)
+    public static void parseData(Object source, String data)
     {
         if(verboseLogging) Log.info(LogType.NETWORKING, "Received packet: " + data);
 
@@ -75,7 +75,24 @@ public class NetworkHandler
             case PacketType.INVENTORYREMOVE -> p = InventoryRemovePacket.fromJson(args);
         }
 
+        //Set the client id if the sender is a client
+        if(source instanceof TcpClient)
+        {
+           p.setSender((TcpClient) source);
+        }
+
         if(p != null) PacketHandler.addToQueue(p);
+    }
+
+    public static TcpClient getClient(int id)
+    {
+        //Go through all servers and return the one with the specified id
+        for(TcpClient c : server.clients)
+        {
+            if(c.id == id) return c;
+        }
+
+        return null;
     }
 
     public static boolean isClient()

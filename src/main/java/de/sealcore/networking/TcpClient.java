@@ -64,7 +64,7 @@ public class TcpClient
             try
             {
                 String data = reader.readLine();
-                NetworkHandler.parseData(data); //Parse data to packet
+                NetworkHandler.parseData(this, data); //Parse data to packet
             }
             catch (Exception ex)
             {
