@@ -3,9 +3,7 @@ package de.sealcore;
 import de.sealcore.client.Client;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
-import de.sealcore.networking.packets.ExamplePacket;
 import de.sealcore.server.Server;
-import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 

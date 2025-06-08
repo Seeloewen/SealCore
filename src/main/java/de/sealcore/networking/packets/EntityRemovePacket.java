@@ -1,30 +1,31 @@
 package de.sealcore.networking.packets;
 
+import com.fasterxml.jackson.databind.node.TextNode;
+import de.sealcore.client.Client;
+import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
-import de.sealcore.util.logging.Log;
-import de.sealcore.util.logging.LogType;
 
-public class ExamplePacket extends Packet
+import java.util.ArrayList;
+
+public class EntityRemovePacket extends Packet
 {
-    public String s;
-    public int i;
+    private int id;
 
-    public ExamplePacket(String s, int i)
+    public EntityRemovePacket(int id)
     {
-        super(PacketType.EXAMPLE);
+        super(PacketType.ENTITYREMOVE);
 
-        this.s = s;
-        this.i = i;
+        this.id = id;
     }
 
     public static Packet fromJson(String json)
     {
         //Parse attributes from json object
         JsonObject args = JsonObject.fromString(json);
-        String s = args.getString("s");
-        int i = args.getInt("i");
 
-        return new ExamplePacket(s, i);
+        int id = args.getInt("id");
+
+        return new EntityRemovePacket(id);
     }
 
     public String toJson()
@@ -34,9 +35,7 @@ public class ExamplePacket extends Packet
         obj.addInt("type", type.ordinal());
 
         JsonObject args = JsonObject.fromScratch();
-        args.addString("s", s);
-        args.addInt("i", i);
-
+        args.addInt("id", id);
         obj.addObject("args", args);
 
         return obj.toString();
@@ -44,6 +43,7 @@ public class ExamplePacket extends Packet
 
     public void handle()
     {
-        Log.info(LogType.MAIN, s + i);
+
+        //
     }
 }

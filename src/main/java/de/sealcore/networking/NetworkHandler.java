@@ -61,15 +61,18 @@ public class NetworkHandler
         //Construct packet from type
         Packet p = null;
         String args = obj.getObject("args").toString();
-
         switch(type)
         {
-            case PacketType.EXAMPLE:
-                p = ExamplePacket.fromJson(args);
-                break;
-            case PacketType.CHUNKADD:
-                p = ChunkAddPacket.fromJson(args);
-                break;
+            case PacketType.CHUNKUNLOAD -> p = ChunkUnloadPacket.fromJson(args);
+            case PacketType.CHUNKADD -> p = ChunkAddPacket.fromJson(args);
+            case PacketType.CHUNKUPDATE -> p = ChunkUpdatePacket.fromJson(args);
+            case PacketType.ENTITYADD -> p = EntityAddPacket.fromJson(args);
+            case PacketType.ENTITYREMOVE -> p = EntityRemovePacket.fromJson(args);
+            case PacketType.ENTITYUPDATEPOS -> p = EntityUpdatePosPacket.fromJson(args);
+            case PacketType.INVENTORYADD -> p = InventoryAddPacket.fromJson(args);
+            case PacketType.INVENTORYGET -> p = InventoryGetPacket.fromJson(args);
+            case PacketType.INVENTORYMOVE -> p = InventoryMovePacket.fromJson(args);
+            case PacketType.INVENTORYREMOVE -> p = InventoryRemovePacket.fromJson(args);
         }
 
         if(p != null) PacketHandler.addToQueue(p);

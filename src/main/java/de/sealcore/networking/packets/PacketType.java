@@ -2,6 +2,14 @@ package de.sealcore.networking.packets;
 
 public enum PacketType
 {
-    EXAMPLE,
+    CHUNKUNLOAD,
+    CHUNKUPDATE,
+    ENTITYADD,
+    ENTITYREMOVE,
+    ENTITYUPDATEPOS,
+    INVENTORYADD,
+    INVENTORYGET,
+    INVENTORYREMOVE,
+    INVENTORYMOVE,
     CHUNKADD
 }
