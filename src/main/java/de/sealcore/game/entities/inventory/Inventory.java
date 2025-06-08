@@ -1,32 +1,125 @@
 package de.sealcore.game.entities.inventory;
 
-public abstract class Inventory
+import de.sealcore.game.items.ItemRegister;
+import de.sealcore.game.items.ItemType;
+
+public class Inventory
 {
-    public final int width;
-    public final int height;
+    final int id;
+    private final InventorySlot[] slots;
 
-    private InventorySlot[] slots;
-
-    public Inventory(int width, int height)
+    Inventory(int id, int materialSlots, int weaponSlots, int ammoSlot, int universalSlots)
     {
-        this.width = width;
-        this.height = height;
+        this.id = id;
 
-        slots = new InventorySlot[width * height];
+        slots = new InventorySlot[materialSlots + ammoSlot + weaponSlots + universalSlots];
+
+        //Construct the inventory slot list
+        for (int i = 0; i < slots.length; i++)
+        {
+            int m = materialSlots;
+            int a = ammoSlot;
+            int w = weaponSlots;
+            int u = universalSlots;
+
+            //Add all different slot types
+            if (u > 0)
+            {
+                slots[i] = new InventorySlot(i);
+                u--;
+            }
+            else if (m > 0)
+            {
+                slots[i] = new InventorySlot(i, ItemType.MATERIAL);
+                m--;
+            }
+            else if (w > 0)
+            {
+                slots[i] = new InventorySlot(i, ItemType.MATERIAL);
+                w--;
+            }
+            else if (a > 0)
+            {
+                slots[i] = new InventorySlot(i, ItemType.AMMO);
+                a--;
+            }
+        }
     }
 
-    public void add(int x, int y, String id, int amount)
+    Inventory(InventorySlot[] slots) //ONLY used for packets on client
     {
-
+        this.id = 0; //Id is irrelevant
+        this.slots = slots;
     }
 
-    public void add(String id, int amount)
+    public int add(int index, String id, int amount)
     {
-        //for(InventorySlot)
+        return add(index, id, amount, "");
     }
 
-    public void remove(String id, int amount)
+    public int add(int index, String id, int amount, String tag)
     {
+        if (index < slots.length) //Make sure the slot is inside the range
+        {
+            InventorySlot slot = slots[index];
+            if (!slot.id.equals(id) || !slot.tag.equals(tag))
+                slot.setItem(id, tag); //If the slot doesn't have the right id clear it and set the right id
 
+            return slot.add(amount); //Returns the amount of remaining items
+        }
+
+        return amount;
+    }
+
+    public int add(String id, int amount)
+    {
+        return add(id, amount, "");
+    }
+
+    public int add(String id, int amount, String tag)
+    {
+        int remainingAmount = amount;
+
+        for (InventorySlot slot : slots) //First, go through all slots and check whether they already contain the item
+        {
+            if (slot.id.equals(id) && slot.tag.equals(tag)) remainingAmount = slot.add(remainingAmount);
+            if (remainingAmount <= 0) return 0; //Break early if all items are added
+        }
+
+        for (InventorySlot slot : slots) //If there are still items to be added, fill empty slots
+        {
+            if (slot.isEmpty() && slot.type == ItemRegister.getItem(id).info.type())
+            {
+                slot.setItem(id, tag);
+                remainingAmount = slot.add(remainingAmount);
+            }
+            if (remainingAmount <= 0) return 0; //Break early if all items are added
+        }
+
+        return remainingAmount; //In the case that still not all items were added, return the remaining amount (like when the inv is full)
+    }
+
+
+    public int remove(int index, int amount)
+    {
+        return slots[index].remove(amount); //Removes the items from a specific slot
+    }
+
+    public int remove(String id, int amount)
+    {
+        int remainingAmount = amount;
+
+        for (InventorySlot slot : slots) //Go through all slots and check whether they contain the item
+        {
+            if (slot.id.equals(id)) remainingAmount = slot.add(remainingAmount);
+            if (remainingAmount <= 0) return 0; //Break early if all items are removed
+        }
+
+        return remainingAmount; //Return the amount of items that still couldn't be removed
+    }
+
+    public InventorySlot[] getSlots()
+    {
+        return slots;
     }
 }

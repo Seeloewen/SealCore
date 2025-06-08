@@ -8,24 +8,38 @@ public class InventorySlot
     public int index;
     public String id;
     public int amount;
+    public String tag;
+
     public final ItemType type;
     public boolean universalSlot;
 
-    public InventorySlot(ItemType type)
+    public InventorySlot(int index, ItemType type)
     {
+        this.index = index;
         this.type = type;
     }
 
-    public InventorySlot()
+    public InventorySlot(int index)
     {
         this.type = null;
+        this.index = index;
         universalSlot = true;
     }
 
-    public void setItem(String id)
+    public InventorySlot(int index, ItemType type, String id, int amount, String tag)
+    {
+        this.index = index;
+        this.type = type;
+        this.id = id;
+        this.amount = amount;
+        this.tag = tag;
+    }
+
+    public void setItem(String id, String tag)
     {
         //Reset the slot with the new specified id
         this.id = id;
+        this.tag = tag;
         amount = 0;
     }
 
@@ -41,12 +55,30 @@ public class InventorySlot
 
     public int move(InventorySlot source, int amount)
     {
-        return 0;
+        //Check how many items are available for moving
+        int remainingAmount = source.remove(amount);
+        int moveableAmount = source.amount - remainingAmount;
+        add(moveableAmount);
+
+        return remainingAmount; //Return the amount of items are still in the first slot.
     }
 
     public void swap(InventorySlot counter)
     {
+        //Temporarily save the values of this slots as it gets overwritten
+        String id = this.id;
+        int amount = this.amount;
+        String tag = this.tag;
 
+        //Move item from counter to this slot
+        this.id = counter.id;
+        this.amount = counter.amount;
+        this.tag = counter.tag;
+
+        //Move items from here to counter
+        counter.id = id;
+        counter.amount = amount;
+        counter.tag = tag;
     }
 
     public int remove(int amount)

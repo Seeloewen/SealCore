@@ -5,6 +5,7 @@ import de.sealcore.client.Client;
 import de.sealcore.game.entities.inventory.Inventory;
 import de.sealcore.game.entities.inventory.InventorySlot;
 import de.sealcore.game.items.ItemType;
+import de.sealcore.server.Server;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 
@@ -42,7 +43,7 @@ public class InventoryGetPacket extends Packet
         }
 
         //Create an inventory of the given slots
-        Inventory inv = new Inventory(slots.toArray(new InventorySlot[0]));
+        Inventory inv = Server.game.inventoryManager.createInventory(slots.toArray(new InventorySlot[0]));
 
         return new InventoryGetPacket(inv);
     }
