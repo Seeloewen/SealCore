@@ -163,6 +163,11 @@ public class JsonArray extends JsonObject implements Iterable<Object>
         objects.add(s);
     }
 
+    public int getSize()
+    {
+        return objects.size();
+    }
+
     @NotNull
     public Iterator<Object> iterator()
     {
