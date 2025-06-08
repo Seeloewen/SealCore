@@ -7,7 +7,10 @@ import de.sealcore.client.rendering.abstractions.*;
 import de.sealcore.client.rendering.meshes.MeshRenderer;
 import de.sealcore.client.rendering.ui.primitives.PrimitiveRenderer;
 import de.sealcore.client.rendering.ui.primitives.Rectangle;
+import de.sealcore.client.rendering.ui.texture.TextureRenderer;
 import de.sealcore.util.Color;
+
+import java.io.IOException;
 
 import static org.lwjgl.opengl.GL33.*;
 
@@ -22,10 +25,16 @@ public class Renderer {
 
         this.game = gameState;
 
+        TextureRenderer.init();
         PrimitiveRenderer.init();
 
         meshRenderer = new MeshRenderer();
 
+        try {
+            TextureRenderer.loadTexture("missing_texture", "Missing_Texture.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -40,6 +49,8 @@ public class Renderer {
 
 
         PrimitiveRenderer.drawRectangle(new Rectangle(100, 100, 200, 200), new Color(0.7f, 0.3f, 0.1f), 0f);
+
+        TextureRenderer.drawTexture("missing_texture", new Rectangle(200, 100, 300, 200), 0f);
 
     }
 
