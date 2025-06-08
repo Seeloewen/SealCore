@@ -114,7 +114,7 @@ public class Shader {
      * @return the file's contents
      * @throws IOException if read fails for any reason
      */
-    static String getResourceFileAsString(String fileName) throws IOException {
+    public static String getResourceFileAsString(String fileName) throws IOException {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         try (InputStream is = classLoader.getResourceAsStream(fileName)) {
             if (is == null) return null;

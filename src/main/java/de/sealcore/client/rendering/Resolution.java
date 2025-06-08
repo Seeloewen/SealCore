@@ -4,7 +4,7 @@ public class Resolution {
 
     public static int width = 800;
     public static int height = 600;
-
+    public static float ratio = 3/4f;
 
     public static float xToScreen(int x) {
         return (float)x/(width/2)-1f;

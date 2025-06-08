@@ -7,6 +7,7 @@ import de.sealcore.client.rendering.abstractions.*;
 import de.sealcore.client.rendering.meshes.MeshRenderer;
 import de.sealcore.client.rendering.ui.primitives.PrimitiveRenderer;
 import de.sealcore.client.rendering.ui.primitives.Rectangle;
+import de.sealcore.client.rendering.ui.text.TextRenderer;
 import de.sealcore.client.rendering.ui.texture.TextureRenderer;
 import de.sealcore.util.Color;
 
@@ -23,10 +24,15 @@ public class Renderer {
     public Renderer(GameState gameState) {
         glEnable(GL_DEPTH_TEST);
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
         this.game = gameState;
 
         TextureRenderer.init();
         PrimitiveRenderer.init();
+        TextRenderer.init();
 
         meshRenderer = new MeshRenderer();
 
@@ -50,7 +56,9 @@ public class Renderer {
 
         PrimitiveRenderer.drawRectangle(new Rectangle(100, 100, 200, 200), new Color(0.7f, 0.3f, 0.1f), 0f);
 
-        TextureRenderer.drawTexture("missing_texture", new Rectangle(200, 100, 300, 200), 0f);
+
+        TextRenderer.drawString(200, 200, 3, "Berr Hert", 0f);
+
 
     }
 

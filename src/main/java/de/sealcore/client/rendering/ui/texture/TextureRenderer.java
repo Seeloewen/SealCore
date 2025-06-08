@@ -48,12 +48,27 @@ public class TextureRenderer {
         GL33.glDrawArrays(GL33.GL_TRIANGLES, 0, 6);
     }
 
+    public static void drawTexture(String id, Rectangle rec, float s1, float t1, float s2, float t2, float z) {
+        var v = new float[5*6];
+        put(rec.x1(), rec.y1(), z, s1, t1, v ,0);
+        put(rec.x2(), rec.y1(), z, s2, t1, v ,1);
+        put(rec.x1(), rec.y2(), z, s1, t2, v ,2);
+        put(rec.x2(), rec.y1(), z, s2, t1, v ,3);
+        put(rec.x1(), rec.y2(), z, s1, t2, v ,4);
+        put(rec.x2(), rec.y2(), z, s2, t2, v ,5);
+        shader.use();
+        buffer.setVertices(v);
+        buffer.bind();
+        loadedTextures.get(id).bind();
+        GL33.glDrawArrays(GL33.GL_TRIANGLES, 0, 6);
+    }
+
     private static void put(int x, int y, float z, float s, float t, float[] v, int i) {
         i *= 5;
         v[i+0] = Resolution.xToScreen(x);
         v[i+1] = Resolution.yToScreen(y);
         v[i+2] = z;
-        v[i+3] = 1-s;
+        v[i+3] = s;
         v[i+4] = 1-t;
     }
 
