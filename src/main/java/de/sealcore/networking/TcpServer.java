@@ -101,8 +101,8 @@ public class TcpServer
             try
             {
                 String data = client.reader.readLine();
-                NetworkHandler.parseData(this, data); //Parse data to packet
-                sendExcept(client, data); //Forward data to other clients
+                NetworkHandler.parseData(client, data); //Parse data to packet
+                //sendExcept(client, data); //Forward data to other clients
             }
             catch (Exception ex)
             {
