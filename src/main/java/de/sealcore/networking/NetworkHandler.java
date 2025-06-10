@@ -73,6 +73,7 @@ public class NetworkHandler
             case PacketType.INVENTORYGET -> p = InventoryGetPacket.fromJson(args);
             case PacketType.INVENTORYMOVE -> p = InventoryMovePacket.fromJson(args);
             case PacketType.INVENTORYREMOVE -> p = InventoryRemovePacket.fromJson(args);
+            case PacketType.MOVEINPUT -> p = MoveInputPacket.fromJson(args);
         }
 
         //Set the client id if the sender is a client

@@ -32,17 +32,17 @@ public class GameState {
         loadChunk(5);
 */
 
-        Builder builder = null;
+        /*Builder builder = null;
         try {
             builder = Parser.parse("test_objects/grass");
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        var mesh = MeshGenerator.generate(builder, 1/8f);
-        loadedMeshes.put(0, new Mesh(mesh));
+        }*/
+        //var mesh = MeshGenerator.generate(builder, 1/8f);
+        //loadedMeshes.put(0, new Mesh(mesh));
 
 
-        addMesh(1, "e:grass", 1, 2, 0);
+        //addMesh(1, "e:grass", 1, 2, 0);
 
 
     }

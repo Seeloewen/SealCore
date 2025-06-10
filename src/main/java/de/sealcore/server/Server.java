@@ -5,6 +5,7 @@ import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
 import de.sealcore.server.commands.CommandHandler;
+import de.sealcore.util.timing.DeltaTimer;
 
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class Server
     public static void main()
     {
         //Thread for command handling
-        Thread t = new Thread(() -> getCommands());
+        Thread t = new Thread(() -> getCommands(), "command input reader");
         t.start();
 
         //Actual server main loop
@@ -34,6 +35,7 @@ public class Server
 
     private void loop()
     {
+        //DeltaTimer.start();
         while(true)
         {
             //Get amount of packets to handle at beginning of tick - only handle those packets
@@ -43,6 +45,14 @@ public class Server
             {
                 PacketHandler.handleNext();
             }
+            //DeltaTimer.blockToTarget(1/30d);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            game.tick(1/30d);
+
         }
     }
 

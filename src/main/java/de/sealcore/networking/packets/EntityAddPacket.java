@@ -10,16 +10,18 @@ import java.util.ArrayList;
 public class EntityAddPacket extends Packet
 {
     private int id;
+    String entityType;
     private double x;
     private double y;
     private double z;
     private double angleX;
 
-    public EntityAddPacket(int id, double x, double y, double z, double angleX)
+    public EntityAddPacket(int id, String entityType, double x, double y, double z, double angleX)
     {
         super(PacketType.ENTITYADD);
 
         this.id = id;
+        this.entityType = entityType;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -32,12 +34,13 @@ public class EntityAddPacket extends Packet
         JsonObject args = JsonObject.fromString(json);
 
         int id = args.getInt("id");
+        String entityType = args.getString("entity_type");
         double x = args.getDouble("x");
         double y = args.getDouble("x");
         double z = args.getDouble("z");
         double angleX = args.getDouble("angleX");
 
-        return new EntityAddPacket(id, x, y, z, angleX);
+        return new EntityAddPacket(id, entityType, x, y, z, angleX);
     }
 
     public String toJson()
@@ -48,6 +51,7 @@ public class EntityAddPacket extends Packet
 
         JsonObject args = JsonObject.fromScratch();
         args.addInt("id", id);
+        args.addString("entity_type", entityType);
         args.addDouble("x", x);
         args.addDouble("y", x);
         args.addDouble("z", x);
@@ -59,6 +63,6 @@ public class EntityAddPacket extends Packet
 
     public void handle()
     {
-        //
+        Client.instance.gameState.addMesh(id, entityType, x, y, z);
     }
 }

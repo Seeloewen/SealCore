@@ -6,5 +6,6 @@ public enum LogType
     RENDERING,
     NETWORKING,
     DEBUGRENDERER,
-    WORLDGEN
+    WORLDGEN,
+    GAME
 }

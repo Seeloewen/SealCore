@@ -61,6 +61,6 @@ public class EntityUpdatePosPacket extends Packet
 
     public void handle()
     {
-        //
+        Client.instance.gameState.updateMeshPos(id, x, y, z);
     }
 }

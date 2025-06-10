@@ -33,7 +33,10 @@ public class DeltaTimer {
             return false;
         }
 
-        while(target > GLFW.glfwGetTime());
+        while(true) {
+            double t = GLFW.glfwGetTime();
+            if(target <= t) break;
+        };
         return true;
     }
 

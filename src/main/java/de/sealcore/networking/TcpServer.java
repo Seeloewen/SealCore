@@ -1,6 +1,7 @@
 package de.sealcore.networking;
 
 import com.sun.source.tree.TryTree;
+import de.sealcore.server.Server;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 import jdk.jshell.spi.ExecutionControlProvider;
@@ -72,10 +73,11 @@ public class TcpServer
                 clients.add(client);
 
                 //Start reading from the client
-                Thread t = new Thread(() -> readStream(client));
+                Thread t = new Thread(() -> readStream(client), "tcp read(clientid=" + client.id + ")");
                 t.start();
 
                 Log.info(LogType.NETWORKING, "Connection with client #" + client.id + " established");
+                Server.game.addPlayer(client.id);
             }
             catch(Exception ex)
             {
