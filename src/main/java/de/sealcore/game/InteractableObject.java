@@ -1,14 +1,7 @@
-package de.sealcore.game.items;
+package de.sealcore.game;
 
-public abstract class Item
+public class InteractableObject
 {
-    public ItemInfo info;
-
-    protected Item(String id, String name, ItemType type, int maxAmount)
-    {
-        info = new ItemInfo(id, name, type, maxAmount);
-    }
-
     public int onLeftClick(int playerId)
     {
         //Returns -1 if not implemented. Should return 0 if implemented to avoid unwanted behaviour!
@@ -19,5 +12,10 @@ public abstract class Item
     {
         //Returns -1 if not implemented. Should return 0 if implemented to avoid unwanted behaviour!
         return -1;
+    }
+
+    public void onCollision()
+    {
+        //Maybe needed, maybe not
     }
 }

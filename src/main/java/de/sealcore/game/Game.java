@@ -1,8 +1,7 @@
 package de.sealcore.game;
 
-import de.sealcore.game.entities.general.Entity;
-import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventoryManager;
+import de.sealcore.game.entities.inventory.InventorySlot;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
@@ -46,12 +45,11 @@ public class Game
 
     public Game()
     {
+        inventoryManager = new InventoryManager();
+
         //Create initial map
         addMap(nextMapId(), MapLayout.NORMAL);
         loadMap(0);
-
-        entities = new ArrayList<>();
-        players = new HashMap<>();
     }
 
     public void addMap(int id, MapLayout layout)
