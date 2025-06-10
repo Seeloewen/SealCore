@@ -1,8 +1,6 @@
 package de.sealcore.game;
 
-import de.sealcore.game.entities.inventory.Inventory;
 import de.sealcore.game.entities.inventory.InventoryManager;
-import de.sealcore.game.entities.inventory.InventorySlot;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 
