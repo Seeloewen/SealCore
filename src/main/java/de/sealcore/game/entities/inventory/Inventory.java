@@ -35,7 +35,7 @@ public class Inventory
             }
             else if (w > 0)
             {
-                slots[i] = new InventorySlot(i, ItemType.MATERIAL);
+                slots[i] = new InventorySlot(i, ItemType.WEAPON);
                 w--;
             }
             else if (a > 0)
