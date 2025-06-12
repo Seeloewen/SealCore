@@ -11,7 +11,15 @@ public class Log
         //Add entry to list and write to console
         LogEntry e = new LogEntry(type, level, message);
         entries.add(e);
-        System.out.println(e.getMessage());
+
+        if(e.level() == LogLevel.ERROR)
+        {
+            System.err.println(e.getMessage());
+        }
+        else
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void info(LogType type, String message)
