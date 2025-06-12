@@ -1,5 +1,6 @@
 package de.sealcore.client.rendering.abstractions;
 
+import de.sealcore.util.ResourceManager;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 import org.joml.Matrix4f;
@@ -87,7 +88,7 @@ public class Shader {
     private int createShader(int type, String path) {
         String source = null;
         try {
-            source = getResourceFileAsString(path);
+            source = ResourceManager.getResourceFileAsString(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -106,23 +107,4 @@ public class Shader {
         }
         return shader;
     }
-
-    /**
-     * Reads given resource file as a string.
-     *
-     * @param fileName path to the resource file
-     * @return the file's contents
-     * @throws IOException if read fails for any reason
-     */
-    public static String getResourceFileAsString(String fileName) throws IOException {
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        try (InputStream is = classLoader.getResourceAsStream(fileName)) {
-            if (is == null) return null;
-            try (InputStreamReader isr = new InputStreamReader(is);
-                 BufferedReader reader = new BufferedReader(isr)) {
-                return reader.lines().collect(Collectors.joining(System.lineSeparator()));
-            }
-        }
-    }
-
 }
