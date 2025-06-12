@@ -14,6 +14,11 @@ public class InteractableObject
         return -1;
     }
 
+    public void onKeyPress(int key, int playerId)
+    {
+        //Hier könnte ihre stehen Werbung
+    }
+
     public void onCollision()
     {
         //Maybe needed, maybe not

@@ -1,5 +1,7 @@
 package de.sealcore.game;
 
+import de.sealcore.game.entities.general.Entity;
+import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventoryManager;
 import de.sealcore.game.entities.inventory.InventorySlot;
 import de.sealcore.game.maps.Map;

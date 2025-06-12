@@ -24,12 +24,54 @@ public abstract class Item extends InteractableObject
         tags = t.toString();
     }
 
+    public void writeTag(String tag, int value)
+    {
+        writeTag(tag, String.valueOf(value));
+    }
+
+    public void writeTag(String tag, double value)
+    {
+        writeTag(tag, String.valueOf(value));
+    }
+
+    public void writeTag(String tag, boolean value)
+    {
+        writeTag(tag, String.valueOf(value));
+    }
+
     @MaybeNull
-    public String readTag(String tag)
+    public String getStringTag(String tag)
     {
         //Converts tags string to JSON object and reads the requested tag
         JsonObject t = JsonObject.fromString(tags);
 
         return t.getString(tag); //Warning: Maybe null
+    }
+
+    @MaybeNull
+    public int getIntTag(String tag)
+    {
+        //Converts tags string to JSON object and reads the requested tag
+        JsonObject t = JsonObject.fromString(tags);
+
+        return t.getInt(tag); //Warning: Maybe null
+    }
+
+    @MaybeNull
+    public double getDoubleTag(String tag)
+    {
+        //Converts tags string to JSON object and reads the requested tag
+        JsonObject t = JsonObject.fromString(tags);
+
+        return t.getDouble(tag); //Warning: Maybe null
+    }
+
+    @MaybeNull
+    public boolean getBoolTag(String tag)
+    {
+        //Converts tags string to JSON object and reads the requested tag
+        JsonObject t = JsonObject.fromString(tags);
+
+        return t.getBool(tag); //Warning: Maybe null
     }
 }

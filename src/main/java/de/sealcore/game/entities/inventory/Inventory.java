@@ -122,4 +122,17 @@ public class Inventory
     {
         return slots;
     }
+
+    public int getAmount(String id)
+    {
+        int amount = 0;
+
+        //Go through all the slots and count how many of the specified item is available
+        for(InventorySlot s : slots)
+        {
+            if(!s.isEmpty() && s.id.equals(id)) amount += s.amount;
+        }
+
+        return amount;
+    }
 }
