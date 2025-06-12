@@ -11,13 +11,13 @@ public class ChunkIndex {
         int step = diff / 4;
 
         if(index < lowest + step) {
-            return - ring + index - lowest;
+            return - ring + index - lowest -1;
         } else if(index < lowest + 2*step) {
-            return ring + 1;
+            return ring + 1-1;
         } else if(index < lowest + 3*step) {
-            return ring + 1 - index + lowest + 2*step;
+            return ring + 1 - index + lowest + 2*step-1;
         } else {
-            return -ring;
+            return -ring-1;
         }
     }
 
@@ -40,6 +40,7 @@ public class ChunkIndex {
     }
 
     public static int toI(int x, int y) {
+        x++;
         int rl = -x;
         int rr = x-1;
         int ru = y;

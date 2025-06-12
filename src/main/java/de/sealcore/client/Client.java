@@ -38,7 +38,13 @@ public class Client {
 
         Client.instance = this;
 
-        NetworkHandler.init(NetworkType.CLIENT);
+        while(!NetworkHandler.init(NetworkType.CLIENT)) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         GLFWErrorCallback.createPrint(System.err);
 

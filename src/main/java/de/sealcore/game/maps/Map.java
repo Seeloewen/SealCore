@@ -60,4 +60,9 @@ public class Map
         if(i >= chunks.length) return null;
         return chunks[i];
     }
+
+    public Chunk getChunk(int i) {
+        if(i >= chunks.length) return null;
+        return chunks[i];
+    }
 }

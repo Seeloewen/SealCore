@@ -65,15 +65,22 @@ public class Chunk
         return blocks[coordsToIndex(x, y)];
     }
 
-    public void sendAddPacket()
+    private ChunkAddPacket getAddPacket()
     {
         ArrayList<String> s = new ArrayList<String>();
         for(Floor f : floors)
         {
             s.add(f.info.id());
         }
+        return new ChunkAddPacket(s.toArray(new String[0]), index);
+    }
 
-        NetworkHandler.send(new ChunkAddPacket(s.toArray(new String[0]), index));
+    public void sendAddPacket() {
+        NetworkHandler.send(getAddPacket());
+    }
+
+    public void sendAddPacket(int clientID) {
+        NetworkHandler.sendOnly(clientID, getAddPacket());
     }
 
     public static int coordsToIndex(int x, int y)

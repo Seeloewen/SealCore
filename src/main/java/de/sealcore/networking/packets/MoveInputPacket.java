@@ -2,6 +2,7 @@ package de.sealcore.networking.packets;
 
 import de.sealcore.server.Server;
 import de.sealcore.util.json.JsonObject;
+import de.sealcore.game.entities.general.Player;
 
 public class MoveInputPacket extends Packet
 {
@@ -21,8 +22,8 @@ public class MoveInputPacket extends Packet
         //Parse attributes from json object
         JsonObject args = JsonObject.fromString(json);
 
-        int y = args.getInt("x");
-        int x = args.getInt("y");
+        int x = args.getInt("x");
+        int y = args.getInt("y");
 
         return new MoveInputPacket(x, y);
     }

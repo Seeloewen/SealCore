@@ -1,11 +1,16 @@
 package de.sealcore.game;
 
+import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.entities.inventory.InventoryManager;
 import de.sealcore.game.entities.inventory.InventorySlot;
+import de.sealcore.game.entities.general.*;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.ChunkAddPacket;
 import de.sealcore.networking.packets.EntityAddPacket;
+import de.sealcore.server.Server;
+import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -38,6 +43,13 @@ public class Game
         players.put(id, player);
         player.sendAdd();
         Log.info(LogType.GAME, "player " + id + " joined the game");
+        for(int i = 0; i < 4; i++) {
+            var chunk = currentMap.getChunk(i);
+            if(chunk != null) chunk.sendAddPacket(id);
+        }
+        for(Entity entity : entities) {
+            if(entity != player) entity.sendAdd(id);
+        }
     }
 
 
@@ -45,6 +57,9 @@ public class Game
 
     public Game()
     {
+        entities = new ArrayList<>();
+        players = new HashMap<>();
+
         inventoryManager = new InventoryManager();
 
         //Create initial map
@@ -71,4 +86,11 @@ public class Game
     {
         return maps.size();
     }
+
+    public boolean isSolid(int x, int y) {
+        Chunk chunk = currentMap.getChunk(x<0?x-7:x/8, y<0?y-7:y/8);
+        return false;
+        //return chunk == null && !chunk.getFloor(x%8, y%8).info.isSolid() && chunk.getBlock(x%8,y%8).info.isSolid();
+    }
+
 }

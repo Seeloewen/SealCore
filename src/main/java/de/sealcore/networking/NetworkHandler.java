@@ -12,7 +12,7 @@ public class NetworkHandler
 
     public static boolean verboseLogging = false; //Debug switch, shows all sent and received packets when toggled on
 
-    public static void init(NetworkType instance)
+    public static boolean init(NetworkType instance)
     {
         try
         {
@@ -31,7 +31,9 @@ public class NetworkHandler
         catch (Exception ex)
         {
             Log.error(LogType.NETWORKING, "Could not initialize networking: " + ex.getMessage());
+            return false;
         }
+        return true;
     }
 
     public static void send(Packet packet)
@@ -48,6 +50,11 @@ public class NetworkHandler
         {
             client.send(packet.toJson());
         }
+    }
+
+    public static void sendOnly(int id, Packet packet) {
+        server.sendOnly(NetworkHandler.getClient(id), packet.toJson());
+        if(verboseLogging) Log.info(LogType.NETWORKING, "Sent packet to " + id + ": " + packet.toJson());
     }
 
     public static void parseData(Object source, String data)

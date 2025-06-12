@@ -3,6 +3,7 @@ package de.sealcore.game.entities.general;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.EntityAddPacket;
 import de.sealcore.networking.packets.EntityUpdatePosPacket;
+import de.sealcore.server.Server;
 import org.joml.Vector2d;
 
 public abstract class Entity {
@@ -14,6 +15,9 @@ public abstract class Entity {
     private final double MOVE_SPEED = 3;
 
     private String entityType;
+
+    protected double sizeX;
+    protected double sizeY;
 
     protected double posX;
     protected double posY;
@@ -50,8 +54,60 @@ public abstract class Entity {
 
 
     private void tryMove(double dx, double dy) {
+
+        /*var game = Server.game;
+
+        if(dx < 0) {
+            int x1 = toBlock(posX);
+            int x2 = toBlock(posX+dx);
+            if(x1 != x2) {
+                int top = toBlock(posY + sizeY);
+                int bot = toBlock(posY);
+                posX += dx;
+                for(int y = bot; y <= top; y++) {
+                    if(game.isSolid(x2, y)) posX = (double)x2 + 1.0 + 0.001;
+                }
+            }
+        } else if( dx > 0) {
+            int x1 = toBlock(posX+sizeX);
+            int x2 = toBlock(posX+dx+sizeX);
+            if(x1 != x2) {
+                int top = toBlock(posY + sizeY);
+                int bot = toBlock(posY);
+                posX += dx;
+                for(int y = bot; y <= top; y++) {
+                    if(game.isSolid(x2, y)) posX = (double)x2 - 0.001 - sizeX;
+                }
+            }
+        }
+        if(dy < 0) {
+            int y1 = toBlock(posY);
+            int y2 = toBlock(posY+dy);
+            if(y1 != y2) {
+                int left = toBlock(posX);
+                int right = toBlock(posX + sizeX);
+                posY += dy;
+                for(int x = left; x <= right; x++) {
+                    if(game.isSolid(x, y2)) posY = y2 + 1 + 0.001;
+                }
+            }
+        } else if(dy > 0) {
+            int y1 = toBlock(posY + sizeY);
+            int y2 = toBlock(posY + dy + sizeY);
+            if(y1 != y2) {
+                int left = toBlock(posX);
+                int right = toBlock(posX + sizeX);
+                posY += dy;
+                for(int x = left; x <= right; x++) {
+                    if(game.isSolid(x, y2)) posY = y2 - sizeY - 0.001;
+                }
+            }
+        }*/
+
         posX += dx;
         posY += dy;
+
+
     }
 
 
@@ -59,10 +115,20 @@ public abstract class Entity {
         NetworkHandler.send(new EntityAddPacket(getID(), entityType, posX, posY, 0, 0));
     }
 
+    public void sendAdd(int id) {
+        NetworkHandler.sendOnly(id, new EntityAddPacket(getID(), entityType, posX, posY, 0, 0));
+    }
+
 
     public int getID() {
         return id;
     }
+
+
+    private int toBlock(double v) {
+        return v >= 0 ? (int)v : ((int)v)-1;
+    }
+
 
 
 }
