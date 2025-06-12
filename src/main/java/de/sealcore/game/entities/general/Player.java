@@ -20,10 +20,8 @@ public class Player extends Entity{
 
     public void updateInputs(int x, int y) {
         double f = 1/Math.sqrt(x*x + y*y);
-        x*=f;
-        y*=f;
-        moveInputX = x;
-        moveInputY = y;
+        moveInputX = x*f;
+        moveInputY = y*f;
     }
 
 
