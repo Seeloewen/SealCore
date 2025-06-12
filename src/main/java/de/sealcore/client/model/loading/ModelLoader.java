@@ -33,8 +33,9 @@ public class ModelLoader {
 
     public static String entityIdToPath(String entityID) {
         return switch(entityID) {
-            case "e:grass" -> "test_objects/grass";
+            case "f:grass" -> "test_objects/Grass.txt";
             case "e:player" -> "test_objects/Player.txt";
+            case "f:water" -> "test_objects/Water.txt";
             default -> throw new IllegalArgumentException("entityId not found: " + entityID);
         };
     }
@@ -42,7 +43,8 @@ public class ModelLoader {
 
     public static float getScale(String entityID) {
         return switch(entityID) {
-            case "e:grass" -> 0.25f;
+            case "f:grass" -> 1/8f;
+            case "f:water" -> 1/8f;
             case "e:player" -> 1/16f;
             default -> throw new IllegalStateException("Unexpected value: " + entityID);
         };

@@ -24,23 +24,24 @@ public class MeshGenerator {
                     var v6 = new MeshVertex(x*s+s, y*s+s, z*s+s);
                     var v7 = new MeshVertex(x*s, y*s+s, z*s+s);
 
+                    float g = 0.1f;
                     if(b.get(x+1, y, z) == null) {
-                        sides.add(new MeshSide(v1, v2, v6, v5, c));
+                        sides.add(new MeshSide(v1, v2, v6, v5, c.scale(1-g)));
                     }
                     if(b.get(x-1, y, z) == null) {
-                        sides.add(new MeshSide(v0, v3, v7, v4, c));
+                        sides.add(new MeshSide(v0, v3, v7, v4, c.scale(1-4*g)));
                     }
                     if(b.get(x, y, z+1) == null) {
-                        sides.add(new MeshSide(v4, v5, v6, v7, c));
+                        sides.add(new MeshSide(v4, v5, v6, v7, c.scale(1)));
                     }
                     if(b.get(x, y, z-1) == null) {
-                        sides.add(new MeshSide(v0, v1, v2, v3, c));
+                        sides.add(new MeshSide(v0, v1, v2, v3, c.scale(1-5*g)));
                     }
                     if(b.get(x, y+1, z) == null) {
-                        sides.add(new MeshSide(v2, v3, v7, v6, c));
+                        sides.add(new MeshSide(v2, v3, v7, v6, c.scale(1-2*g)));
                     }
                     if(b.get(x, y-1, z) == null) {
-                        sides.add(new MeshSide(v0, v1, v5, v4, c));
+                        sides.add(new MeshSide(v0, v1, v5, v4, c.scale(1-3*g)));
                     }
                 }
             }

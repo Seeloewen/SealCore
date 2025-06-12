@@ -7,6 +7,7 @@ import de.sealcore.client.model.loading.ModelLoader;
 import de.sealcore.client.model.loading.Parser;
 import de.sealcore.client.model.mesh.Mesh;
 import de.sealcore.client.rendering.meshes.MeshRenderer;
+import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -42,7 +43,6 @@ public class GameState {
         //loadedMeshes.put(0, new Mesh(mesh));
 
 
-        //addMesh(1, "e:grass", 1, 2, 0);
 
 
     }
@@ -67,7 +67,7 @@ public class GameState {
     }
 
     public void updateFloorChunk(int id, String floorID, int index) {
-        loadedChunks.get(id).floors[index] = new FloorState(floorID);
+        loadedChunks.get(id).floors[index] = new FloorState(floorID, ChunkIndex.toX(id)*8+index%8, ChunkIndex.toY(id)*8+index/8);
     }
 
     public void updateBlockChunk(int id, String blockID, int index) {

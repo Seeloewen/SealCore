@@ -1,34 +1,40 @@
 package de.sealcore.client.gamestate;
 
+import de.sealcore.client.model.loading.ModelLoader;
+import de.sealcore.client.model.mesh.Mesh;
+import de.sealcore.client.rendering.meshes.MeshRenderer;
 import de.sealcore.game.floors.Grass;
 import de.sealcore.game.floors.Stone;
 import de.sealcore.game.floors.StoneBricks;
 import de.sealcore.game.floors.Water;
 import de.sealcore.util.Color;
+import org.joml.Matrix4f;
 
 public class FloorState {
 
-    private Color color;
+    private String type;
+    private int x;
+    private int y;
+    private Mesh mesh;
 
-    FloorState(String id) {
-        this(toColor(id));
+
+    FloorState(String id, int globalX, int globalY) {
+        type = id;
+        x = globalX;
+        y = globalY;
+        mesh = calcMesh();
+        mesh.position = new Matrix4f().translate(x, y, -1);
     }
 
-    FloorState(Color color) {
-        this.color = color;
+    void render() {
+        MeshRenderer.render(mesh);
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    private static Color toColor(String id) {
-        return switch(id) {
-            case "f:grass" -> new Color(0f,1f,0f);
-            case "f:water" -> new Color(0f,0f,1f);
-            case "f:stone" -> new Color(0.1f,0.1f,0.1f);
-            case "f:stone_bricks" -> new Color(0.69f, 0.69f, 0.69f);
-            default -> throw new IllegalStateException("Unexpected value: " + id);
+    private Mesh calcMesh() {
+        return switch(type) {
+            case "f:grass" -> ModelLoader.loadMesh("f:grass");
+            case "f:water" -> ModelLoader.loadMesh("f:water");
+            default -> throw new IllegalStateException("Unexpected value: " + type);
         };
     }
 
