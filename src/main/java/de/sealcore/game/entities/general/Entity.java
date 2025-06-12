@@ -1,5 +1,6 @@
 package de.sealcore.game.entities.general;
 
+import de.sealcore.game.entities.inventory.Inventory;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.EntityAddPacket;
 import de.sealcore.networking.packets.EntityUpdatePosPacket;
@@ -28,6 +29,7 @@ public abstract class Entity {
     protected double moveInputX;
     protected double moveInputY;
 
+    public Inventory inventory;
 
     public Entity(String entityType) {
         this.id = nextID++;

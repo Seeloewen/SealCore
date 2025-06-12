@@ -35,7 +35,7 @@ public class Inventory
             }
             else if (w > 0)
             {
-                slots[i] = new InventorySlot(i, ItemType.MATERIAL);
+                slots[i] = new InventorySlot(i, ItemType.WEAPON);
                 w--;
             }
             else if (a > 0)
@@ -121,5 +121,18 @@ public class Inventory
     public InventorySlot[] getSlots()
     {
         return slots;
+    }
+
+    public int getAmount(String id)
+    {
+        int amount = 0;
+
+        //Go through all the slots and count how many of the specified item is available
+        for(InventorySlot s : slots)
+        {
+            if(!s.isEmpty() && s.id.equals(id)) amount += s.amount;
+        }
+
+        return amount;
     }
 }
