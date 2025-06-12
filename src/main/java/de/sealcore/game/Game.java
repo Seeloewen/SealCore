@@ -1,6 +1,7 @@
 package de.sealcore.game;
 
 import de.sealcore.game.chunks.Chunk;
+import de.sealcore.game.crafting.CraftingHandler;
 import de.sealcore.game.entities.general.Entity;
 import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventoryManager;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 public class Game
 {
     public InventoryManager inventoryManager;
+    public CraftingHandler craftingHandler;
     private ArrayList<Map> maps = new ArrayList<Map>();
     private Map currentMap;
 
@@ -63,6 +65,7 @@ public class Game
         players = new HashMap<>();
 
         inventoryManager = new InventoryManager();
+        craftingHandler = new CraftingHandler();
 
         //Create initial map
         addMap(nextMapId(), MapLayout.NORMAL);

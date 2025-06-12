@@ -1,0 +1,24 @@
+{
+  "workstationId": "workbench",
+  "recipes": [
+    {
+      "id": "example_recipe",
+      "ingredients": [
+        {
+          "id": "example",
+          "amount": 1
+        },
+        {
+          "id": "example2",
+          "amount": 3
+        }
+      ],
+      "output":[
+        {
+          "id": "example3",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}
