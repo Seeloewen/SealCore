@@ -7,6 +7,7 @@ import de.sealcore.client.rendering.abstractions.VertexArrayLayout;
 import de.sealcore.client.rendering.abstractions.VertexBuffer;
 import de.sealcore.client.rendering.ui.primitives.Rectangle;
 import de.sealcore.client.rendering.ui.texture.TextureRenderer;
+import de.sealcore.util.ResourceManager;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 import org.lwjgl.opengl.GL11;
@@ -37,7 +38,7 @@ public class TextRenderer {
             TextureRenderer.loadTexture("font", "font/block font - final3.png");
 
             mappings = new HashMap<>();
-            String jsonContent = Shader.getResourceFileAsString("font/font-map.json");
+            String jsonContent = ResourceManager.getResourceFileAsString("font/font-map.json");
             var o = JsonObject.fromString(jsonContent);
             JsonArray charObjects = o.getArray("characters");
             for (Object obj : charObjects) {
