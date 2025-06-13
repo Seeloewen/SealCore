@@ -25,7 +25,7 @@ public class MeshRenderer {
 
 
 
-        perspective = new Matrix4f().perspective(0.5f, 4f/3, 0.5f, 100f);
+        perspective = new Matrix4f().perspective(0.5f, 1/Resolution.RATIO, 0.5f, 100f);
 
         viewRot = new Matrix4f().lookAt(
                 new Vector3f(0f,0f,0f),

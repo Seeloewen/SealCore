@@ -4,6 +4,7 @@ import de.sealcore.client.state.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
+import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.rendering.Renderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
@@ -47,7 +48,7 @@ public class Client {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-        window = glfwCreateWindow(800, 600, "SealCore (dev)", NULL, NULL);
+        window = glfwCreateWindow(Resolution.WIDTH, Resolution.HEIGHT, "SealCore (dev)", NULL, NULL);
         if(window == NULL) throw new RuntimeException("Failed to create window");
 
         glfwMakeContextCurrent(window);
