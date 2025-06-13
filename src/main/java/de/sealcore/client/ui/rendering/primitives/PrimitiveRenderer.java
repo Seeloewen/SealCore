@@ -1,9 +1,9 @@
-package de.sealcore.client.rendering.ui.primitives;
+package de.sealcore.client.ui.rendering.primitives;
 
-import de.sealcore.client.rendering.Resolution;
-import de.sealcore.client.rendering.abstractions.Shader;
-import de.sealcore.client.rendering.abstractions.VertexArrayLayout;
-import de.sealcore.client.rendering.abstractions.VertexBuffer;
+import de.sealcore.client.ui.Resolution;
+import de.sealcore.client.ui.rendering.abstractions.Shader;
+import de.sealcore.client.ui.rendering.abstractions.VertexArrayLayout;
+import de.sealcore.client.ui.rendering.abstractions.VertexBuffer;
 import de.sealcore.util.Color;
 import org.lwjgl.opengl.GL33;
 

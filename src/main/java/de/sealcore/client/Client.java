@@ -1,27 +1,20 @@
 package de.sealcore.client;
 
-import de.sealcore.client.gamestate.GameState;
+import de.sealcore.client.state.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
-import de.sealcore.client.rendering.renderer.Renderer;
+import de.sealcore.client.ui.rendering.Renderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
 import de.sealcore.util.timing.DeltaTimer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 
-import org.lwjgl.*;
-import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
-import org.lwjgl.system.*;
 
-import java.nio.*;
-
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class Client {

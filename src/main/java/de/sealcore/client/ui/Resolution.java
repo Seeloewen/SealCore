@@ -1,4 +1,4 @@
-package de.sealcore.client.rendering;
+package de.sealcore.client.ui;
 
 public class Resolution {
 

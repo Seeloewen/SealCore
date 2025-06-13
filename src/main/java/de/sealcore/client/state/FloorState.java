@@ -1,13 +1,8 @@
-package de.sealcore.client.gamestate;
+package de.sealcore.client.state;
 
-import de.sealcore.client.model.loading.ModelLoader;
+import de.sealcore.client.model.loading.MeshLoader;
 import de.sealcore.client.model.mesh.Mesh;
-import de.sealcore.client.rendering.meshes.MeshRenderer;
-import de.sealcore.game.floors.Grass;
-import de.sealcore.game.floors.Stone;
-import de.sealcore.game.floors.StoneBricks;
-import de.sealcore.game.floors.Water;
-import de.sealcore.util.Color;
+import de.sealcore.client.ui.rendering.mesh.MeshRenderer;
 import org.joml.Matrix4f;
 
 public class FloorState {
@@ -32,8 +27,8 @@ public class FloorState {
 
     private Mesh calcMesh() {
         return switch(type) {
-            case "f:grass" -> ModelLoader.loadMesh("f:grass");
-            case "f:water" -> ModelLoader.loadMesh("f:water");
+            case "f:grass" -> MeshLoader.loadMesh("f:grass");
+            case "f:water" -> MeshLoader.loadMesh("f:water");
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
     }

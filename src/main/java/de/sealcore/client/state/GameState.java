@@ -1,12 +1,6 @@
-package de.sealcore.client.gamestate;
+package de.sealcore.client.state;
 
 
-import de.sealcore.client.model.loading.Builder;
-import de.sealcore.client.model.loading.MeshGenerator;
-import de.sealcore.client.model.loading.ModelLoader;
-import de.sealcore.client.model.loading.Parser;
-import de.sealcore.client.model.mesh.Mesh;
-import de.sealcore.client.rendering.meshes.MeshRenderer;
 import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
@@ -18,7 +12,7 @@ public class GameState {
 
     HashMap<Integer, ChunkState> loadedChunks;
 
-    HashMap<Integer, Mesh> loadedMeshes;
+    HashMap<Integer, MeshState> loadedMeshes;
 
 
     public GameState() {
@@ -51,18 +45,18 @@ public class GameState {
 
     public void render() {
         for(var state : loadedChunks.values()) {
-            state.renderFloor();
+            state.render();
         }
         for(var mesh : loadedMeshes.values()) {
-            MeshRenderer.render(mesh);
+            mesh.render();
         }
 
     }
 
 
     //chunk creation parameters have to be added
-    public void loadChunk(int id, String[] floors) {
-        loadedChunks.put(id, new ChunkState(id, floors));
+    public void loadChunk(int id, String[] floors, String[] blocks) {
+        loadedChunks.put(id, new ChunkState(id, floors, blocks));
         Log.info(LogType.RENDERING, "loaded chunk " + id);
     }
 
@@ -71,14 +65,12 @@ public class GameState {
     }
 
     public void updateBlockChunk(int id, String blockID, int index) {
-        loadedChunks.get(id).blocks[index] = new BlockState(blockID);
+        loadedChunks.get(id).blocks[index] = new BlockState(blockID, ChunkIndex.toX(id)*8+index%8, ChunkIndex.toY(id)*8+index/8);
     }
 
 
-    public void addMesh(int id, String entityID, double x, double y, double z) {
-        Mesh m = ModelLoader.loadMesh(entityID);
-        loadedMeshes.put(id, m);
-        m.setPosition(x, y, z);
+    public void addMesh(int id, String entityID, double x, double y, double z, double sizeX, double sizeY, double sizeZ) {
+        loadedMeshes.put(id, new MeshState(entityID, x, y, z, sizeX, sizeY, sizeZ));
     }
 
     public void updateMeshPos(int id, double x, double y, double z) {

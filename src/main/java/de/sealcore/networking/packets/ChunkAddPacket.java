@@ -14,12 +14,14 @@ public class ChunkAddPacket extends Packet
 {
     private int id;
     private String[] floors;
+    private String[] blocks;
 
-    public ChunkAddPacket(String[] f, int id)
+    public ChunkAddPacket(String[] f, String[] b, int id)
     {
         super(PacketType.CHUNKADD);
 
         floors = f;
+        blocks = b;
         this.id = id;
     }
 
@@ -28,6 +30,7 @@ public class ChunkAddPacket extends Packet
         //Parse attributes from json object
         JsonObject args = JsonObject.fromString(json);
         JsonArray floorObjects = args.getArray("floors");
+        JsonArray blockObjects = args.getArray("blocks");
 
         ArrayList<String> floors = new ArrayList<String>();
         for (Object o : floorObjects)
@@ -35,10 +38,16 @@ public class ChunkAddPacket extends Packet
             //o is only string in this case
             floors.add(((TextNode) o).asText());
         }
+        ArrayList<String> blocks = new ArrayList<String>();
+        for (Object o : blockObjects)
+        {
+            //o is only string in this case
+            blocks.add(((TextNode) o).asText());
+        }
 
         int id = args.getInt("id");
 
-        return new ChunkAddPacket(floors.toArray(new String[0]), id);
+        return new ChunkAddPacket(floors.toArray(new String[0]), blocks.toArray(new String[0]), id);
     }
 
     public String toJson()
@@ -49,14 +58,19 @@ public class ChunkAddPacket extends Packet
 
         JsonObject args = JsonObject.fromScratch();
         JsonArray floors = JsonArray.fromScratch();
+        JsonArray blocks = JsonArray.fromScratch();
 
         for (String s : this.floors)
         {
             floors.addString(s);
         }
+        for(String s : this.blocks) {
+            blocks.addString(s);
+        }
 
         args.addInt("id", id);
         args.addArray("floors", floors);
+        args.addArray("blocks", blocks);
 
         obj.addObject("args", args);
 
@@ -66,6 +80,6 @@ public class ChunkAddPacket extends Packet
     public void handle()
     {
 
-        Client.instance.gameState.loadChunk(id, floors);
+        Client.instance.gameState.loadChunk(id, floors, blocks);
     }
 }

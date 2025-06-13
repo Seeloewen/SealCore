@@ -1,14 +1,13 @@
-package de.sealcore.client.rendering.renderer;
+package de.sealcore.client.ui.rendering;
 
 
 import de.sealcore.client.Camera;
-import de.sealcore.client.gamestate.GameState;
-import de.sealcore.client.rendering.abstractions.*;
-import de.sealcore.client.rendering.meshes.MeshRenderer;
-import de.sealcore.client.rendering.ui.primitives.PrimitiveRenderer;
-import de.sealcore.client.rendering.ui.primitives.Rectangle;
-import de.sealcore.client.rendering.ui.text.TextRenderer;
-import de.sealcore.client.rendering.ui.texture.TextureRenderer;
+import de.sealcore.client.state.GameState;
+import de.sealcore.client.ui.rendering.mesh.MeshRenderer;
+import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
+import de.sealcore.client.ui.rendering.primitives.Rectangle;
+import de.sealcore.client.ui.rendering.text.TextRenderer;
+import de.sealcore.client.ui.rendering.texture.TextureRenderer;
 import de.sealcore.util.Color;
 
 import java.io.IOException;

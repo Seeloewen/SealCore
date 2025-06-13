@@ -72,7 +72,12 @@ public class Chunk
         {
             s.add(f.info.id());
         }
-        return new ChunkAddPacket(s.toArray(new String[0]), index);
+        ArrayList<String> blocks = new ArrayList<String>();
+        for(Block b : this.blocks)
+        {
+            blocks.add(b == null ? "" : b.info.id());
+        }
+        return new ChunkAddPacket(s.toArray(new String[0]), blocks.toArray(new String[0]), index);
     }
 
     public void sendAddPacket() {

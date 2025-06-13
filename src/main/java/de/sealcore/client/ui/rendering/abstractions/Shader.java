@@ -1,21 +1,13 @@
-package de.sealcore.client.rendering.abstractions;
+package de.sealcore.client.ui.rendering.abstractions;
 
 import de.sealcore.util.ResourceManager;
-import de.sealcore.util.logging.Log;
-import de.sealcore.util.logging.LogType;
-import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 import org.joml.Vector3f;
 import org.lwjgl.system.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.IntBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 import static org.lwjgl.opengl.GL33.*;
 
