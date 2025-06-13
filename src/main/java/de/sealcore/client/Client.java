@@ -6,7 +6,7 @@ import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
 import de.sealcore.client.menus.MainMenu;
-import de.sealcore.client.rendering.renderer.Renderer;
+import de.sealcore.client.ui.rendering.Renderer;
 import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.overlay.OverlayManager;
 import de.sealcore.networking.NetworkHandler;
@@ -36,8 +36,10 @@ public class Client {
     public InventoryState inventoryState;
 
     private Client() {
-        MainMenu main = new MainMenu();
-        main.setVisible(true);
+        //MainMenu main = new MainMenu();
+        //main.setVisible(true);
+
+        init();
     }
 
     private void init()
