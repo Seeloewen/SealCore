@@ -1,4 +1,4 @@
-package de.sealcore.client.state;
+package de.sealcore.client.state.world;
 
 import de.sealcore.client.model.loading.MeshLoader;
 import de.sealcore.client.model.mesh.Mesh;

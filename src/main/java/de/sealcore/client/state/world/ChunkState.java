@@ -1,4 +1,4 @@
-package de.sealcore.client.state;
+package de.sealcore.client.state.world;
 
 import de.sealcore.util.ChunkIndex;
 

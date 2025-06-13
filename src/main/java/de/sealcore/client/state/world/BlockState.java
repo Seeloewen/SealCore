@@ -1,18 +1,12 @@
-package de.sealcore.client.state;
+package de.sealcore.client.state.world;
 
 import de.sealcore.client.model.loading.MeshLoader;
 import de.sealcore.client.model.mesh.Mesh;
 import de.sealcore.client.model.mesh.MeshSide;
 import de.sealcore.client.ui.rendering.mesh.MeshRenderer;
-import de.sealcore.game.blocks.BigRock;
-import de.sealcore.game.blocks.OakTree;
-import de.sealcore.game.blocks.SmallRock;
-import de.sealcore.game.blocks.SpruceTree;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 import org.joml.Matrix4f;
-
-import java.util.ArrayList;
 
 public class BlockState {
 

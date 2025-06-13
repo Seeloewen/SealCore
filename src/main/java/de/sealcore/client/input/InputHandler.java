@@ -1,5 +1,7 @@
 package de.sealcore.client.input;
 
+import de.sealcore.client.ui.overlay.OverlayManager;
+
 import java.util.HashMap;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -35,6 +37,9 @@ public class InputHandler {
     private static void keyCallback(int key, int action) {
         if(key == GLFW_KEY_C && action == GLFW_PRESS) changeMouseMode();
         pressedKeys.put(key, action != GLFW_RELEASE);
+        if(action == GLFW_PRESS) {
+            OverlayManager.handleKeyPress(key);
+        }
     }
 
 

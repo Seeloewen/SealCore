@@ -2,7 +2,8 @@ package de.sealcore.client.ui.rendering;
 
 
 import de.sealcore.client.Camera;
-import de.sealcore.client.state.GameState;
+import de.sealcore.client.state.world.GameState;
+import de.sealcore.client.ui.overlay.OverlayManager;
 import de.sealcore.client.ui.rendering.mesh.MeshRenderer;
 import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
 import de.sealcore.client.ui.rendering.primitives.Rectangle;
@@ -22,7 +23,6 @@ public class Renderer {
 
     public Renderer(GameState gameState) {
         glEnable(GL_DEPTH_TEST);
-
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -34,11 +34,6 @@ public class Renderer {
         TextRenderer.init();
         MeshRenderer.init();
 
-        try {
-            TextureRenderer.loadTexture("missing_texture", "Missing_Texture.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
     }
 
@@ -49,14 +44,13 @@ public class Renderer {
 
         MeshRenderer.setCamera(camera);
 
+
         game.render();
 
+        glClear(GL_DEPTH_BUFFER_BIT);
 
-        PrimitiveRenderer.drawRectangle(new Rectangle(100, 100, 200, 200), new Color(0.7f, 0.3f, 0.1f), 0f);
 
-
-        TextRenderer.drawString(200, 200, 3, "Berr Hert", 0f);
-
+        OverlayManager.render();
 
     }
 

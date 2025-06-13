@@ -1,10 +1,12 @@
 package de.sealcore.client;
 
-import de.sealcore.client.state.GameState;
+import de.sealcore.client.state.inventory.InventoryState;
+import de.sealcore.client.state.world.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
 import de.sealcore.client.ui.Resolution;
+import de.sealcore.client.ui.overlay.OverlayManager;
 import de.sealcore.client.ui.rendering.Renderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
@@ -27,6 +29,7 @@ public class Client {
     private Renderer renderer;
     private Camera camera;
     public GameState gameState;
+    public InventoryState inventoryState;
 
     private Client() {
 
@@ -62,12 +65,14 @@ public class Client {
         glfwSwapInterval(0);
 
         gameState = new GameState();
+        inventoryState = new InventoryState();
 
         renderer = new Renderer(gameState);
 
         camera = new Camera();
 
 
+        OverlayManager.init();
 
     }
 

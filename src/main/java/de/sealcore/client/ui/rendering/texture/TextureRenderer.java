@@ -23,6 +23,12 @@ public class TextureRenderer {
         shader = new Shader("shaders/texture");
         buffer = new VertexBuffer(new float[5*6], new VertexArrayLayout().add(3).add(2));
         loadedTextures = new HashMap<>();
+
+        try {
+            TextureRenderer.loadTexture("missing_texture", "Missing_Texture.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
