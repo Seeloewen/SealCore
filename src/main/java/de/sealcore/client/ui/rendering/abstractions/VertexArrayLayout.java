@@ -1,4 +1,4 @@
-package de.sealcore.client.rendering.abstractions;
+package de.sealcore.client.ui.rendering.abstractions;
 
 import java.util.ArrayList;
 

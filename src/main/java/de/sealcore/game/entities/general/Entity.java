@@ -17,8 +17,8 @@ public abstract class Entity {
 
     private String entityType;
 
-    protected double sizeX;
-    protected double sizeY;
+    protected double sizeX = 0.8;
+    protected double sizeY = 0.8;
 
     protected double posX;
     protected double posY;
@@ -56,69 +56,76 @@ public abstract class Entity {
 
 
     private void tryMove(double dx, double dy) {
-
-        /*var game = Server.game;
+        var game = Server.game;
 
         if(dx < 0) {
             int x1 = toBlock(posX);
             int x2 = toBlock(posX+dx);
+            posX += dx;
             if(x1 != x2) {
                 int top = toBlock(posY + sizeY);
                 int bot = toBlock(posY);
-                posX += dx;
                 for(int y = bot; y <= top; y++) {
-                    if(game.isSolid(x2, y)) posX = (double)x2 + 1.0 + 0.001;
+                    if(game.isSolid(x2, y)) {
+                        posX = (double)x2 + 0.001 + 1.0;
+                    }
                 }
             }
         } else if( dx > 0) {
             int x1 = toBlock(posX+sizeX);
             int x2 = toBlock(posX+dx+sizeX);
+            posX += dx;
             if(x1 != x2) {
                 int top = toBlock(posY + sizeY);
                 int bot = toBlock(posY);
-                posX += dx;
                 for(int y = bot; y <= top; y++) {
-                    if(game.isSolid(x2, y)) posX = (double)x2 - 0.001 - sizeX;
+                    if(game.isSolid(x2, y)) {
+                        posX = (double)x2 - 0.001 - sizeX;
+                    }
                 }
             }
         }
         if(dy < 0) {
             int y1 = toBlock(posY);
             int y2 = toBlock(posY+dy);
+            posY += dy;
             if(y1 != y2) {
                 int left = toBlock(posX);
                 int right = toBlock(posX + sizeX);
-                posY += dy;
                 for(int x = left; x <= right; x++) {
-                    if(game.isSolid(x, y2)) posY = y2 + 1 + 0.001;
+                    if(game.isSolid(x, y2)) {
+                        posY = y2 + 1 + 0.001;
+                    }
                 }
             }
         } else if(dy > 0) {
             int y1 = toBlock(posY + sizeY);
             int y2 = toBlock(posY + dy + sizeY);
+            posY += dy;
             if(y1 != y2) {
                 int left = toBlock(posX);
                 int right = toBlock(posX + sizeX);
-                posY += dy;
                 for(int x = left; x <= right; x++) {
-                    if(game.isSolid(x, y2)) posY = y2 - sizeY - 0.001;
+                    if(game.isSolid(x, y2)) {
+                        posY = y2 - sizeY - 0.001;
+                    }
                 }
             }
-        }*/
+        }
 
-        posX += dx;
-        posY += dy;
+        //posX += dx;
+        //posY += dy;
 
 
     }
 
 
     public void sendAdd() {
-        NetworkHandler.send(new EntityAddPacket(getID(), entityType, posX, posY, 0, 0));
+        NetworkHandler.send(new EntityAddPacket(getID(), entityType, posX, posY, 0, sizeX, sizeY, 1.8, 0));
     }
 
     public void sendAdd(int id) {
-        NetworkHandler.sendOnly(id, new EntityAddPacket(getID(), entityType, posX, posY, 0, 0));
+        NetworkHandler.sendOnly(id, new EntityAddPacket(getID(), entityType, posX, posY, 0, sizeX, sizeY, 1.8, 0));
     }
 
 

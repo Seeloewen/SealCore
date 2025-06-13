@@ -7,7 +7,7 @@ import de.sealcore.util.logging.LogType;
 
 import java.io.IOException;
 
-public class ModelLoader {
+public class MeshLoader {
 
 
 
@@ -36,6 +36,8 @@ public class ModelLoader {
             case "f:grass" -> "test_objects/Grass.txt";
             case "e:player" -> "test_objects/Player.txt";
             case "f:water" -> "test_objects/Water.txt";
+            case "b:spruce_tree" -> "test_objects/Tree.txt";
+            case "b:oak_tree" -> "test_objects/Tree.txt";
             default -> throw new IllegalArgumentException("entityId not found: " + entityID);
         };
     }
@@ -46,6 +48,8 @@ public class ModelLoader {
             case "f:grass" -> 1/8f;
             case "f:water" -> 1/8f;
             case "e:player" -> 1/16f;
+            case "b:spruce_tree" -> 1/16f;
+            case "b:oak_tree" -> 1/16f;
             default -> throw new IllegalStateException("Unexpected value: " + entityID);
         };
     }

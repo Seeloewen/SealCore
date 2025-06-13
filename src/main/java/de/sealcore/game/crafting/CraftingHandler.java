@@ -1,6 +1,5 @@
 package de.sealcore.game.crafting;
 
-import de.sealcore.client.rendering.abstractions.Shader;
 import de.sealcore.game.entities.general.Player;
 import de.sealcore.server.Server;
 import de.sealcore.util.ResourceManager;

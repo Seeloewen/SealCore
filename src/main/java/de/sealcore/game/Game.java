@@ -93,9 +93,11 @@ public class Game
     }
 
     public boolean isSolid(int x, int y) {
-        Chunk chunk = currentMap.getChunk(x<0?x-7:x/8, y<0?y-7:y/8);
-        return false;
-        //return chunk == null && !chunk.getFloor(x%8, y%8).info.isSolid() && chunk.getBlock(x%8,y%8).info.isSolid();
+        Chunk chunk = currentMap.getChunk(x<0?(x-7)/8:x/8, y<0?(y-7)/8:y/8);
+        //return false;
+        if(chunk == null) return false;
+        var block = chunk.getBlock((x%8+8)%8,(y%8+8)%8);
+        return !chunk.getFloor((x%8+8)%8, (y%8+8)%8).info.isSolid() || (block != null && block.info.isSolid());
     }
 
 }

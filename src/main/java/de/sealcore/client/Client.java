@@ -1,29 +1,27 @@
 package de.sealcore.client;
 
-import de.sealcore.client.gamestate.GameState;
+import de.sealcore.client.state.inventory.InventoryState;
+import de.sealcore.client.state.world.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
 import de.sealcore.client.menus.MainMenu;
 import de.sealcore.client.rendering.renderer.Renderer;
+import de.sealcore.client.ui.Resolution;
+import de.sealcore.client.ui.overlay.OverlayManager;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
 import de.sealcore.util.timing.DeltaTimer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 
-import org.lwjgl.*;
-import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
-import org.lwjgl.system.*;
 
 import javax.swing.*;
 import java.nio.*;
 
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class Client {
@@ -35,6 +33,7 @@ public class Client {
     private Renderer renderer;
     private Camera camera;
     public GameState gameState;
+    public InventoryState inventoryState;
 
     private Client() {
         MainMenu main = new MainMenu();
@@ -61,7 +60,7 @@ public class Client {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-        window = glfwCreateWindow(800, 600, "SealCore (dev)", NULL, NULL);
+        window = glfwCreateWindow(Resolution.WIDTH, Resolution.HEIGHT, "SealCore (dev)", NULL, NULL);
         if(window == NULL) throw new RuntimeException("Failed to create window");
 
         glfwMakeContextCurrent(window);
@@ -75,10 +74,15 @@ public class Client {
         glfwSwapInterval(0);
 
         gameState = new GameState();
+        inventoryState = new InventoryState();
 
         renderer = new Renderer(gameState);
 
         camera = new Camera();
+
+
+        OverlayManager.init();
+
     }
 
     private void loop() {
@@ -114,7 +118,7 @@ public class Client {
     public static void main() {
         Client client = new Client();
 
-        //client.loop();
+        client.loop();
     }
 
 }

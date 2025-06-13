@@ -1,7 +1,7 @@
 package de.sealcore.client.model.mesh;
 
-import de.sealcore.client.rendering.abstractions.VertexArrayLayout;
-import de.sealcore.client.rendering.abstractions.VertexBuffer;
+import de.sealcore.client.ui.rendering.abstractions.VertexArrayLayout;
+import de.sealcore.client.ui.rendering.abstractions.VertexBuffer;
 import org.joml.Matrix4f;
 
 public class Mesh {
