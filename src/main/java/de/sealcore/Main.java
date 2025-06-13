@@ -1,5 +1,6 @@
 package de.sealcore;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import de.sealcore.client.Client;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
@@ -11,12 +12,16 @@ import java.util.Scanner;
 
 public class Main
 {
+    public static final String VERSION = "Dev";
+    public static final String BUILDDATE = "13.06.2025";
 
     public static void main(String[] args)
     {
         //*
         Log.info(LogType.MAIN, "SealCore Development Build");
         Scanner scanner = new Scanner(System.in);
+
+        FlatLightLaf.setup();
 
         parseArgs(args);
 

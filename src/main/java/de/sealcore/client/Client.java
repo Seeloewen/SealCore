@@ -4,6 +4,7 @@ import de.sealcore.client.gamestate.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
+import de.sealcore.client.menus.MainMenu;
 import de.sealcore.client.rendering.renderer.Renderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
@@ -16,6 +17,7 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 
+import javax.swing.*;
 import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
@@ -28,14 +30,19 @@ public class Client {
 
     public static Client instance;
 
-    private final long window;
+    private long window;
 
     private Renderer renderer;
     private Camera camera;
     public GameState gameState;
 
     private Client() {
+        MainMenu main = new MainMenu();
+        main.setVisible(true);
+    }
 
+    private void init()
+    {
         Client.instance = this;
 
         while(!NetworkHandler.init(NetworkType.CLIENT)) {
@@ -72,9 +79,6 @@ public class Client {
         renderer = new Renderer(gameState);
 
         camera = new Camera();
-
-
-
     }
 
     private void loop() {
@@ -110,7 +114,7 @@ public class Client {
     public static void main() {
         Client client = new Client();
 
-        client.loop();
+        //client.loop();
     }
 
 }

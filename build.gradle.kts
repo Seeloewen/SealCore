@@ -38,4 +38,6 @@ dependencies {
 
     implementation("org.joml:joml:1.10.8")
 
+    implementation("com.formdev:flatlaf:3.4")
+
 }
