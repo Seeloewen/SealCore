@@ -20,9 +20,9 @@ public class Player extends Entity{
 
     public void updateInputs(int x, int y, double angleHor) {
         double f = 1/Math.sqrt(x*x + y*y);
-        moveInputX = x*f;
-        moveInputY = y*f;
-        this.rotZ = angleHor;
+        moveInputX = x*f; //forward
+        moveInputY = y*f; //side
+        this.rotZ = angleHor; //horizontal dir (0= +x)
     }
 
 

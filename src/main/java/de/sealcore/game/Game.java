@@ -50,7 +50,7 @@ public class Game
         NetworkHandler.sendOnly(id, new SetFollowCamPacket(player.getID()));
         player.sendAdd();
         Log.info(LogType.GAME, "player " + id + " joined the game");
-        for(int i = 0; i < 16; i++) {
+        for(int i = 0; i < 10; i++) {
             var chunk = currentMap.getChunk(i);
             if(chunk != null) chunk.sendAddPacket(id);
         }
@@ -73,6 +73,10 @@ public class Game
         //Create initial map
         addMap(nextMapId(), MapLayout.NORMAL);
         loadMap(0);
+
+        var e = new Grassling();
+        entities.add(e);
+        e.sendAdd();
     }
 
     public void addMap(int id, MapLayout layout)
