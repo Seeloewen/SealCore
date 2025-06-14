@@ -20,6 +20,7 @@ import de.sealcore.util.logging.LogType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 
 public class Game
@@ -34,32 +35,32 @@ public class Game
     public HashMap<Integer, Player> players;
 
 
+    public void tick(double dt)
+    {
 
-
-    public void tick(double dt) {
-
-        for(Entity entity : entities) entity.doPhysicsTick(dt);
+        for (Entity entity : entities) entity.doPhysicsTick(dt);
 
     }
 
 
-    public void addPlayer(int id) {
+    public void addPlayer(int id)
+    {
         Player player = new Player(id);
         entities.add(player);
         players.put(id, player);
         NetworkHandler.sendOnly(id, new SetFollowCamPacket(player.getID()));
         player.sendAdd();
         Log.info(LogType.GAME, "player " + id + " joined the game");
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 32; i++)
+        {
             var chunk = currentMap.getChunk(i);
-            if(chunk != null) chunk.sendAddPacket(id);
+            if (chunk != null) chunk.sendAddPacket(id);
         }
-        for(Entity entity : entities) {
-            if(entity != player) entity.sendAdd(id);
+        for (Entity entity : entities)
+        {
+            if (entity != player) entity.sendAdd(id);
         }
     }
-
-
 
 
     public Game()
@@ -74,9 +75,17 @@ public class Game
         addMap(nextMapId(), MapLayout.NORMAL);
         loadMap(0);
 
-        var e = new Grassling();
+        var e = new Grassling(0, 0);
         entities.add(e);
         e.sendAdd();
+
+        /*Random rnd = new Random();
+        for (int i = 0; i < 10; i++)
+        {
+            var e = new Grassling(rnd.nextDouble(-10, 10), rnd.nextDouble(-10, 10));
+            entities.add(e);
+            e.sendAdd();
+        }*/
     }
 
     public void addMap(int id, MapLayout layout)
@@ -99,12 +108,13 @@ public class Game
         return maps.size();
     }
 
-    public boolean isSolid(int x, int y) {
-        Chunk chunk = currentMap.getChunk(x<0?(x-7)/8:x/8, y<0?(y-7)/8:y/8);
+    public boolean isSolid(int x, int y)
+    {
+        Chunk chunk = currentMap.getChunk(x < 0 ? (x - 7) / 8 : x / 8, y < 0 ? (y - 7) / 8 : y / 8);
         //return false;
-        if(chunk == null) return false;
-        var block = chunk.getBlock((x%8+8)%8,(y%8+8)%8);
-        return !chunk.getFloor((x%8+8)%8, (y%8+8)%8).info.isSolid() || (block != null && block.info.isSolid());
+        if (chunk == null) return false;
+        var block = chunk.getBlock((x % 8 + 8) % 8, (y % 8 + 8) % 8);
+        return !chunk.getFloor((x % 8 + 8) % 8, (y % 8 + 8) % 8).info.isSolid() || (block != null && block.info.isSolid());
     }
 
 }

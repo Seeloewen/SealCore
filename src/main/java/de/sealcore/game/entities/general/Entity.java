@@ -5,15 +5,16 @@ import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.EntityAddPacket;
 import de.sealcore.networking.packets.EntityUpdatePosPacket;
 import de.sealcore.server.Server;
-import org.joml.Vector2d;
 
 public abstract class Entity {
+
+    protected PathFinder pathFinder;
 
     static private int nextID = 0;
 
     private final int id;
 
-    private final double MOVE_SPEED = 3;
+    public double moveSpeed = 3;
 
     private String entityType;
 
@@ -42,22 +43,33 @@ public abstract class Entity {
         velY = 0;
     }
 
-
+    public Entity(String entityType, double x, double y) {
+        this.id = nextID++;
+        this.entityType = entityType;
+        posX = x;
+        posY = y;
+        velX = 0;
+        velY = 0;
+    }
 
     public void doPhysicsTick(double dt) {
+        double f = 1/Math.sqrt(moveInputX*moveInputX + moveInputY*moveInputY);
+        moveInputX *= f;
+        moveInputY *= f;
 
-        velX = MOVE_SPEED * (moveInputX * Math.cos(rotZ) - moveInputY * Math.sin(rotZ));
-        velY = MOVE_SPEED * (moveInputX * Math.sin(rotZ) + moveInputY * Math.cos(rotZ));
+        velX = moveSpeed * (moveInputX * Math.cos(rotZ) - moveInputY * Math.sin(rotZ));
+        velY = moveSpeed * (moveInputX * Math.sin(rotZ) + moveInputY * Math.cos(rotZ));
 
         double dx = velX * dt;
         double dy = velY * dt;
         tryMove(dx, dy);
 
-        NetworkHandler.send(new EntityUpdatePosPacket(id, posX, posY, 0, 0));
+        NetworkHandler.send(new EntityUpdatePosPacket(id, posX, posY, 0, rotZ));
     }
 
 
     private void tryMove(double dx, double dy) {
+        //Skull
         var game = Server.game;
 
         if(dx < 0) {
@@ -121,6 +133,13 @@ public abstract class Entity {
 
     }
 
+
+    public void updateInputs(int x, int y, double angleHor) {
+        double f = 1/Math.sqrt(x*x + y*y);
+        moveInputX = x*f; //forward
+        moveInputY = y*f; //side
+        this.rotZ = angleHor; //horizontal dir (0= +x)
+    }
 
     public void sendAdd() {
         NetworkHandler.send(new EntityAddPacket(getID(), entityType, posX, posY, 0, sizeX, sizeY, 1.8, 0));

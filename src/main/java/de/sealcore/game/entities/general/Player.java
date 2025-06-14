@@ -21,15 +21,4 @@ public class Player extends Entity{
 
         inventory = Server.game.inventoryManager.createInventory(clientID, MAT_SLOTS, WEAPON_SLOTS, AMMO_SLOTS, UNI_SLOTS);
     }
-
-
-    public void updateInputs(int x, int y, double angleHor) {
-        double f = 1/Math.sqrt(x*x + y*y);
-        moveInputX = x*f; //forward
-        moveInputY = y*f; //side
-        this.rotZ = angleHor; //horizontal dir (0= +x)
-    }
-
-
-
 }

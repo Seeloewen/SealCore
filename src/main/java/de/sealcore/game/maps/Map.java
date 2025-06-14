@@ -1,12 +1,11 @@
 package de.sealcore.game.maps;
 
+import de.sealcore.game.blocks.Block;
 import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.chunks.ChunkGenerator;
-import de.sealcore.networking.NetworkHandler;
-import de.sealcore.networking.packets.ChunkAddPacket;
+import de.sealcore.game.floors.Floor;
 import de.sealcore.util.ChunkIndex;
-import de.sealcore.util.logging.Log;
-import de.sealcore.util.logging.LogType;
+import de.sealcore.util.Maths;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -31,7 +30,7 @@ public class Map
         generator = new ChunkGenerator(seed, layout);
 
         //Generate the first four chunks (spawn chunks)
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 32; i++)
         {
             genChunk(ChunkIndex.toX(i), ChunkIndex.toY(i));
         }
@@ -64,5 +63,37 @@ public class Map
     public Chunk getChunk(int i) {
         if(i >= chunks.length) return null;
         return chunks[i];
+    }
+
+    public Block getBlock(int x, int y)
+    {
+        //Effectively deletes the decimal part, resulting in the raw chunk
+        int cx = (int)Math.floor((double) x / 8);
+        int cy = (int)Math.floor((double) y / 8);
+
+        Chunk c = getChunk(cx, cy);
+
+        x = Maths.safeMod(x, 8);
+        y = Maths.safeMod(y, 8);
+
+        if(c != null) return c.getBlock(x, y);
+
+        return null;
+    }
+
+    public Floor getFloor(int x, int y)
+    {
+        //Effectively deletes the decimal part, resulting in the raw chunk
+        int cx = (int)Math.floor((double) x / 8);
+        int cy = (int)Math.floor((double) y / 8);
+
+        Chunk c = getChunk(cx, cy);
+
+        x = Maths.safeMod(x, 8);
+        y = Maths.safeMod(y, 8);
+
+        if(c != null) return c.getFloor(x, y);
+
+        return null;
     }
 }
