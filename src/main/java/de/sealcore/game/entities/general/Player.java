@@ -14,15 +14,20 @@ public class Player extends Entity{
     public Player(int clientID) {
         super("e:player");
         this.clientID = clientID;
+        sizeX = 0.6;
+        sizeY = sizeX * 16.0/10;
+        sizeZ = sizeX * 32.0/10;
+
 
         inventory = Server.game.inventoryManager.createInventory(clientID, MAT_SLOTS, WEAPON_SLOTS, AMMO_SLOTS, UNI_SLOTS);
     }
 
 
-    public void updateInputs(int x, int y) {
+    public void updateInputs(int x, int y, double angleHor) {
         double f = 1/Math.sqrt(x*x + y*y);
-        moveInputX = x*f;
-        moveInputY = y*f;
+        moveInputX = x*f; //forward
+        moveInputY = y*f; //side
+        this.rotZ = angleHor; //horizontal dir (0= +x)
     }
 
 

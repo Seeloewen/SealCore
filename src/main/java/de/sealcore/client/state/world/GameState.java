@@ -12,7 +12,7 @@ public class GameState {
 
     HashMap<Integer, ChunkState> loadedChunks;
 
-    HashMap<Integer, MeshState> loadedMeshes;
+    public HashMap<Integer, MeshState> loadedMeshes;
 
 
     public GameState() {

@@ -12,5 +12,6 @@ public enum PacketType
     INVENTORYREMOVE,
     INVENTORYMOVE,
     CHUNKADD,
-    MOVEINPUT
+    MOVEINPUT,
+    SETFOLLOWCAM,
 }

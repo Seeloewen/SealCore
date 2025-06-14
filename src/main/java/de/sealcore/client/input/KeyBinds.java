@@ -20,6 +20,8 @@ public class KeyBinds {
     public static final int PLAYER_MOVE_LEFT = GLFW_KEY_A;
     public static final int PLAYER_SPRINT = GLFW_KEY_LEFT_SHIFT;
 
+    public static final int EXIT = GLFW_KEY_ESCAPE;
+
     public static final int RELOAD = GLFW_KEY_R;
 
 

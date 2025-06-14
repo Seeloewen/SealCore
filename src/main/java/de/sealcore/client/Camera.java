@@ -12,8 +12,10 @@ public class Camera {
     private static final float ROT_FACTOR = 0.003f;
     private static final float PI = 3.14159265358979f;
 
+    public int following = -1;
+
     private Vector3f position;
-    private double angleHor;
+    public double angleHor;
     private double angleVert;
 
     public Camera() {
@@ -22,8 +24,8 @@ public class Camera {
     }
 
     void update(CamMoveInput input, double dt) {
+        updateRotation(input.dx(), input.dy());
         if( InputHandler.camMode) {
-            updateRotation(input.dx(), input.dy());
             Vector3f movement = new Vector3f(input.getTranslation());
             movement.mul((float)dt).mul(MOVE_SPEED);
             movement.rotateZ((float)angleHor);
@@ -44,7 +46,17 @@ public class Camera {
     }
 
     public Matrix4fc getView() {
-        return new Matrix4f().translate(position).rotateZ((float)angleHor).rotateY((float)angleVert);
+        if(InputHandler.camMode) {
+            return new Matrix4f().translate(position).rotateZ((float)angleHor).rotateY((float)angleVert);
+        } else {
+            var e = Client.instance.gameState.loadedMeshes.get(following);
+            return new Matrix4f().translate( (float)e.posX+0.3f , (float)e.posY+0.48f,  (float)e.posZ+1.8f)
+                    .rotateZ((float)angleHor).rotateY((float)angleVert);
+        }
+    }
+
+    public void follow(int id) {
+        following = id;
     }
 
 }

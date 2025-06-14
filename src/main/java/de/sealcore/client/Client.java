@@ -1,5 +1,6 @@
 package de.sealcore.client;
 
+import de.sealcore.client.input.KeyBinds;
 import de.sealcore.client.state.inventory.InventoryState;
 import de.sealcore.client.state.world.GameState;
 import de.sealcore.client.input.CamMoveInput;
@@ -17,6 +18,8 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 
 import org.lwjgl.opengl.*;
 
+
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -28,7 +31,7 @@ public class Client {
     private long window;
 
     private Renderer renderer;
-    private Camera camera;
+    public Camera camera;
     public GameState gameState;
     public InventoryState inventoryState;
 
@@ -90,7 +93,7 @@ public class Client {
 
         DeltaTimer.start();
 
-        while ( !glfwWindowShouldClose(window) ) {
+        while ( !glfwWindowShouldClose(window) && !InputHandler.isPressed(KeyBinds.EXIT)) {
 
             double dt = DeltaTimer.getDeltaTime();
 
@@ -111,6 +114,12 @@ public class Client {
             glfwPollEvents();
         }
 
+        glfwFreeCallbacks(window);
+        glfwDestroyWindow(window);
+
+        // Terminate GLFW and free the error callback
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
     }
 
 
