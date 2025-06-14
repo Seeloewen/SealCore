@@ -10,6 +10,9 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class InputHandler {
 
+    public static final int MOUSE_DOWN = 1;
+    public static final int MOUSE_UP = 0;
+
     public static boolean camMode = true; //will be changed to false in init
 
     public static boolean showMouse = false;

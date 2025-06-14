@@ -1,10 +1,13 @@
 package de.sealcore.client.state.inventory;
 
+import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
 import de.sealcore.client.ui.rendering.primitives.Rectangle;
 import de.sealcore.game.entities.inventory.InventorySlotType;
 import de.sealcore.game.items.ItemType;
 import de.sealcore.util.Color;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 
 public class SlotState
 {
@@ -27,6 +30,15 @@ public class SlotState
     {
         this.x = x;
         this.y = y;
+    }
+
+    public void handleMouseClick(int button, int action)
+    {
+        if(InputHandler.mouseX >= x && InputHandler.mouseX <= x + WIDTH
+            && InputHandler.mouseY >= y && InputHandler.mouseY <= y + HEIGHT)
+        {
+            Log.info(LogType.RENDERING, "Clicked slot " + index);
+        }
     }
 
     public void render()
