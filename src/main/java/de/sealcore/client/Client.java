@@ -5,10 +5,10 @@ import de.sealcore.client.state.world.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
-import de.sealcore.client.menus.MainMenu;
 import de.sealcore.client.ui.rendering.Renderer;
 import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.overlay.OverlayManager;
+import de.sealcore.game.entities.general.Player;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
@@ -16,9 +16,6 @@ import de.sealcore.util.timing.DeltaTimer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 
 import org.lwjgl.opengl.*;
-
-import javax.swing.*;
-import java.nio.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -76,7 +73,7 @@ public class Client {
         glfwSwapInterval(0);
 
         gameState = new GameState();
-        inventoryState = new InventoryState();
+        inventoryState = new InventoryState(Player.WEAPON_SLOTS, Player.AMMO_SLOTS, Player.MAT_SLOTS, Player.UNI_SLOTS);
 
         renderer = new Renderer(gameState);
 
