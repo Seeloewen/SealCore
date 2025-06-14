@@ -7,5 +7,6 @@ public enum LogType
     NETWORKING,
     DEBUGRENDERER,
     WORLDGEN,
-    GAME
+    GAME,
+    PERFORMANCE,
 }

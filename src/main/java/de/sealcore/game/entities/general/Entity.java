@@ -19,13 +19,15 @@ public abstract class Entity {
 
     protected double sizeX = 0.8;
     protected double sizeY = 0.8;
+    protected double sizeZ = 0.8;
+    //sizeZ/sizeX of grass enemy : 1.5
 
     protected double posX;
     protected double posY;
     protected double velX;
     protected double velY;
 
-
+    protected double rotZ;
     protected double moveInputX;
     protected double moveInputY;
 
@@ -44,8 +46,8 @@ public abstract class Entity {
 
     public void doPhysicsTick(double dt) {
 
-        velX = moveInputX * MOVE_SPEED;
-        velY = moveInputY * MOVE_SPEED;
+        velX = MOVE_SPEED * (moveInputX * Math.cos(rotZ) - moveInputY * Math.sin(rotZ));
+        velY = MOVE_SPEED * (moveInputX * Math.sin(rotZ) + moveInputY * Math.cos(rotZ));
 
         double dx = velX * dt;
         double dy = velY * dt;

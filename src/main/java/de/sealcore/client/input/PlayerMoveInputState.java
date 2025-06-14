@@ -1,9 +1,10 @@
 package de.sealcore.client.input;
 
+import de.sealcore.client.Client;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.MoveInputPacket;
 
-public record PlayerMoveInputState (int x, int y, boolean sprint) {
+public record PlayerMoveInputState (int x, int y, boolean sprint, double angleHor) {
 
     static private PlayerMoveInputState state;
 
@@ -21,11 +22,11 @@ public record PlayerMoveInputState (int x, int y, boolean sprint) {
         if(InputHandler.isPressed(KeyBinds.PLAYER_MOVE_LEFT)) y++;
         if(InputHandler.isPressed(KeyBinds.PLAYER_MOVE_UP)) x++;
         if(InputHandler.isPressed(KeyBinds.PLAYER_MOVE_DOWN)) x--;
-        return new PlayerMoveInputState(x, y, InputHandler.isPressed(KeyBinds.PLAYER_SPRINT));
+        return new PlayerMoveInputState(x, y, InputHandler.isPressed(KeyBinds.PLAYER_SPRINT), Client.instance.camera.angleHor);
     }
 
     private void send() {
-        NetworkHandler.send(new MoveInputPacket(x, y));
+        NetworkHandler.send(new MoveInputPacket(x, y, angleHor));
     }
 
 

@@ -34,6 +34,9 @@ public class OverlayManager {
 
 
 
+    public static void handleMousePress(int button, int action) {
+
+    }
 
     public static void handleKeyPress(int key) {
         if(key == GLFW.GLFW_KEY_O) test = !test;

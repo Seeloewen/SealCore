@@ -31,7 +31,7 @@ public class Map
         generator = new ChunkGenerator(seed, layout);
 
         //Generate the first four chunks (spawn chunks)
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 16; i++)
         {
             genChunk(ChunkIndex.toX(i), ChunkIndex.toY(i));
         }

@@ -47,9 +47,10 @@ public class MeshLoader {
         return switch(entityID) {
             case "f:grass" -> 1/8f;
             case "f:water" -> 1/8f;
-            case "e:player" -> 1/16f;
-            case "b:spruce_tree" -> 1/16f;
-            case "b:oak_tree" -> 1/16f;
+            case "e:player" -> 0.6f/10;
+            case "e:grass_enemy" -> 1/8f;
+            case "b:spruce_tree" -> 1/10f;
+            case "b:oak_tree" -> 1/10f;
             default -> throw new IllegalStateException("Unexpected value: " + entityID);
         };
     }

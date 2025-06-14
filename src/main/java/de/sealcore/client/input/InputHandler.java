@@ -12,6 +12,8 @@ public class InputHandler {
 
     public static boolean camMode = true; //will be changed to false in init
 
+    public static boolean showMouse = false;
+
     private static  HashMap<Integer, Boolean> pressedKeys;
 
     private static long window;
@@ -35,21 +37,24 @@ public class InputHandler {
 
 
     private static void keyCallback(int key, int action) {
-        if(key == GLFW_KEY_C && action == GLFW_PRESS) changeMouseMode();
+        if(key == GLFW_KEY_C && action == GLFW_PRESS) camMode = !camMode;
         pressedKeys.put(key, action != GLFW_RELEASE);
         if(action == GLFW_PRESS) {
             OverlayManager.handleKeyPress(key);
         }
     }
 
+    private static void mouseButtonCallback(int button, int action) {
+        OverlayManager.handleMousePress(button, action);
+    }
 
-    private static void changeMouseMode() {
-        if(camMode) {
+
+    public static void changeMouseMode() {
+        if(showMouse) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         } else {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
-        camMode = !camMode;
     }
 
 
@@ -73,6 +78,9 @@ public class InputHandler {
             mouseX = x;
             mouseY = y;
             init = true;
+        });
+        glfwSetMouseButtonCallback(window, (w, b, a, m) -> {
+            mouseButtonCallback(b, a);
         });
 
     }

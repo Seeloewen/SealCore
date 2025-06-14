@@ -8,9 +8,9 @@ public class MeshState {
 
 
     Mesh mesh;
-    double posX;
-    double posY;
-    double posZ;
+    public double posX;
+    public double posY;
+    public double posZ;
 
     MeshState(String modelID, double posX, double posY, double posZ, double sizeX, double sizeY, double sizeZ) {
         mesh = MeshLoader.loadMesh(modelID);

@@ -12,6 +12,7 @@ import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.ChunkAddPacket;
 import de.sealcore.networking.packets.EntityAddPacket;
+import de.sealcore.networking.packets.SetFollowCamPacket;
 import de.sealcore.server.Server;
 import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.logging.Log;
@@ -19,6 +20,7 @@ import de.sealcore.util.logging.LogType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Game
 {
@@ -45,9 +47,10 @@ public class Game
         Player player = new Player(id);
         entities.add(player);
         players.put(id, player);
+        NetworkHandler.sendOnly(id, new SetFollowCamPacket(player.getID()));
         player.sendAdd();
         Log.info(LogType.GAME, "player " + id + " joined the game");
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < 16; i++) {
             var chunk = currentMap.getChunk(i);
             if(chunk != null) chunk.sendAddPacket(id);
         }

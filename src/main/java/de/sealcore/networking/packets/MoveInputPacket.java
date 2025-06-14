@@ -8,13 +8,15 @@ public class MoveInputPacket extends Packet
 {
     private int x;
     private int y;
+    private double angleHor;
 
-    public MoveInputPacket(int x, int y)
+    public MoveInputPacket(int x, int y, double angHor)
     {
         super(PacketType.MOVEINPUT);
 
         this.x = x;
         this.y = y;
+        this.angleHor = angHor;
     }
 
     public static Packet fromJson(String json)
@@ -24,8 +26,9 @@ public class MoveInputPacket extends Packet
 
         int x = args.getInt("x");
         int y = args.getInt("y");
+        double angleHor = args.getDouble("angleHor");
 
-        return new MoveInputPacket(x, y);
+        return new MoveInputPacket(x, y, angleHor);
     }
 
     public String toJson()
@@ -37,6 +40,7 @@ public class MoveInputPacket extends Packet
         JsonObject args = JsonObject.fromScratch();
         args.addInt("x", x);
         args.addInt("y", y);
+        args.addDouble("angleHor", angleHor);
         obj.addObject("args", args);
 
         return obj.toString();
@@ -44,6 +48,6 @@ public class MoveInputPacket extends Packet
 
     public void handle()
     {
-        Server.game.players.get(getSender()).updateInputs(x, y);
+        Server.game.players.get(getSender()).updateInputs(x, y, angleHor);
     }
 }
