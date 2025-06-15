@@ -42,5 +42,6 @@ public class SetFollowCamPacket extends Packet
     public void onHandle()
     {
         Client.instance.camera.follow(id);
+        Client.instance.gameState.getMesh(id).visible = false;
     }
 }
