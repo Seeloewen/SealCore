@@ -34,9 +34,9 @@ public class BlockGenerator
         float n = getBlockNoise(x, y); //Noise of point that gets checked
 
         //Check the surrounding noises in each direction 1 block to determine if local maximum
-        for (int i = -1; i < 1; i++)
+        for (int i = -1; i < 2; i++)
         {
-            for (int j = -1; j < 1; j++)
+            for (int j = -1; j < 2; j++)
             {
                 if (i == 0 && j == 0) continue; //Skip the reference noise, obviously
 

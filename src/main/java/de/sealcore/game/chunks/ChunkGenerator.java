@@ -54,11 +54,13 @@ public class ChunkGenerator
             {
                 if (!blockGenerator.isLocalMaxNoise(c.index, x, y)) continue; //Only generate structures at local max points, ensures even distribution
 
+                if (!c.getFloor(x, y).info.isSolid()) continue; //Skip all floors that are not solid
+
                 //Roll the structure to generate
                 int structure = rnd.nextInt(0, 1);
 
                 if (structure == 0) blockGenerator.genTree(c, x, y); //Trees
-                else if(structure == 1) blockGenerator.genRock(c, x, y); //Rocks
+                else if (structure == 1) blockGenerator.genRock(c, x, y); //Rocks
 
             }
         }
