@@ -2,6 +2,7 @@ package de.sealcore.networking.packets;
 
 import com.fasterxml.jackson.databind.node.TextNode;
 import de.sealcore.client.Client;
+import de.sealcore.client.ui.overlay.DebugOverlay;
 import de.sealcore.client.ui.overlay.OverlayManager;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
@@ -63,8 +64,8 @@ public class EntityUpdatePosPacket extends Packet
     public void handle()
     {
         Client.instance.gameState.updateMeshPos(id, x, y, z);
-        OverlayManager.debugDir = String.valueOf(angleX);
-        OverlayManager.debugX = x;
-        OverlayManager.debugY = y;
+        DebugOverlay.direction = angleX;
+        DebugOverlay.posX = x;
+        DebugOverlay.posY = y;
     }
 }

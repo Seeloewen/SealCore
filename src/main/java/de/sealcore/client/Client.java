@@ -6,6 +6,7 @@ import de.sealcore.client.state.world.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
+import de.sealcore.client.ui.overlay.DebugOverlay;
 import de.sealcore.client.ui.rendering.Renderer;
 import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.overlay.OverlayManager;
@@ -19,6 +20,8 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.*;
 
 
+import java.time.LocalDateTime;
+
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -27,6 +30,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class Client {
 
     public static Client instance;
+    private long lastTime = 0;
 
     private long window;
 
@@ -96,6 +100,13 @@ public class Client {
         while ( !glfwWindowShouldClose(window) && !InputHandler.isPressed(KeyBinds.EXIT)) {
 
             double dt = DeltaTimer.getDeltaTime();
+
+            long currentTime = System.currentTimeMillis();
+            if(currentTime - lastTime >= 1000)
+            {
+                lastTime = currentTime;
+                DebugOverlay.fps = 1.0 / dt;
+            }
 
             int queueSize = PacketHandler.getQueueSize();
             for(int i = 0; i < queueSize; i++)

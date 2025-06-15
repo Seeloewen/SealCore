@@ -12,10 +12,8 @@ import org.lwjgl.glfw.GLFW;
 public class OverlayManager {
 
 
-    static boolean showInventory = false;
-    public static String debugDir ="";
-    public static double debugX = 0;
-    public static double debugY = 0;
+    private static boolean showInventory = false;
+    private static boolean showDebugOverlay = false;
 
 
 
@@ -26,18 +24,7 @@ public class OverlayManager {
 
 
     public static void render() {
-
-        TextRenderer.drawString(10, 10, 3, debugDir, 0);
-        TextRenderer.drawString(10, 60, 3, String.valueOf(debugX), 0);
-        TextRenderer.drawString(10, 110, 3, String.valueOf(debugY), 0);
-
-        /*if(test) {
-
-            PrimitiveRenderer.drawRectangle(new Rectangle(100, 100, 200, 200), new Color(0.7f, 0.3f, 0.1f), 0f);
-
-            TextRenderer.drawString(200, 200, 3, "Berr Hert", 0f);
-        }*/
-
+        if(showDebugOverlay) DebugOverlay.render();
         if(showInventory) Client.instance.inventoryState.render();
         Client.instance.inventoryState.renderHotbar();
     }
@@ -54,6 +41,10 @@ public class OverlayManager {
             showInventory = !showInventory;
             InputHandler.showMouse = !InputHandler.showMouse;
             InputHandler.changeMouseMode();
+        }
+        else if(key == GLFW.GLFW_KEY_F3)
+        {
+            showDebugOverlay = !showDebugOverlay;
         }
     }
 
