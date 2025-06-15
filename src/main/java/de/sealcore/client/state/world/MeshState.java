@@ -1,30 +1,28 @@
 package de.sealcore.client.state.world;
 
-import de.sealcore.client.model.loading.MeshLoader;
-import de.sealcore.client.model.mesh.Mesh;
 import de.sealcore.client.ui.rendering.mesh.MeshRenderer;
+import org.joml.Matrix4f;
 
 public class MeshState {
 
 
-    Mesh mesh;
+    String meshID;
     public double posX;
     public double posY;
     public double posZ;
 
     MeshState(String modelID, double posX, double posY, double posZ, double sizeX, double sizeY, double sizeZ) {
-        mesh = MeshLoader.loadMesh(modelID);
+        this.meshID = modelID;
     }
 
     void setPosition(double x, double y, double z) {
         posX = x;
         posY = y;
         posZ = z;
-        mesh.setPosition(x, y, z);
     }
 
     void render() {
-        MeshRenderer.render(mesh);
+        MeshRenderer.render(meshID, new Matrix4f().translate((float) posX, (float) posY, (float) posZ));
     }
 
 

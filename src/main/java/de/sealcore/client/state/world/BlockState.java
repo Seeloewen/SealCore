@@ -13,29 +13,21 @@ public class BlockState {
     private String type;
     private int x;
     private int y;
-    private Mesh mesh;
+    private Matrix4f pos;
+
 
 
     BlockState(String id, int globalX, int globalY) {
         type = id;
         x = globalX;
         y = globalY;
-        mesh = calcMesh();
-        mesh.position = new Matrix4f().translate(x, y, 0);
+        pos = new Matrix4f().translate(x, y, 0);
     }
 
     void render() {
-        MeshRenderer.render(mesh);
+        MeshRenderer.render(type, pos);
     }
 
-    private Mesh calcMesh() {
-        try {
-            return MeshLoader.loadMesh(type);
-        } catch (RuntimeException e) {
-            Log.error(LogType.RENDERING, "RuntimeException loading mesh of type " + type + ": " + e.getMessage());
-        }
-        return new Mesh(new MeshSide[0]);
-    }
 
 
 

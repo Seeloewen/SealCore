@@ -24,5 +24,8 @@ public class KeyBinds {
 
     public static final int RELOAD = GLFW_KEY_R;
 
+    public static final int CAMMODE = GLFW_KEY_C;
+    public static final int MOUSEMODE = GLFW_KEY_M;
+
 
 }

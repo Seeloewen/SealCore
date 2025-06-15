@@ -1,7 +1,8 @@
 package de.sealcore.networking.packets;
 
 import de.sealcore.networking.TcpClient;
-import de.sealcore.networking.TcpServer;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 
 public abstract class Packet
 {
@@ -30,5 +31,13 @@ public abstract class Packet
 
     public abstract String toJson();
 
-    public abstract void handle();
+    public void handle() {
+        try {
+            onHandle();
+        } catch(Exception e) {
+            Log.error(LogType.NETWORKING, "Exception while handling Packet \n" + toJson() + "\n" + e.toString());
+        }
+    }
+
+    public abstract void onHandle();
 }

@@ -10,27 +10,20 @@ public class FloorState {
     private String type;
     private int x;
     private int y;
-    private Mesh mesh;
+    private String meshID;
+    private Matrix4f pos;
 
 
     FloorState(String id, int globalX, int globalY) {
         type = id;
         x = globalX;
         y = globalY;
-        mesh = calcMesh();
-        mesh.position = new Matrix4f().translate(x, y, -1);
+        meshID = id;
+        pos = new Matrix4f().translate(x, y, -1);
     }
 
     void render() {
-        MeshRenderer.render(mesh);
-    }
-
-    private Mesh calcMesh() {
-        return switch(type) {
-            case "f:grass" -> MeshLoader.loadMesh("f:grass");
-            case "f:water" -> MeshLoader.loadMesh("f:water");
-            default -> throw new IllegalStateException("Unexpected value: " + type);
-        };
+        MeshRenderer.render(meshID, pos);
     }
 
 }

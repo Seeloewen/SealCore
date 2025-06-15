@@ -6,7 +6,6 @@ import org.joml.Matrix4f;
 
 public class Mesh {
 
-    public Matrix4f position;
 
     private VertexBuffer buffer;
     private final int size;
@@ -25,16 +24,12 @@ public class Mesh {
         buffer = new VertexBuffer(vertices, layout);
         size = vertices.length;
 
-        position = new Matrix4f();
     }
 
     public int size() {
         return size;
     }
 
-    public void setPosition(double x, double y, double z) {
-        position = new Matrix4f().translate((float) x, (float)y, (float)z);
-    }
 
     public void bind() {
         buffer.bind();

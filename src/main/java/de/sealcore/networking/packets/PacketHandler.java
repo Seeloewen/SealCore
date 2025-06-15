@@ -1,7 +1,6 @@
 package de.sealcore.networking.packets;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 
 public class PacketHandler
 {

@@ -77,7 +77,7 @@ public class ChunkAddPacket extends Packet
         return obj.toString();
     }
 
-    public void handle()
+    public void onHandle()
     {
 
         Client.instance.gameState.loadChunk(id, floors, blocks);

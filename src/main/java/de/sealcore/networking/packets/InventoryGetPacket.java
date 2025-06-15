@@ -74,7 +74,7 @@ public class InventoryGetPacket extends Packet
         return obj.toString();
     }
 
-    public void handle()
+    public void onHandle()
     {
         //
     }

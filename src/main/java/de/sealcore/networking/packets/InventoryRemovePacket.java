@@ -47,7 +47,7 @@ public class InventoryRemovePacket extends Packet
         return obj.toString();
     }
 
-    public void handle()
+    public void onHandle()
     {
         //
     }

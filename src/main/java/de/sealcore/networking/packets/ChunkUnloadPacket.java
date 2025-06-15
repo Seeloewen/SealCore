@@ -41,7 +41,7 @@ public class ChunkUnloadPacket extends Packet
         return obj.toString();
     }
 
-    public void handle()
+    public void onHandle()
     {
         Client.instance.gameState.unloadChunk(id);
     }

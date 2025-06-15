@@ -46,7 +46,7 @@ public class MoveInputPacket extends Packet
         return obj.toString();
     }
 
-    public void handle()
+    public void onHandle()
     {
         Server.game.players.get(getSender()).updateInputs(x, y, angleHor);
 
