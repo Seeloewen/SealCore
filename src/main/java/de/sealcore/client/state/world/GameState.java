@@ -60,6 +60,11 @@ public class GameState {
         Log.info(LogType.RENDERING, "loaded chunk " + id);
     }
 
+    public void unloadChunk(int id) {
+        loadedChunks.remove(id);
+        Log.info(LogType.RENDERING, "unloaded chunk " + id);
+    }
+
     public void updateFloorChunk(int id, String floorID, int index) {
         loadedChunks.get(id).floors[index] = new FloorState(floorID, ChunkIndex.toX(id)*8+index%8, ChunkIndex.toY(id)*8+index/8);
     }

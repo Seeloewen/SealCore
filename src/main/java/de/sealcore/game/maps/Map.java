@@ -5,7 +5,10 @@ import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.chunks.ChunkGenerator;
 import de.sealcore.game.floors.Floor;
 import de.sealcore.util.ChunkIndex;
-import de.sealcore.util.Maths;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
+
+import static de.sealcore.util.MathUtil.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -30,10 +33,14 @@ public class Map
         generator = new ChunkGenerator(seed, layout);
 
         //Generate the first four chunks (spawn chunks)
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < 36; i++)
         {
-            genChunk(ChunkIndex.toX(i), ChunkIndex.toY(i));
+            genChunk(i);
         }
+    }
+
+    public Chunk genChunk(int i) {
+        return genChunk(ChunkIndex.toX(i), ChunkIndex.toY(i));
     }
 
     public Chunk genChunk(int x, int y)
@@ -44,8 +51,7 @@ public class Map
         //Generate a new chunk and add it to the register
         Chunk c = generator.getChunk(x, y);
         chunks[i] = c;
-
-        c.sendAddPacket();
+        Log.info(LogType.GAME, "generated chunk " + i);
 
         //Returns the chunk in case further action should be applied
         return c;
@@ -56,25 +62,22 @@ public class Map
         //Gets the chunk from the list
         int i = ChunkIndex.toI(x, y);
 
-        if(i >= chunks.length) return null;
         return chunks[i];
     }
 
     public Chunk getChunk(int i) {
-        if(i >= chunks.length) return null;
         return chunks[i];
     }
 
+
     public Block getBlock(int x, int y)
     {
+
+        Chunk c = getChunk(toChunk(x), toChunk(y));
+
         //Effectively deletes the decimal part, resulting in the raw chunk
-        int cx = (int)Math.floor((double) x / 8);
-        int cy = (int)Math.floor((double) y / 8);
-
-        Chunk c = getChunk(cx, cy);
-
-        x = Maths.safeMod(x, 8);
-        y = Maths.safeMod(y, 8);
+        x = safeMod(x, 8);
+        y = safeMod(y, 8);
 
         if(c != null) return c.getBlock(x, y);
 
@@ -83,14 +86,11 @@ public class Map
 
     public Floor getFloor(int x, int y)
     {
-        //Effectively deletes the decimal part, resulting in the raw chunk
-        int cx = (int)Math.floor((double) x / 8);
-        int cy = (int)Math.floor((double) y / 8);
 
-        Chunk c = getChunk(cx, cy);
+        Chunk c = getChunk(toChunk(x), toChunk(y));
 
-        x = Maths.safeMod(x, 8);
-        y = Maths.safeMod(y, 8);
+        x = safeMod(x, 8);
+        y = safeMod(y, 8);
 
         if(c != null) return c.getFloor(x, y);
 

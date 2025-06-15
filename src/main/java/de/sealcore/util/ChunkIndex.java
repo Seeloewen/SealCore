@@ -63,6 +63,9 @@ public class ChunkIndex {
 
     }
 
+    public static int blockToI(int x, int y) {
+        return toI(MathUtil.toChunk(x), MathUtil.toChunk(y));
+    }
 
     private static int max(int... values) {
         int max = 0;

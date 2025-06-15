@@ -5,6 +5,7 @@ import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.EntityAddPacket;
 import de.sealcore.networking.packets.EntityUpdatePosPacket;
 import de.sealcore.server.Server;
+import de.sealcore.util.MathUtil;
 
 public abstract class Entity {
 
@@ -73,12 +74,12 @@ public abstract class Entity {
         var game = Server.game;
 
         if(dx < 0) {
-            int x1 = toBlock(posX);
-            int x2 = toBlock(posX+dx);
+            int x1 = MathUtil.toBlock(posX);
+            int x2 = MathUtil.toBlock(posX+dx);
             posX += dx;
             if(x1 != x2) {
-                int top = toBlock(posY + sizeY);
-                int bot = toBlock(posY);
+                int top = MathUtil.toBlock(posY + sizeY);
+                int bot = MathUtil.toBlock(posY);
                 for(int y = bot; y <= top; y++) {
                     if(game.isSolid(x2, y)) {
                         posX = (double)x2 + 0.001 + 1.0;
@@ -86,12 +87,12 @@ public abstract class Entity {
                 }
             }
         } else if( dx > 0) {
-            int x1 = toBlock(posX+sizeX);
-            int x2 = toBlock(posX+dx+sizeX);
+            int x1 = MathUtil.toBlock(posX+sizeX);
+            int x2 = MathUtil.toBlock(posX+dx+sizeX);
             posX += dx;
             if(x1 != x2) {
-                int top = toBlock(posY + sizeY);
-                int bot = toBlock(posY);
+                int top = MathUtil.toBlock(posY + sizeY);
+                int bot = MathUtil.toBlock(posY);
                 for(int y = bot; y <= top; y++) {
                     if(game.isSolid(x2, y)) {
                         posX = (double)x2 - 0.001 - sizeX;
@@ -100,12 +101,12 @@ public abstract class Entity {
             }
         }
         if(dy < 0) {
-            int y1 = toBlock(posY);
-            int y2 = toBlock(posY+dy);
+            int y1 = MathUtil.toBlock(posY);
+            int y2 = MathUtil.toBlock(posY+dy);
             posY += dy;
             if(y1 != y2) {
-                int left = toBlock(posX);
-                int right = toBlock(posX + sizeX);
+                int left = MathUtil.toBlock(posX);
+                int right = MathUtil.toBlock(posX + sizeX);
                 for(int x = left; x <= right; x++) {
                     if(game.isSolid(x, y2)) {
                         posY = y2 + 1 + 0.001;
@@ -113,12 +114,12 @@ public abstract class Entity {
                 }
             }
         } else if(dy > 0) {
-            int y1 = toBlock(posY + sizeY);
-            int y2 = toBlock(posY + dy + sizeY);
+            int y1 = MathUtil.toBlock(posY + sizeY);
+            int y2 = MathUtil.toBlock(posY + dy + sizeY);
             posY += dy;
             if(y1 != y2) {
-                int left = toBlock(posX);
-                int right = toBlock(posX + sizeX);
+                int left = MathUtil.toBlock(posX);
+                int right = MathUtil.toBlock(posX + sizeX);
                 for(int x = left; x <= right; x++) {
                     if(game.isSolid(x, y2)) {
                         posY = y2 - sizeY - 0.001;
@@ -155,9 +156,6 @@ public abstract class Entity {
     }
 
 
-    private int toBlock(double v) {
-        return v >= 0 ? (int)v : ((int)v)-1;
-    }
 
 
 

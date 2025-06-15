@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
+import static de.sealcore.util.MathUtil.*;
+
 public class Game
 {
     public InventoryManager inventoryManager;
@@ -48,14 +50,10 @@ public class Game
         Player player = new Player(id);
         entities.add(player);
         players.put(id, player);
-        NetworkHandler.sendOnly(id, new SetFollowCamPacket(player.getID()));
         player.sendAdd();
+        NetworkHandler.sendOnly(id, new SetFollowCamPacket(player.getID()));
         Log.info(LogType.GAME, "player " + id + " joined the game");
-        for (int i = 0; i < 10; i++)
-        {
-            var chunk = currentMap.getChunk(i);
-            if (chunk != null) chunk.sendAddPacket(id);
-        }
+        player.updateLoadedChunks();
         for (Entity entity : entities)
         {
             if (entity != player) entity.sendAdd(id);
@@ -110,11 +108,11 @@ public class Game
 
     public boolean isSolid(int x, int y)
     {
-        Chunk chunk = currentMap.getChunk(x < 0 ? (x - 7) / 8 : x / 8, y < 0 ? (y - 7) / 8 : y / 8);
+        Chunk chunk = currentMap.getChunk(toChunk(x), toChunk(y));
         //return false;
         if (chunk == null) return false;
-        var block = chunk.getBlock((x % 8 + 8) % 8, (y % 8 + 8) % 8);
-        return !chunk.getFloor((x % 8 + 8) % 8, (y % 8 + 8) % 8).info.isSolid() || (block != null && block.info.isSolid());
+        var block = chunk.getBlock(safeMod(x, 8), safeMod(y, 8));
+        return !chunk.getFloor(safeMod(x, 8), safeMod(y, 8)).info.isSolid() || (block != null && block.info.isSolid());
     }
 
 }
