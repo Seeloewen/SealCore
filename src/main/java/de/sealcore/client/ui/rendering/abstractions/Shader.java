@@ -57,8 +57,8 @@ public class Shader {
     }
 
     private void init(String srcFolder) {
-        int vert = createShader(GL_VERTEX_SHADER, srcFolder + "\\vert.glsl");
-        int frag = createShader(GL_FRAGMENT_SHADER, srcFolder + "\\frag.glsl");
+        int vert = createShader(GL_VERTEX_SHADER, srcFolder + "/vert.glsl");
+        int frag = createShader(GL_FRAGMENT_SHADER, srcFolder + "/frag.glsl");
 
         program = glCreateProgram();
         glAttachShader(program, vert);
