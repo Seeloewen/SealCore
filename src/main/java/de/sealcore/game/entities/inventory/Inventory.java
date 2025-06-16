@@ -25,22 +25,22 @@ public class Inventory
             //Add all different slot types
             if (u > 0)
             {
-                slots[i] = new InventorySlot(i);
+                slots[i] = new InventorySlot(this, i);
                 u--;
             }
             else if (m > 0)
             {
-                slots[i] = new InventorySlot(i, ItemType.MATERIAL);
+                slots[i] = new InventorySlot(this, i, ItemType.MATERIAL);
                 m--;
             }
             else if (w > 0)
             {
-                slots[i] = new InventorySlot(i, ItemType.WEAPON);
+                slots[i] = new InventorySlot(this, i, ItemType.WEAPON);
                 w--;
             }
             else if (a > 0)
             {
-                slots[i] = new InventorySlot(i, ItemType.AMMO);
+                slots[i] = new InventorySlot(this, i, ItemType.AMMO);
                 a--;
             }
         }

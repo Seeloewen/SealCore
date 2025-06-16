@@ -65,6 +65,11 @@ public class InventoryState
         this.y = y;
     }
 
+    public void updateSlot(int index, String id, int amount)
+    {
+        getSlot(index).update(id, amount);
+    }
+
     public void positionSlots()
     {
         int offset = 0;
@@ -130,6 +135,17 @@ public class InventoryState
                 if (c == n) return s;
                 c++; //Nice
             }
+        }
+
+        return null;
+    }
+
+    private SlotState getSlot(int i)
+    {
+        //Get the slot with the specified id
+        for(SlotState s : slots)
+        {
+            if(i == s.index) return s;
         }
 
         return null;

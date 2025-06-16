@@ -77,7 +77,7 @@ public class NetworkHandler
             case PacketType.ENTITYREMOVE -> p = EntityRemovePacket.fromJson(args);
             case PacketType.ENTITYUPDATEPOS -> p = EntityUpdatePosPacket.fromJson(args);
             case PacketType.INVENTORYADD -> p = InventoryAddPacket.fromJson(args);
-            case PacketType.INVENTORYGET -> p = InventoryGetPacket.fromJson(args);
+            case PacketType.INVENTORYSTATE -> p = InventoryStatePacket.fromJson(args);
             case PacketType.INVENTORYMOVE -> p = InventoryMovePacket.fromJson(args);
             case PacketType.INVENTORYREMOVE -> p = InventoryRemovePacket.fromJson(args);
             case PacketType.MOVEINPUT -> p = MoveInputPacket.fromJson(args);

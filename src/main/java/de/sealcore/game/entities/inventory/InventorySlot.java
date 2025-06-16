@@ -2,27 +2,33 @@ package de.sealcore.game.entities.inventory;
 
 import de.sealcore.game.items.ItemRegister;
 import de.sealcore.game.items.ItemType;
+import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.InventoryStatePacket;
 
 public class InventorySlot
 {
+    private Inventory inv;
+
     public int index;
-    public String id;
+    public String id = "";
     public int amount;
-    public String tag;
+    public String tag = "";
 
     public final ItemType type;
     public boolean universalSlot;
 
-    public InventorySlot(int index, ItemType type)
+    public InventorySlot(Inventory inv, int index, ItemType type)
     {
         this.index = index;
         this.type = type;
+        this.inv = inv;
     }
 
-    public InventorySlot(int index)
+    public InventorySlot(Inventory inv, int index)
     {
         this.type = null;
         this.index = index;
+        this.inv = inv;
         universalSlot = true;
     }
 
@@ -48,7 +54,9 @@ public class InventorySlot
         int possibleAmount = ItemRegister.getItem(id).info.maxAmount() - this.amount; //Check how many more items can be added to this slot
         int addAmount = Integer.min(amount, possibleAmount); //Calculate how many items will be added
 
-        amount += addAmount;
+        this.amount += addAmount;
+
+        NetworkHandler.sendOnly(inv.id, new InventoryStatePacket(inv));
 
         return amount - addAmount; //Returns the number of items that still need to be added
     }
@@ -85,7 +93,9 @@ public class InventorySlot
     {
         int removeAmount = Integer.min(amount, this.amount); //Calculate how many items will be removed
 
-        amount -= removeAmount;
+        this.amount -= removeAmount;
+
+        NetworkHandler.sendOnly(inv.id, new InventoryStatePacket(inv));
 
         return amount - removeAmount; //Returns the amount of items that still needs to be removed
     }
