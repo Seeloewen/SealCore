@@ -2,7 +2,7 @@ package de.sealcore.client.state.world;
 
 import de.sealcore.util.ChunkIndex;
 
-class ChunkState {
+public class ChunkState {
 
     FloorState[] floors;
     BlockState[] blocks;
@@ -29,6 +29,12 @@ class ChunkState {
         for(BlockState b : blocks) if(b != null) b.render();
     }
 
+    public void rayIntersectChunks(double[] o, double[] d) {
+        for(int i = 0; i < 64; i++) {
+            if(blocks[i] != null) blocks[i].rayIntersect(o, d);
+            if(floors[i] != null) floors[i].rayIntersect(o, d);
+        }
+    }
 
 
 }

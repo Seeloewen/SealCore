@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class GameState {
 
-    HashMap<Integer, ChunkState> loadedChunks;
+    public HashMap<Integer, ChunkState> loadedChunks;
 
     public HashMap<Integer, MeshState> loadedMeshes;
 

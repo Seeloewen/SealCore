@@ -22,7 +22,12 @@ public class Camera {
 
     int targetEntity;
     double distTargetEntity;
-
+    public int targetBlockX;
+    public int targetBlockY;
+    public double distTargetBlock;
+    public int targetFloorX;
+    public int targetFloorY;
+    public double distTargetFloor;
 
     public Camera() {
         position = new Vector3f(-5f, 0f, 0f);
@@ -86,6 +91,13 @@ public class Camera {
                 distTargetEntity = t;
             }
         }
+
+        distTargetBlock = -1;
+        distTargetFloor = -1;
+        for(var c : Client.instance.gameState.loadedChunks.values()) {
+            c.rayIntersectChunks(origin, direction);
+        }
+
 
         /*if(targetEntity != -1) {
             Log.info(LogType.GAME, "intersect! with " + targetEntity);
