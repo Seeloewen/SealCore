@@ -1,5 +1,6 @@
 package de.sealcore.util.timing;
 
+import de.sealcore.client.ui.overlay.DebugOverlay;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 import org.lwjgl.glfw.*;
@@ -43,6 +44,7 @@ public class DeltaTimer {
         sum = 0;
         c = 0;
         lastPrint = timeLast;
+        DebugOverlay.fps = sum/c;
     }
 
     public static double getCurrentTime() {
@@ -51,16 +53,18 @@ public class DeltaTimer {
 
     public static boolean blockToTarget(double targetDeltaTime) {
         double target = timeLast + targetDeltaTime;
-        timeLast = target;
 
         if(target < GLFW.glfwGetTime()) {
+            timeLast = GLFW.glfwGetTime();
             return false;
         }
+
+        timeLast = target;
 
         while(true) {
             double t = GLFW.glfwGetTime();
             if(target <= t) break;
-        };
+        }
         return true;
     }
 

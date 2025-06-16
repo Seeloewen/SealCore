@@ -15,7 +15,7 @@ public abstract class Entity {
 
     private final int id;
 
-    public double moveSpeed = 3;
+    public double moveSpeed = 6;
 
     private String entityType;
 

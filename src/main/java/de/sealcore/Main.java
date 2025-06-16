@@ -10,6 +10,8 @@ import de.sealcore.util.logging.LogType;
 
 import java.util.Scanner;
 
+import static org.lwjgl.glfw.GLFW.glfwInit;
+
 public class Main
 {
     public static final String VERSION = "Dev";
@@ -24,6 +26,8 @@ public class Main
         FlatLightLaf.setup();
 
         parseArgs(args);
+
+        if(!glfwInit()) throw new IllegalStateException("Failed to initialize GLFW");
 
         switch (getNetworkType(args[0]))
         {

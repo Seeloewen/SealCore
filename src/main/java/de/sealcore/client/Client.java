@@ -101,13 +101,6 @@ public class Client {
 
             double dt = DeltaTimer.getDeltaTime();
 
-            long currentTime = System.currentTimeMillis();
-            if(currentTime - lastTime >= 1000)
-            {
-                lastTime = currentTime;
-                DebugOverlay.fps = 1.0 / dt;
-            }
-
             int queueSize = PacketHandler.getQueueSize();
             for(int i = 0; i < queueSize; i++)
             {

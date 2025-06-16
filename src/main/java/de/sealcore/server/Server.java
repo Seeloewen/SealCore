@@ -5,6 +5,8 @@ import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
 import de.sealcore.server.commands.CommandHandler;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 import de.sealcore.util.timing.DeltaTimer;
 
 import java.util.Scanner;
@@ -45,13 +47,8 @@ public class Server
             {
                 PacketHandler.handleNext();
             }
-            //DeltaTimer.blockToTarget(1/30d);
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            game.tick(1/30d);
+            if(!DeltaTimer.blockToTarget(0.015d)) Log.warn(LogType.PERFORMANCE, "last server tick exceeded 0.015ms");
+            game.tick(0.015d);
 
         }
     }
