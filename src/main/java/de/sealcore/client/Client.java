@@ -93,7 +93,7 @@ public class Client {
 
     private void loop() {
 
-        glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
+        glClearColor(0.5f, 0.88f, 0.95f, 0.0f);
 
         DeltaTimer.start();
 
@@ -116,6 +116,8 @@ public class Client {
 
             camera.update(CamMoveInput.generate(), dt);
             if(!InputHandler.camMode) PlayerMoveInputState.update();
+
+            camera.updateTargeted();
 
             renderer.render(camera);
             glfwSwapBuffers(window); // swap the color buffers

@@ -2,6 +2,8 @@ package de.sealcore.client;
 
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 import org.joml.Vector3f;
@@ -17,6 +19,10 @@ public class Camera {
     private Vector3f position;
     public double angleHor;
     private double angleVert;
+
+    int targetEntity;
+    double distTargetEntity;
+
 
     public Camera() {
         position = new Vector3f(-5f, 0f, 0f);
@@ -58,5 +64,37 @@ public class Camera {
     public void follow(int id) {
         following = id;
     }
+
+
+    public void updateTargeted() {
+        if(following == -1) return;
+        var player = Client.instance.gameState.getMesh(following);
+        double[] origin = {player.posX+0.3f, player.posY+0.48f, player.posZ+1.8f};
+        double[] direction = {
+                Math.cos(angleVert) * Math.cos(angleHor),
+                Math.cos(angleVert) * Math.sin(angleHor),
+                Math.sin(-angleVert)
+        };
+
+        targetEntity = -1;
+        distTargetEntity = -1;
+        for(var p : Client.instance.gameState.loadedMeshes.entrySet()) {
+            if(p.getKey() == following) continue;
+            double t = p.getValue().rayIntersect(origin, direction);
+            if((targetEntity == -1 && t >= 0) || distTargetEntity > t ) {
+                targetEntity = p.getKey();
+                distTargetEntity = t;
+            }
+        }
+
+        /*if(targetEntity != -1) {
+            Log.info(LogType.GAME, "intersect! with " + targetEntity);
+        }*/
+    }
+
+
+
+
+
 
 }

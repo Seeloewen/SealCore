@@ -86,7 +86,9 @@ public class GameState {
         loadedMeshes.remove(id);
     }
 
-
+    public MeshState getMesh(int id) {
+        return loadedMeshes.get(id);
+    }
 
 
 }

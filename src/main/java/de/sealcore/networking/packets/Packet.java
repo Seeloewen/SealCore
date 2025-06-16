@@ -40,7 +40,7 @@ public abstract class Packet
         }
         catch (Exception e)
         {
-            Log.error(LogType.NETWORKING, "Exception while handling Packet \n" + toJson() + "\n" + e.toString());
+            Log.warn(LogType.NETWORKING, "Exception while handling Packet \n" + toJson() + "\n" + e.toString());
 
             //Log stack trace if verbose logging is enabled
             for (StackTraceElement el : e.getStackTrace())

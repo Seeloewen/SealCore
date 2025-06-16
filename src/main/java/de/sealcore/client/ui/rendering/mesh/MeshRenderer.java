@@ -29,7 +29,7 @@ public class MeshRenderer {
         loadedMeshes = new HashMap<>();
 
 
-        perspective = new Matrix4f().perspective(1f, 1/Resolution.RATIO, 0.5f, 100f);
+        perspective = new Matrix4f().perspective(1f, 1/Resolution.RATIO, 0.1f, 100f);
 
         viewRot = new Matrix4f().lookAt(
                 new Vector3f(0f,0f,0f),
@@ -67,6 +67,7 @@ public class MeshRenderer {
 
         m.bind();
 
+        shader.use();
         shader.setUniformMat4("model", position);
 
         GL33.glDrawArrays(GL33.GL_TRIANGLES, 0, m.size());
