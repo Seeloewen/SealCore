@@ -35,7 +35,7 @@ public abstract class Packet
         try {
             onHandle();
         } catch(Exception e) {
-            Log.error(LogType.NETWORKING, "Exception while handling Packet \n" + toJson() + "\n" + e.toString());
+            Log.warn(LogType.NETWORKING, "Exception while handling Packet \n" + toJson() + "\n" + e.toString());
         }
     }
 
