@@ -38,13 +38,13 @@ public class DeltaTimer {
     }
 
     private static void printStats() {
+        DebugOverlay.fps = c;
         Log.info(LogType.PERFORMANCE, String.format("dt last second=(%.3f|%.3f|%.3f)", min, sum/c, max));
         min = Float.MAX_VALUE;
         max = Float.MIN_VALUE;
         sum = 0;
         c = 0;
         lastPrint = timeLast;
-        DebugOverlay.fps = sum/c;
     }
 
     public static double getCurrentTime() {
