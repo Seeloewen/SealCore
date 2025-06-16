@@ -6,6 +6,7 @@ public class ItemRegister
     {
         return switch(id)
         {
+            case "grass_block" -> new Grass_Block();
             default -> null;
         };
     }

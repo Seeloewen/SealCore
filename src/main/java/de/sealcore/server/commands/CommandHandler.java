@@ -30,10 +30,13 @@ public class CommandHandler
         switch(cmd[0])
         {
             case "ping":
-                Commands.HandlePong(args);
+                Commands.handlePong(args);
                 break;
             case "debugrenderer":
-                Commands.HandleDebugRenderer();
+                Commands.handleDebugRenderer();
+                break;
+            case "additem":
+                Commands.handleAddItem(args);
                 break;
             default:
                 Log.info(LogType.MAIN, "Unknown Command.");

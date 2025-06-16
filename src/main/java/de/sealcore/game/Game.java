@@ -39,9 +39,10 @@ public class Game
 
     public void tick(double dt)
     {
-
-        for (Entity entity : entities) entity.doPhysicsTick(dt);
-
+        for(int i = 0; i< entities.size(); i++)
+        {
+            entities.get(i).doPhysicsTick(dt);
+        }
     }
 
 

@@ -77,5 +77,9 @@ public class TextureRenderer {
         v[i+4] = 1-t;
     }
 
+    public static void initTextures()
+    {
+
+    }
 
 }

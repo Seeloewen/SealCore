@@ -1,23 +1,22 @@
 package de.sealcore.networking.packets;
 
-import com.fasterxml.jackson.databind.node.TextNode;
 import de.sealcore.client.Client;
 import de.sealcore.game.entities.inventory.Inventory;
+import de.sealcore.game.entities.inventory.InventoryManager;
 import de.sealcore.game.entities.inventory.InventorySlot;
 import de.sealcore.game.items.ItemType;
-import de.sealcore.server.Server;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 
 import java.util.ArrayList;
 
-public class InventoryGetPacket extends Packet
+public class InventoryStatePacket extends Packet
 {
     private Inventory inventory;
 
-    public InventoryGetPacket(Inventory inv)
+    public InventoryStatePacket(Inventory inv)
     {
-        super(PacketType.INVENTORYGET);
+        super(PacketType.INVENTORYSTATE);
 
         inventory = inv;
     }
@@ -29,8 +28,8 @@ public class InventoryGetPacket extends Packet
         JsonArray slotObjects = args.getArray("slots");
 
         //Construct list of slots from data
-        ArrayList<InventorySlot> slots = new ArrayList<InventorySlot>();
-        for(int i = 0; i < slotObjects.getSize() - 1; i++)
+        InventorySlot[] slots = new InventorySlot[slotObjects.getSize()];
+        for(int i = 0; i < slotObjects.getSize(); i++)
         {
             JsonObject o = (JsonObject)slotObjects.get(i);
             int index = o.getInt("index");
@@ -39,13 +38,13 @@ public class InventoryGetPacket extends Packet
             int amount = o.getInt("amount");
             String tag = o.getString("tag");
 
-            slots.add(new InventorySlot(index, type, id, amount, tag));
+            slots[i] = new InventorySlot(index, type, id, amount, tag);
         }
 
         //Create an inventory of the given slots
-        Inventory inv = Server.game.inventoryManager.createInventory(slots.toArray(new InventorySlot[0]));
+        Inventory inv = InventoryManager.createInventory(slots);
 
-        return new InventoryGetPacket(inv);
+        return new InventoryStatePacket(inv);
     }
 
     public String toJson()
@@ -59,12 +58,16 @@ public class InventoryGetPacket extends Packet
 
         for (InventorySlot s : inventory.getSlots())
         {
+            if(s == null) continue;
+
             JsonObject o = JsonObject.fromScratch();
             o.addInt("index", s.index);
             o.addInt("type", s.type.ordinal());
             o.addString("id", s.id);
             o.addInt("amount", s.amount);
             o.addString("tag", s.tag);
+
+            slots.addObject(o);
         }
 
         args.addArray("slots", slots);
@@ -76,6 +79,9 @@ public class InventoryGetPacket extends Packet
 
     public void onHandle()
     {
-        //
+        for(InventorySlot s : inventory.getSlots())
+        {
+            Client.instance.inventoryState.updateSlot(s.index, s.id, s.amount);
+        }
     }
 }

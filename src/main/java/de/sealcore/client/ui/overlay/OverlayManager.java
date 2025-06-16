@@ -8,6 +8,8 @@ import de.sealcore.client.ui.rendering.primitives.Rectangle;
 import de.sealcore.client.ui.rendering.text.TextRenderer;
 import de.sealcore.client.ui.rendering.texture.TextureRenderer;
 import de.sealcore.util.Color;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 import org.lwjgl.glfw.GLFW;
 
 public class OverlayManager {
@@ -20,7 +22,7 @@ public class OverlayManager {
 
 
     public static void init() {
-
+        initTextures();
     }
 
 
@@ -53,6 +55,17 @@ public class OverlayManager {
         }
     }
 
-
+    public static void initTextures()
+    {
+        //Load all the textures required for the game
+        try
+        {
+            TextureRenderer.loadTexture("grass_block", "textures/Grass_Block.png");
+        }
+        catch(Exception e)
+        {
+            Log.error(LogType.RENDERING, "Could not load textures: " + e.getMessage());
+        }
+    }
 
 }
