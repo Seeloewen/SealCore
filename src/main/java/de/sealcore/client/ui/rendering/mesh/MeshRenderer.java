@@ -29,7 +29,7 @@ public class MeshRenderer {
         loadedMeshes = new HashMap<>();
 
 
-        perspective = new Matrix4f().perspective(1f, 1/Resolution.RATIO, 0.1f, 100f);
+        refreshProjection();
 
         viewRot = new Matrix4f().lookAt(
                 new Vector3f(0f,0f,0f),
@@ -46,6 +46,10 @@ public class MeshRenderer {
         loadMesh( "b:oak_tree");
 
 
+    }
+
+    public static void refreshProjection() {
+        perspective = new Matrix4f().perspective(1f, 1/Resolution.RATIO, 0.1f, 100f);
     }
 
     public static void setCamera(Camera camera) {
