@@ -1,10 +1,17 @@
 package de.sealcore.game.entities.general;
 
 import de.sealcore.game.chunks.Chunk;
+import de.sealcore.game.items.Item;
+import de.sealcore.game.items.ItemRegister;
+import de.sealcore.game.items.ItemType;
+import de.sealcore.game.items.weapons.Weapon;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.ChunkUnloadPacket;
+import de.sealcore.networking.packets.SetHPPacket;
 import de.sealcore.server.Server;
 import de.sealcore.util.ChunkIndex;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 
 import java.util.HashSet;
 
@@ -22,7 +29,7 @@ public class Player extends Entity{
     private HashSet<Integer> loadedChunks;
 
     public Player(int clientID) {
-        super("e:player");
+        super("e:player", 10, 0, 0);
         this.clientID = clientID;
         sizeX = 0.6;
         sizeY = sizeX * 16.0/10;
@@ -30,6 +37,71 @@ public class Player extends Entity{
 
         loadedChunks = new HashSet<>();
         inventory = Server.game.inventoryManager.createInventory(clientID, MAT_SLOTS, WEAPON_SLOTS, AMMO_SLOTS, UNI_SLOTS);
+    }
+
+
+    @Override
+    public void damage(int damage, int source) {
+        super.damage(damage, source);
+        setHP(hp);
+    }
+
+    private void setHP(int hp) {
+        this.hp = hp;
+        NetworkHandler.sendOnly(clientID, new SetHPPacket(hp));
+    }
+
+
+    @Override
+    protected void onDeath(int source) {
+        posX = 0;
+        posY = 0;
+        setHP(15);
+    }
+
+
+    public void interact(int slotIndex, boolean leftClick, int te, double dte,
+                         int tbx, int tby, double dtb,
+                         int tfx, int tfy, double dtf) {
+        var slot = inventory.getSlot(slotIndex);
+        Item item = ItemRegister.getItem(slot.id);
+        /*if(item instanceof Weapon w && w.info.type() == ItemType.WEAPON_RANGED) {
+            int a = w.getIntTag("ammoAmount");
+            if(a > 0) {
+                w.writeTag("ammoAmount", a-1);
+                Log.debug("ammo"+w.getIntTag("ammoAmount"));
+            }
+        }*/
+
+        if(dte >= 0 && (dtb < 0 || dte < dtb) && (dtf < 0 || dte < dtf)) {
+            switch (item.info.type()) {
+                case WEAPON_MELEE -> {
+                    Weapon weapon = (Weapon) item;
+                    double range = weapon.weaponInfo.range();
+                    if(range >= dte) {
+                        int damage = weapon.weaponInfo.damage();
+                        Server.game.getEntity(te).damage(damage, getID());
+                    }
+                }
+                case WEAPON_RANGED -> {
+                    Weapon weapon = (Weapon) item;
+                    double range = weapon.weaponInfo.range();
+                    int ammo = weapon.getIntTag("ammoAmount");
+                    item.writeTag("ammoAmount", ammo-1);
+                    if(range >= dte && ammo > 0) {
+                        int damage = weapon.weaponInfo.damage();
+                        Server.game.getEntity(te).damage(damage, getID());
+                        Log.debug("shot");
+                    }
+                    Log.debug("ammo"+ (ammo-1));
+                }
+            }
+
+        } else if(dtb >= 0 && (dte < 0 || dtb < dte) && (dtf < 0 || dtb < dtf)) {
+            Log.info(LogType.GAME, "interact on block " + tbx + "|" + tby + " left=" + leftClick);
+        } else if(dtf >= 0 && (dte < 0 || dtf < dte) && (dtb < 0 || dtf < dtb)) {
+            Log.info(LogType.GAME, "interact on floor " + tfx + "|" + tfy + " left=" + leftClick);
+        }
     }
 
 

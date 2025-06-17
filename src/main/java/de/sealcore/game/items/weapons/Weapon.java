@@ -3,6 +3,7 @@ package de.sealcore.game.items.weapons;
 import de.sealcore.client.input.KeyBinds;
 import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventorySlot;
+import de.sealcore.game.entities.inventory.InventorySlotType;
 import de.sealcore.game.items.Item;
 import de.sealcore.game.items.ItemType;
 import de.sealcore.game.items.bullets.Bullet;
@@ -12,7 +13,7 @@ public abstract class Weapon extends Item
 {
     public WeaponInfo weaponInfo;
 
-    protected Weapon(String id, String name, ItemType type, int maxAmount, WeaponType wType, int damage, int range, int magSize)
+    protected Weapon(String id, String name, ItemType type, int maxAmount, WeaponType wType, int damage, double range, int magSize)
     {
         super(id, name, type, maxAmount);
         weaponInfo = new WeaponInfo(wType, damage, range, magSize);
@@ -31,7 +32,7 @@ public abstract class Weapon extends Item
         String ammoId = "";
         for(InventorySlot s : p.inventory.getSlots())
         {
-            if(s.type == ItemType.AMMO && !s.isEmpty())
+            if(s.type == InventorySlotType.AMMO && !s.isEmpty())
             {
                 ammoId = s.id;
                 break;

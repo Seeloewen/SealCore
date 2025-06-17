@@ -24,6 +24,8 @@ public class SlotState
     private String id = "";
     private int amount;
 
+    public boolean isHotbar = false;
+
     SlotState(int index, InventorySlotType type)
     {
         this.index = index;

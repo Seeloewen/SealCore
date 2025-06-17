@@ -30,17 +30,17 @@ public class Inventory
             }
             else if (m > 0)
             {
-                slots[i] = new InventorySlot(this, i, ItemType.MATERIAL);
+                slots[i] = new InventorySlot(this, i, InventorySlotType.MATERIAL);
                 m--;
             }
             else if (w > 0)
             {
-                slots[i] = new InventorySlot(this, i, ItemType.WEAPON);
+                slots[i] = new InventorySlot(this, i, InventorySlotType.WEAPON);
                 w--;
             }
             else if (a > 0)
             {
-                slots[i] = new InventorySlot(this, i, ItemType.AMMO);
+                slots[i] = new InventorySlot(this, i, InventorySlotType.AMMO);
                 a--;
             }
         }
@@ -88,7 +88,7 @@ public class Inventory
 
         for (InventorySlot slot : slots) //If there are still items to be added, fill empty slots
         {
-            if (slot.isEmpty() && slot.type == ItemRegister.getItem(id).info.type())
+            if (slot.isEmpty() && slotTypesMatch(slot.type, ItemRegister.getItem(id).info.type()))
             {
                 slot.setItem(id, tag);
                 remainingAmount = slot.add(remainingAmount);
@@ -99,6 +99,9 @@ public class Inventory
         return remainingAmount; //In the case that still not all items were added, return the remaining amount (like when the inv is full)
     }
 
+    public InventorySlot getSlot(int i) {
+        return slots[i];
+    }
 
     public int remove(int index, int amount)
     {
@@ -134,5 +137,17 @@ public class Inventory
         }
 
         return amount;
+    }
+
+    public boolean slotTypesMatch(InventorySlotType slotType, ItemType itemType)
+    {
+        //Check if the item type specified is allowed by the slot
+        return switch(slotType)
+        {
+            case WEAPON -> itemType == ItemType.WEAPON_MELEE || itemType == ItemType.WEAPON_RANGED ||itemType == ItemType.TOOL;
+            case MATERIAL -> itemType == ItemType.MATERIAL || itemType == ItemType.PLACEABLE;
+            case AMMO -> itemType == ItemType.AMMO;
+            case UNIVERSAL -> true;
+        };
     }
 }

@@ -1,21 +1,17 @@
 package de.sealcore.networking.packets;
 
-import com.fasterxml.jackson.databind.node.TextNode;
 import de.sealcore.client.Client;
-import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 
-import java.util.ArrayList;
-
-public class EntityRemovePacket extends Packet
+public class SetHPPacket extends Packet
 {
-    private int id;
+    private int hp;
 
-    public EntityRemovePacket(int id)
+    public SetHPPacket(int hp)
     {
-        super(PacketType.ENTITYREMOVE);
+        super(PacketType.SETHP);
 
-        this.id = id;
+        this.hp = hp;
     }
 
     public static Packet fromJson(String json)
@@ -23,9 +19,9 @@ public class EntityRemovePacket extends Packet
         //Parse attributes from json object
         JsonObject args = JsonObject.fromString(json);
 
-        int id = args.getInt("id");
+        int hp = args.getInt("hp");
 
-        return new EntityRemovePacket(id);
+        return new SetHPPacket(hp);
     }
 
     public String toJson()
@@ -35,7 +31,7 @@ public class EntityRemovePacket extends Packet
         obj.addInt("type", type.ordinal());
 
         JsonObject args = JsonObject.fromScratch();
-        args.addInt("id", id);
+        args.addInt("hp", hp);
         obj.addObject("args", args);
 
         return obj.toString();
@@ -43,7 +39,6 @@ public class EntityRemovePacket extends Packet
 
     public void onHandle()
     {
-        Client.instance.gameState.removeMesh(id);
-        //
+        Client.instance.playerState.hp = hp;
     }
 }

@@ -1,7 +1,9 @@
 package de.sealcore.client;
 
+import de.sealcore.client.config.Items;
 import de.sealcore.client.input.KeyBinds;
 import de.sealcore.client.menus.MainMenu;
+import de.sealcore.client.state.PlayerState;
 import de.sealcore.client.state.inventory.InventoryState;
 import de.sealcore.client.state.world.GameState;
 import de.sealcore.client.input.CamMoveInput;
@@ -40,6 +42,7 @@ public class Client {
     public Camera camera;
     public GameState gameState;
     public InventoryState inventoryState;
+    public PlayerState playerState;
 
     public static void start(String ip, int port)
     {
@@ -89,8 +92,11 @@ public class Client {
 
         glfwSwapInterval(0);
 
+        Items.init();
+
         gameState = new GameState();
         inventoryState = new InventoryState(Player.WEAPON_SLOTS, Player.AMMO_SLOTS, Player.MAT_SLOTS, Player.UNI_SLOTS);
+        playerState = new PlayerState();
 
         renderer = new Renderer(gameState);
 

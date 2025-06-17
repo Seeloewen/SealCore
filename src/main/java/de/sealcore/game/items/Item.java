@@ -11,6 +11,8 @@ public abstract class Item extends InteractableObject
     protected Item(String id, String name, ItemType type, int maxAmount)
     {
         info = new ItemInfo(id, name, type, maxAmount);
+        JsonObject t = JsonObject.fromScratch();
+        tags = t.toString();
     }
 
     public void writeTag(String tag, String value)
@@ -19,6 +21,7 @@ public abstract class Item extends InteractableObject
         JsonObject t = JsonObject.fromString(tags);
 
         t.addString(tag, value);
+
 
         tags = t.toString();
     }

@@ -1,10 +1,13 @@
 package de.sealcore.game.items;
 
-public class Grass_Block extends Item
+import de.sealcore.game.items.weapons.Weapon;
+import de.sealcore.game.items.weapons.WeaponType;
+
+public class Grass_Block extends Weapon
 {
     public Grass_Block()
     {
-        super("grass_block", "Grass Block", ItemType.MATERIAL, 64);
-
+        super("grass_block", "Grass Block", ItemType.WEAPON_RANGED, 64, WeaponType.MELEE, 4, 20, 100);
+        writeTag("ammoAmount", 50);
     }
 }

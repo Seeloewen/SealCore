@@ -82,6 +82,8 @@ public class NetworkHandler
             case PacketType.INVENTORYREMOVE -> p = InventoryRemovePacket.fromJson(args);
             case PacketType.MOVEINPUT -> p = MoveInputPacket.fromJson(args);
             case PacketType.SETFOLLOWCAM -> p = SetFollowCamPacket.fromJson(args);
+            case PacketType.PLAYERINTERACT -> p = PlayerInteractPacket.fromJson(args);
+            case PacketType.SETHP -> p = SetHPPacket.fromJson(args);
         }
 
         //Set the client id if the sender is a client

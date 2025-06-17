@@ -55,18 +55,18 @@ public class FloorState {
         }
 
         if( tmin >= 0) {
-            var cam = Client.instance.camera;
-            if(tmin < cam.distTargetFloor || cam.distTargetFloor < 0) {
-                cam.targetFloorX = x;
-                cam.targetFloorY = y;
-                cam.distTargetFloor = tmin;
+            var ps = Client.instance.playerState;
+            if(tmin < ps.distTargetFloor || ps.distTargetFloor < 0) {
+                ps.targetFloorX = x;
+                ps.targetFloorY = y;
+                ps.distTargetFloor = tmin;
             }
         } else if(tmax >= 0){
-            var cam = Client.instance.camera;
-            if(tmax < cam.distTargetFloor || cam.distTargetFloor < 0) {
-                cam.targetFloorX = x;
-                cam.targetFloorY = y;
-                cam.distTargetFloor = tmax;
+            var ps = Client.instance.playerState;
+            if(tmax < ps.distTargetFloor || ps.distTargetFloor < 0) {
+                ps.targetFloorX = x;
+                ps.targetFloorY = y;
+                ps.distTargetFloor = tmax;
             }
         }
     }

@@ -17,6 +17,8 @@ public class MeshState {
     public double sizeY;
     public double sizeZ;
 
+    public double rotZ;
+
     public boolean visible = true;
 
     MeshState(String modelID, double posX, double posY, double posZ, double sizeX, double sizeY, double sizeZ) {
@@ -29,15 +31,21 @@ public class MeshState {
         this.sizeZ = sizeZ;
     }
 
-    void setPosition(double x, double y, double z) {
+    void setPosition(double x, double y, double z, double rotZ) {
         posX = x;
         posY = y;
         posZ = z;
+        this.rotZ = rotZ;
     }
 
     void render() {
+        var m = new Matrix4f()
+                .translate((float) posX, (float) posY, (float) posZ)
+                .translate((float) (sizeX/2), (float) (sizeY/2), (float) (sizeZ/2))
+                .rotateZ((float) rotZ)
+                .translate((float) (-sizeX/2), (float) (-sizeY/2), (float) (-sizeZ/2));
         if(visible) {
-            MeshRenderer.render(meshID, new Matrix4f().translate((float) posX, (float) posY, (float) posZ));
+            MeshRenderer.render(meshID, m);
         }
         LineRenderer.render(new Matrix4f().translate((float) posX, (float) posY, (float) posZ), new Vector3f((float) sizeX, (float) sizeY, (float) sizeZ));
     }

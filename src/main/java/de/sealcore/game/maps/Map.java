@@ -51,7 +51,7 @@ public class Map
         //Generate a new chunk and add it to the register
         Chunk c = generator.getChunk(x, y);
         chunks[i] = c;
-        Log.info(LogType.GAME, "generated chunk " + i);
+        //Log.info(LogType.GAME, "generated chunk " + i);
 
         //Returns the chunk in case further action should be applied
         return c;
