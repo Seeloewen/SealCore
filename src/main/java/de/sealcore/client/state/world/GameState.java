@@ -1,7 +1,9 @@
 package de.sealcore.client.state.world;
 
 
+import de.sealcore.client.Client;
 import de.sealcore.util.ChunkIndex;
+import de.sealcore.util.MathUtil;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -44,8 +46,20 @@ public class GameState {
 
 
     public void render() {
+        var rotZ = Client.instance.camera.angleHor;
+        var p = Client.instance.gameState.loadedMeshes.get(Client.instance.camera.following);
+        int dy = rotZ >= 0 ? -1 : 1;
+        int dx = rotZ <= Math.PI/2 && rotZ >= -Math.PI/2 ? -1 : 1;
+        int x = MathUtil.toChunk(MathUtil.toBlock(p.posX));
+        int y = MathUtil.toChunk(MathUtil.toBlock(p.posY));
         for(var state : loadedChunks.values()) {
-            state.render();
+            int i = state.index;
+            int cx = ChunkIndex.toX(i);
+            int cy = ChunkIndex.toY(i);
+            boolean cullX = (dy < 0 && cy < y) || (dy > 0 && cy > y);
+            boolean cullY = (dx < 0 && cx < x) || (dx > 0 && cx > x);
+
+            if(!cullX || !cullY) state.render();
         }
         for(var mesh : loadedMeshes.values()) {
             mesh.render();

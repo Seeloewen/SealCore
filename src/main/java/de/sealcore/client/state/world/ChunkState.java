@@ -25,6 +25,7 @@ public class ChunkState {
 
 
     void render() {
+
         for(FloorState f : floors) f.render();
         for(BlockState b : blocks) if(b != null) b.render();
     }
