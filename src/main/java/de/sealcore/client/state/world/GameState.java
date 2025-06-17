@@ -48,18 +48,23 @@ public class GameState {
     public void render() {
         var rotZ = Client.instance.camera.angleHor;
         var p = Client.instance.gameState.loadedMeshes.get(Client.instance.camera.following);
-        int dy = rotZ >= 0 ? -1 : 1;
-        int dx = rotZ <= Math.PI/2 && rotZ >= -Math.PI/2 ? -1 : 1;
-        int x = MathUtil.toChunk(MathUtil.toBlock(p.posX));
-        int y = MathUtil.toChunk(MathUtil.toBlock(p.posY));
+        double dy = Math.sin(rotZ);
+        double dx = Math.cos(rotZ);
+        double x = p.posX;
+        double y = p.posY;
+        x -= dx * 8;
+        y -= dy * 8;
+
+
         for(var state : loadedChunks.values()) {
             int i = state.index;
-            int cx = ChunkIndex.toX(i);
-            int cy = ChunkIndex.toY(i);
-            boolean cullX = (dy < 0 && cy < y) || (dy > 0 && cy > y);
-            boolean cullY = (dx < 0 && cx < x) || (dx > 0 && cx > x);
-
-            if(!cullX || !cullY) state.render();
+            int cx = ChunkIndex.toX(i)*8+4;
+            int cy = ChunkIndex.toY(i)*8+4;
+            double cAngle = Math.atan2(cy-y, cx -x);
+            boolean cull2 = Math.abs(rotZ - cAngle) >= 0.9 && Math.abs(rotZ - cAngle) <= Math.PI*2-0.9;
+            if(!cull2) {
+                state.render();
+            }
         }
         for(var mesh : loadedMeshes.values()) {
             mesh.render();
