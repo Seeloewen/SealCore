@@ -76,24 +76,30 @@ public class NetworkHandler
             case PacketType.ENTITYADD -> p = EntityAddPacket.fromJson(args);
             case PacketType.ENTITYREMOVE -> p = EntityRemovePacket.fromJson(args);
             case PacketType.ENTITYUPDATEPOS -> p = EntityUpdatePosPacket.fromJson(args);
-            case PacketType.INVENTORYADD -> p = InventoryAddPacket.fromJson(args);
             case PacketType.INVENTORYSTATE -> p = InventoryStatePacket.fromJson(args);
             case PacketType.INVENTORYMOVE -> p = InventoryMovePacket.fromJson(args);
-            case PacketType.INVENTORYREMOVE -> p = InventoryRemovePacket.fromJson(args);
             case PacketType.MOVEINPUT -> p = MoveInputPacket.fromJson(args);
             case PacketType.SETFOLLOWCAM -> p = SetFollowCamPacket.fromJson(args);
             case PacketType.PLAYERINTERACT -> p = PlayerInteractPacket.fromJson(args);
             case PacketType.SETHP -> p = SetHPPacket.fromJson(args);
             case PacketType.SETCOOLDOWN -> p = SetCooldownPacket.fromJson(args);
+            case PacketType.INVENTORYSWAP -> p = InventorySwapPacket.fromJson(args);
         }
 
         //Set the client id if the sender is a client
-        if(source instanceof TcpClient)
+        if(p != null)
         {
-           p.setSender((TcpClient) source);
-        }
+            if(source instanceof TcpClient)
+            {
+                p.setSender((TcpClient) source);
+            }
 
-        if(p != null) PacketHandler.addToQueue(p);
+            PacketHandler.addToQueue(p);
+        }
+        else
+        {
+            Log.error(LogType.NETWORKING, "Couldn't construct packet as the type is not registered.");
+        }
     }
 
     public static TcpClient getClient(int id)

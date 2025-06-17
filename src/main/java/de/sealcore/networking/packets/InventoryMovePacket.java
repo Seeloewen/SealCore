@@ -2,6 +2,8 @@ package de.sealcore.networking.packets;
 
 import com.fasterxml.jackson.databind.node.TextNode;
 import de.sealcore.client.Client;
+import de.sealcore.game.entities.inventory.InventorySlot;
+import de.sealcore.server.Server;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 
@@ -48,6 +50,9 @@ public class InventoryMovePacket extends Packet
 
     public void onHandle()
     {
-        //
+        InventorySlot oldSlot = Server.game.players.get(getSender()).inventory.getSlot(oldIndex);
+        InventorySlot newSlot = Server.game.players.get(getSender()).inventory.getSlot(newIndex);
+
+        newSlot.move(oldSlot, oldSlot.amount);
     }
 }

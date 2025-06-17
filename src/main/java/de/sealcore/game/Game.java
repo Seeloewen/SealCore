@@ -51,14 +51,15 @@ public class Game
         players.put(id, player);
         player.sendAdd();
         NetworkHandler.sendOnly(id, new SetFollowCamPacket(player.getID()));
-        Log.info(LogType.GAME, "player " + id + " joined the game");
+        Log.info(LogType.GAME, "Player #" + id + " joined the game");
         player.updateLoadedChunks();
         for (Entity entity : entities)
         {
             if (entity != player) entity.sendAdd(id);
         }
         Item i = new Grass_Block();
-        player.inventory.add(5, i.info.id(), 1, i.tags);
+        player.inventory.add(5, i.info.id(), 50, i.tags);
+        player.inventory.add(7, i.info.id(), 5, i.tags);
     }
 
 
