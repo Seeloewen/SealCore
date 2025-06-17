@@ -44,8 +44,10 @@ public class MeshRenderer {
         loadMesh( "f:water" );
         loadMesh( "b:spruce_tree" );
         loadMesh( "b:oak_tree");
-
-
+        loadMesh( "b:core_1");
+        loadMesh( "b:core_2");
+        loadMesh( "b:core_3");
+        loadMesh( "b:core_4");
     }
 
     public static void setCamera(Camera camera) {

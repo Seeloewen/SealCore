@@ -11,6 +11,10 @@ public class BlockRegister
             case "b:big_rock" -> new BigRock();
             case "b:oak_tree" -> new OakTree();
             case "b:spruce_tree" -> new SpruceTree();
+            case "b:core_1" -> new Core_1();
+            case "b:core_2" -> new Core_2();
+            case "b:core_3" -> new Core_3();
+            case "b:core_4" -> new Core_4();
             default -> null;
         };
     }
