@@ -1,19 +1,15 @@
 package de.sealcore.client.menus;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import de.sealcore.Main;
 import de.sealcore.util.ResourceManager;
-import de.sealcore.util.logging.Log;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static de.sealcore.util.logging.LogType.RENDERING;
-
 public class MainMenu extends JFrame
 {
     private final AboutMenu aboutMenu = new AboutMenu();
-    public final ConnectMenu connectMenu = new ConnectMenu(this);
+    public final ConnectMenu connectMenu = new ConnectMenu();
 
     private final int WIDTH = 900;
     private final int HEIGHT = 500;
@@ -32,18 +28,10 @@ public class MainMenu extends JFrame
         super("SealCore");
 
         setLayout(null);
+        setResizable(false);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        try
-        {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        }
-        catch (Exception e)
-        {
-            Log.error(RENDERING, "Could not set Look and Feel for Main Menu: " + e.getMessage());
-        }
 
         setupUi();
     }

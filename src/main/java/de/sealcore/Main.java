@@ -15,13 +15,12 @@ import static org.lwjgl.glfw.GLFW.glfwInit;
 public class Main
 {
     public static final String VERSION = "Dev";
-    public static final String BUILDDATE = "13.06.2025";
+    public static final String BUILDDATE = "17.06.2025";
 
     public static boolean bypassMenu = false;
 
     public static void main(String[] args)
     {
-        //*
         Log.info(LogType.MAIN, "SealCore Development Build");
         Scanner scanner = new Scanner(System.in);
 
@@ -36,7 +35,6 @@ public class Main
             case NetworkType.CLIENT -> Client.main();
             case NetworkType.SERVER -> Server.main();
         }
-        //*/
     }
 
     public static NetworkType getNetworkType(String arg)

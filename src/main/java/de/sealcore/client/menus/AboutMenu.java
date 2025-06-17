@@ -1,6 +1,5 @@
 package de.sealcore.client.menus;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import de.sealcore.Main;
 import de.sealcore.util.ResourceManager;
 import de.sealcore.util.logging.Log;
@@ -28,18 +27,10 @@ public class AboutMenu extends JFrame
     {
         super("About");
 
+        setResizable(false);
         setLayout(null);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
-
-        try
-        {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        }
-        catch (Exception e)
-        {
-            Log.error(RENDERING, "Could not set Look and Feel for About Menu: " + e.getMessage());
-        }
 
         setupUi();
     }

@@ -1,19 +1,13 @@
 package de.sealcore.client.menus;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import de.sealcore.client.Client;
 import de.sealcore.util.TypeParser;
-import de.sealcore.util.logging.Log;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static de.sealcore.util.logging.LogType.RENDERING;
-
 public class ConnectMenu extends JFrame
 {
-    private final MainMenu menu;
-
     private final int WIDTH = 500;
     private final int HEIGHT = 260;
 
@@ -25,24 +19,14 @@ public class ConnectMenu extends JFrame
     private final JButton btnCancel = new JButton("Cancel");
     private final JButton btnConnect = new JButton("Connect");
 
-    public ConnectMenu(MainMenu menu)
+    public ConnectMenu()
     {
         super("Connect");
 
-        this.menu = menu;
-
+        setResizable(false);
         setLayout(null);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
-
-        try
-        {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        }
-        catch (Exception e)
-        {
-            Log.error(RENDERING, "Could not set Look and Feel for Connect Menu: " + e.getMessage());
-        }
 
         setupUi();
     }
@@ -66,6 +50,7 @@ public class ConnectMenu extends JFrame
         btnConnect.addActionListener(e -> connect(tbIp.getText(), tbPort.getText()));
         btnCancel.setBounds(WIDTH - 250, HEIGHT - 100, 215, 40);
         btnCancel.setFont(new Font("Arial", Font.PLAIN, 18));
+        btnCancel.addActionListener(e -> setVisible(false));
 
         add(btnCancel);
         add(btnConnect);
