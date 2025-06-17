@@ -15,6 +15,10 @@ public class Server
 {
     public static Game game;
 
+    private final double TICKRATE = 1/40d;
+
+    public int ticksToEvent;
+
     private Server()
     {
         //Initialize game
@@ -22,6 +26,10 @@ public class Server
 
         //Initialize networking
         NetworkHandler.init(NetworkType.SERVER);
+    }
+
+    public void setTicksToEvent(double seconds) {
+        ticksToEvent = (int)(seconds/TICKRATE);
     }
 
     public static void main()
@@ -47,9 +55,9 @@ public class Server
             {
                 PacketHandler.handleNext();
             }
-            if(!DeltaTimer.blockToTarget(0.015d)) Log.warn(LogType.PERFORMANCE, "last server tick exceeded 0.015ms");
-            game.tick(0.015d);
-
+            if(!DeltaTimer.blockToTarget(TICKRATE)) Log.warn(LogType.PERFORMANCE, "last server tick exceeded tickrate");
+            game.tick(TICKRATE);
+            ticksToEvent--;
         }
     }
 
