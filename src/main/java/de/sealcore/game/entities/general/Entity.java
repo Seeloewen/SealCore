@@ -64,7 +64,8 @@ public abstract class Entity {
     }
 
     public void doPhysicsTick(double dt) {
-        double f = 1/Math.sqrt(moveInputX*moveInputX + moveInputY*moveInputY);
+        double totalInput = Math.sqrt(moveInputX*moveInputX + moveInputY*moveInputY);
+        double f = totalInput == 0 ? 1 : 1/totalInput;
         moveInputX *= f;
         moveInputY *= f;
 
@@ -75,7 +76,7 @@ public abstract class Entity {
         double dy = velY * dt;
         tryMove(dx, dy);
 
-        NetworkHandler.send(new EntityUpdatePosPacket(id, posX, posY, 0, rotZ));
+        NetworkHandler.send(new EntityUpdatePosPacket(id, posX, posY, 0, rotZ, velX, velY));
     }
 
 
@@ -93,6 +94,7 @@ public abstract class Entity {
                 for(int y = bot; y <= top; y++) {
                     if(game.isSolid(x2, y)) {
                         posX = (double)x2 + 0.001 + 1.0;
+                        velX = 0;
                     }
                 }
             }
@@ -106,6 +108,7 @@ public abstract class Entity {
                 for(int y = bot; y <= top; y++) {
                     if(game.isSolid(x2, y)) {
                         posX = (double)x2 - 0.001 - sizeX;
+                        velX = 0;
                     }
                 }
             }
@@ -120,6 +123,7 @@ public abstract class Entity {
                 for(int x = left; x <= right; x++) {
                     if(game.isSolid(x, y2)) {
                         posY = y2 + 1 + 0.001;
+                        velY = 0;
                     }
                 }
             }
@@ -133,6 +137,7 @@ public abstract class Entity {
                 for(int x = left; x <= right; x++) {
                     if(game.isSolid(x, y2)) {
                         posY = y2 - sizeY - 0.001;
+                        velY = 0;
                     }
                 }
             }
@@ -146,9 +151,8 @@ public abstract class Entity {
 
 
     public void updateInputs(int x, int y, double angleHor) {
-        double f = 1/Math.sqrt(x*x + y*y);
-        moveInputX = x*f; //forward
-        moveInputY = y*f; //side
+        moveInputX = x; //forward
+        moveInputY = y; //side
         this.rotZ = angleHor; //horizontal dir (0= +x)
     }
 

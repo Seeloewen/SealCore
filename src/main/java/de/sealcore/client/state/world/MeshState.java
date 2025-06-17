@@ -13,6 +13,9 @@ public class MeshState {
     public double posY;
     public double posZ;
 
+    public double velX = 0;
+    public double velY = 0;
+
     public double sizeX;
     public double sizeY;
     public double sizeZ;
@@ -31,11 +34,18 @@ public class MeshState {
         this.sizeZ = sizeZ;
     }
 
-    void setPosition(double x, double y, double z, double rotZ) {
+    void setPosition(double x, double y, double z, double rotZ, double velX, double velY) {
         posX = x;
         posY = y;
         posZ = z;
         this.rotZ = rotZ;
+        this.velX = velX;
+        this.velY = velY;
+    }
+
+    void interpolate(double dt) {
+        posX += velX*dt;
+        posY += velY*dt;
     }
 
     void render() {

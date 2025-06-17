@@ -43,7 +43,11 @@ public class GameState {
 
     }
 
-
+    public void interpolate(double dt) {
+        for(var m : loadedMeshes.values()) {
+            m.interpolate(dt);
+        }
+    }
 
     public void render() {
         var rotZ = Client.instance.camera.angleHor;
@@ -97,8 +101,8 @@ public class GameState {
         loadedMeshes.put(id, new MeshState(entityID, x, y, z, sizeX, sizeY, sizeZ));
     }
 
-    public void updateMeshPos(int id, double x, double y, double z, double rotZ) {
-        loadedMeshes.get(id).setPosition(x, y, z, rotZ);
+    public void updateMeshPos(int id, double x, double y, double z, double rotZ, double velX, double velY) {
+        loadedMeshes.get(id).setPosition(x, y, z, rotZ, velX, velY);
     }
 
     public void removeMesh(int id) {

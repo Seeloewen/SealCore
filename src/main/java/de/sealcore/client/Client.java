@@ -125,6 +125,8 @@ public class Client {
                 PacketHandler.handleNext();
             }
 
+            gameState.interpolate(dt);
+
             camera.update(CamMoveInput.generate(), dt);
             if(!InputHandler.camMode) PlayerMoveInputState.update();
 

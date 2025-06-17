@@ -16,8 +16,10 @@ public class EntityUpdatePosPacket extends Packet
     private double y;
     private double z;
     private double angleX;
+    private double velX;
+    private double velY;
 
-    public EntityUpdatePosPacket(int id, double x, double y, double z, double angleX)
+    public EntityUpdatePosPacket(int id, double x, double y, double z, double angleX, double velX, double velY)
     {
         super(PacketType.ENTITYUPDATEPOS);
 
@@ -26,6 +28,8 @@ public class EntityUpdatePosPacket extends Packet
         this.y = y;
         this.z = z;
         this.angleX = angleX;
+        this.velX = velX;
+        this.velY = velY;
     }
 
     public static Packet fromJson(String json)
@@ -38,8 +42,10 @@ public class EntityUpdatePosPacket extends Packet
         double y = args.getDouble("y");
         double z = args.getDouble("z");
         double angleX = args.getDouble("angleX");
+        double velX = args.getDouble("velX");
+        double velY = args.getDouble("velY");
 
-        return new EntityUpdatePosPacket(id, x, y, z, angleX);
+        return new EntityUpdatePosPacket(id, x, y, z, angleX, velX, velY);
     }
 
     public String toJson()
@@ -55,6 +61,8 @@ public class EntityUpdatePosPacket extends Packet
         args.addDouble("y", y);
         args.addDouble("z", z);
         args.addDouble("angleX", angleX);
+        args.addDouble("velX", velX);
+        args.addDouble("velY", velY);
 
         obj.addObject("args", args);
 
@@ -63,7 +71,7 @@ public class EntityUpdatePosPacket extends Packet
 
     public void onHandle()
     {
-        Client.instance.gameState.updateMeshPos(id, x, y, z, angleX);
+        Client.instance.gameState.updateMeshPos(id, x, y, z, angleX, velX, velY);
         DebugOverlay.direction = angleX;
         DebugOverlay.posX = x;
         DebugOverlay.posY = y;
