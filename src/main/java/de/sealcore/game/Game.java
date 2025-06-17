@@ -5,24 +5,19 @@ import de.sealcore.game.crafting.CraftingHandler;
 import de.sealcore.game.entities.general.Entity;
 import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventoryManager;
-import de.sealcore.game.entities.inventory.InventorySlot;
 import de.sealcore.game.entities.general.*;
+import de.sealcore.game.items.Grass_Block;
+import de.sealcore.game.items.Item;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
-import de.sealcore.networking.packets.ChunkAddPacket;
-import de.sealcore.networking.packets.EntityAddPacket;
 import de.sealcore.networking.packets.EntityRemovePacket;
 import de.sealcore.networking.packets.SetFollowCamPacket;
-import de.sealcore.server.Server;
-import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
-import java.util.Set;
 
 import static de.sealcore.util.MathUtil.*;
 
@@ -60,7 +55,8 @@ public class Game
         {
             if (entity != player) entity.sendAdd(id);
         }
-        player.inventory.add(5, "grass_block", 1);
+        Item i = new Grass_Block();
+        player.inventory.add(5, i.info.id(), 1, i.tags);
     }
 
 

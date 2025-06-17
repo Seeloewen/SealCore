@@ -4,6 +4,7 @@ import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.items.Item;
 import de.sealcore.game.items.ItemRegister;
 import de.sealcore.game.items.ItemType;
+import de.sealcore.game.items.TagHandler;
 import de.sealcore.game.items.weapons.Weapon;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.ChunkUnloadPacket;
@@ -86,8 +87,8 @@ public class Player extends Entity{
                 case WEAPON_RANGED -> {
                     Weapon weapon = (Weapon) item;
                     double range = weapon.weaponInfo.range();
-                    int ammo = weapon.getIntTag("ammoAmount");
-                    item.writeTag("ammoAmount", ammo-1);
+                    int ammo = TagHandler.getIntTag(slot.tag, "ammoAmount");
+                    TagHandler.writeTag(slot, "ammoAmount", ammo-1);
                     if(range >= dte && ammo > 0) {
                         int damage = weapon.weaponInfo.damage();
                         Server.game.getEntity(te).damage(damage, getID());
