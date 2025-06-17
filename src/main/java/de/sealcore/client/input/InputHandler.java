@@ -77,7 +77,7 @@ public class InputHandler {
 
         changeMouseMode();
         glfwSetCursorPosCallback(window, (w, x, y) -> {
-            if(init) {
+            if(init && showMouse) {
                 mouseDeltaX += x - mouseX;
                 mouseDeltaY += y - mouseY;
             }

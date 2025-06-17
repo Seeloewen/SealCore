@@ -7,11 +7,15 @@ import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
 import de.sealcore.client.ui.rendering.primitives.Rectangle;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.PlayerInteractPacket;
+import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.Color;
+import de.sealcore.util.MathUtil;
 import org.lwjgl.glfw.GLFW;
 
 public class PlayerState {
 
+    public static int playerChunkX;
+    public static int playerChunkY;
 
     public int selectedSlot = 5;
 
@@ -41,6 +45,10 @@ public class PlayerState {
     }
 
     public void update(double dt) {
+        var p = Client.instance.gameState.loadedMeshes.get(Client.instance.camera.following);
+        playerChunkX = MathUtil.toChunk(MathUtil.toBlock(p.posX));
+        playerChunkY = MathUtil.toChunk(MathUtil.toBlock(p.posY));
+
         if(cooldownProgress < cooldownTotal) {
             cooldownProgress += dt;
         }

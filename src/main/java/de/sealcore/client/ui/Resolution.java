@@ -1,5 +1,9 @@
 package de.sealcore.client.ui;
 
+import de.sealcore.client.ui.rendering.mesh.MeshRenderer;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL33;
+
 public class Resolution {
 
     public static int WIDTH = 1280;
@@ -23,5 +27,12 @@ public class Resolution {
     }
 
 
+    public static void resize(int width, int height) {
+        WIDTH = width;
+        HEIGHT = height;
+        RATIO = (float) HEIGHT / WIDTH;
+        MeshRenderer.refreshProjection();
+        GL33.glViewport(0, 0, width, height);
+    }
 
 }

@@ -1,7 +1,9 @@
 package de.sealcore.client.state.world;
 
 
+import de.sealcore.client.Client;
 import de.sealcore.util.ChunkIndex;
+import de.sealcore.util.MathUtil;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -41,11 +43,32 @@ public class GameState {
 
     }
 
-
+    public void interpolate(double dt) {
+        for(var m : loadedMeshes.values()) {
+            m.interpolate(dt);
+        }
+    }
 
     public void render() {
+        var rotZ = Client.instance.camera.angleHor;
+        var p = Client.instance.gameState.loadedMeshes.get(Client.instance.camera.following);
+        double dy = Math.sin(rotZ);
+        double dx = Math.cos(rotZ);
+        double x = p.posX;
+        double y = p.posY;
+        x -= dx * 8;
+        y -= dy * 8;
+
+
         for(var state : loadedChunks.values()) {
-            state.render();
+            int i = state.index;
+            int cx = ChunkIndex.toX(i)*8+4;
+            int cy = ChunkIndex.toY(i)*8+4;
+            double cAngle = Math.atan2(cy-y, cx -x);
+            boolean cull2 = Math.abs(rotZ - cAngle) >= 0.9 && Math.abs(rotZ - cAngle) <= Math.PI*2-0.9;
+            if(!cull2) {
+                state.render();
+            }
         }
         for(var mesh : loadedMeshes.values()) {
             mesh.render();
@@ -78,8 +101,8 @@ public class GameState {
         loadedMeshes.put(id, new MeshState(entityID, x, y, z, sizeX, sizeY, sizeZ));
     }
 
-    public void updateMeshPos(int id, double x, double y, double z, double rotZ) {
-        loadedMeshes.get(id).setPosition(x, y, z, rotZ);
+    public void updateMeshPos(int id, double x, double y, double z, double rotZ, double velX, double velY) {
+        loadedMeshes.get(id).setPosition(x, y, z, rotZ, velX, velY);
     }
 
     public void removeMesh(int id) {

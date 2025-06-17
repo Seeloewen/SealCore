@@ -18,6 +18,7 @@ import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
 import de.sealcore.util.timing.DeltaTimer;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 
 import org.lwjgl.opengl.*;
@@ -83,6 +84,10 @@ public class Client {
         window = glfwCreateWindow(Resolution.WIDTH, Resolution.HEIGHT, "SealCore (dev)", NULL, NULL);
         if(window == NULL) throw new RuntimeException("Failed to create window");
 
+        org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback(window, (window, w, h) -> {
+            Resolution.resize(w, h);
+        });
+
         glfwMakeContextCurrent(window);
 
         glfwShowWindow(window);
@@ -124,6 +129,8 @@ public class Client {
             {
                 PacketHandler.handleNext();
             }
+
+            gameState.interpolate(dt);
 
             camera.update(CamMoveInput.generate(), dt);
             if(!InputHandler.camMode) PlayerMoveInputState.update();
