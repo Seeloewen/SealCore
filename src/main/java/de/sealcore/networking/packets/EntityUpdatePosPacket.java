@@ -63,7 +63,7 @@ public class EntityUpdatePosPacket extends Packet
 
     public void onHandle()
     {
-        Client.instance.gameState.updateMeshPos(id, x, y, z);
+        Client.instance.gameState.updateMeshPos(id, x, y, z, angleX);
         DebugOverlay.direction = angleX;
         DebugOverlay.posX = x;
         DebugOverlay.posY = y;

@@ -56,18 +56,18 @@ public class BlockState {
         }
 
         if( tmin >= 0) {
-            var cam = Client.instance.camera;
-            if(tmin < cam.distTargetBlock || cam.distTargetBlock < 0) {
-                cam.targetBlockX = x;
-                cam.targetBlockY = y;
-                cam.distTargetBlock = tmin;
+            var ps = Client.instance.playerState;
+            if(tmin < ps.distTargetBlock || ps.distTargetBlock < 0) {
+                ps.targetBlockX = x;
+                ps.targetBlockY = y;
+                ps.distTargetBlock = tmin;
             }
         } else if(tmax >= 0){
-            var cam = Client.instance.camera;
-            if(tmax < cam.distTargetBlock || cam.distTargetBlock < 0) {
-                cam.targetBlockX = x;
-                cam.targetBlockY = y;
-                cam.distTargetBlock = tmax;
+            var ps = Client.instance.playerState;
+            if(tmax < ps.distTargetBlock || ps.distTargetBlock < 0) {
+                ps.targetBlockX = x;
+                ps.targetBlockY = y;
+                ps.distTargetBlock = tmax;
             }
         }
     }

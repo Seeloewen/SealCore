@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "id": "i:rifle",
+      "type": "it:weapon_ranged",
+      "range": 60.0,
+      "cooldown": 0.3
+    },
+    {
+      "id": "i:gun",
+      "type": "it:weapon_ranged",
+      "range": 40.0,
+      "cooldown": 1.5
+    },
+    {
+      "id": "i:sword",
+      "type": "it:weapon_melee",
+      "range": 3.0,
+      "cooldown": 1.5
+    },
+    {
+      "id": "i:pickaxe",
+      "type": "it:tool",
+      "range": 1.5,
+      "cooldown": 3
+    },
+    {
+      "id": "i:axe",
+      "type": "it:tool",
+      "range": 3
+    }
+  ]
+}

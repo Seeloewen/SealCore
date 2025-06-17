@@ -4,8 +4,11 @@ import de.sealcore.game.entities.inventory.Inventory;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.EntityAddPacket;
 import de.sealcore.networking.packets.EntityUpdatePosPacket;
+import de.sealcore.networking.packets.SetHPPacket;
 import de.sealcore.server.Server;
 import de.sealcore.util.MathUtil;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 
 public abstract class Entity {
 
@@ -35,22 +38,29 @@ public abstract class Entity {
 
     public Inventory inventory;
 
-    public Entity(String entityType) {
-        this.id = nextID++;
-        this.entityType = entityType;
-        posX = 0;
-        posY = 0;
-        velX = 0;
-        velY = 0;
-    }
+    int hp;
 
-    public Entity(String entityType, double x, double y) {
+
+    public Entity(String entityType, int hp, double x, double y) {
         this.id = nextID++;
         this.entityType = entityType;
         posX = x;
         posY = y;
         velX = 0;
         velY = 0;
+        this.hp = hp;
+    }
+
+    public void damage(int damage, int source) {
+        hp -= damage;
+        Log.info(LogType.GAME, "damage");
+        if(hp <= 0) {
+            onDeath(source);
+        }
+    }
+
+    protected void onDeath(int source) {
+        Server.game.removeEntity(getID());
     }
 
     public void doPhysicsTick(double dt) {

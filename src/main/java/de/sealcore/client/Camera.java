@@ -20,14 +20,6 @@ public class Camera {
     public double angleHor;
     private double angleVert;
 
-    int targetEntity;
-    double distTargetEntity;
-    public int targetBlockX;
-    public int targetBlockY;
-    public double distTargetBlock;
-    public int targetFloorX;
-    public int targetFloorY;
-    public double distTargetFloor;
 
     public Camera() {
         position = new Vector3f(-5f, 0f, 0f);
@@ -81,19 +73,21 @@ public class Camera {
                 Math.sin(-angleVert)
         };
 
-        targetEntity = -1;
-        distTargetEntity = -1;
+        var ps = Client.instance.playerState;
+
+        ps.targetEntity = -1;
+        ps.distTargetEntity = -1;
         for(var p : Client.instance.gameState.loadedMeshes.entrySet()) {
             if(p.getKey() == following) continue;
             double t = p.getValue().rayIntersect(origin, direction);
-            if((targetEntity == -1 && t >= 0) || distTargetEntity > t ) {
-                targetEntity = p.getKey();
-                distTargetEntity = t;
+            if(t >= 0 && (ps.targetEntity == -1 || ps.distTargetEntity > t )) {
+                ps.targetEntity = p.getKey();
+                ps.distTargetEntity = t;
             }
         }
 
-        distTargetBlock = -1;
-        distTargetFloor = -1;
+        ps.distTargetBlock = -1;
+        ps.distTargetFloor = -1;
         for(var c : Client.instance.gameState.loadedChunks.values()) {
             c.rayIntersectChunks(origin, direction);
         }

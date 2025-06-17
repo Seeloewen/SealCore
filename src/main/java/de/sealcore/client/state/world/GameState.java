@@ -78,8 +78,8 @@ public class GameState {
         loadedMeshes.put(id, new MeshState(entityID, x, y, z, sizeX, sizeY, sizeZ));
     }
 
-    public void updateMeshPos(int id, double x, double y, double z) {
-        loadedMeshes.get(id).setPosition(x, y, z);
+    public void updateMeshPos(int id, double x, double y, double z, double rotZ) {
+        loadedMeshes.get(id).setPosition(x, y, z, rotZ);
     }
 
     public void removeMesh(int id) {

@@ -14,10 +14,9 @@ public class InventorySlot
     public int amount;
     public String tag = "";
 
-    public final ItemType type;
-    public boolean universalSlot;
+    public final InventorySlotType type;
 
-    public InventorySlot(Inventory inv, int index, ItemType type)
+    public InventorySlot(Inventory inv, int index, InventorySlotType type)
     {
         this.index = index;
         this.type = type;
@@ -29,10 +28,9 @@ public class InventorySlot
         this.type = null;
         this.index = index;
         this.inv = inv;
-        universalSlot = true;
     }
 
-    public InventorySlot(int index, ItemType type, String id, int amount, String tag)
+    public InventorySlot(int index, InventorySlotType type, String id, int amount, String tag)
     {
         this.index = index;
         this.type = type;

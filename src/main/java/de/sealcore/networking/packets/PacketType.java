@@ -14,4 +14,6 @@ public enum PacketType
     CHUNKADD,
     MOVEINPUT,
     SETFOLLOWCAM,
+    PLAYERINTERACT,
+    SETHP
 }

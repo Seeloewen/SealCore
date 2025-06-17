@@ -4,6 +4,7 @@ import de.sealcore.client.Client;
 import de.sealcore.game.entities.inventory.Inventory;
 import de.sealcore.game.entities.inventory.InventoryManager;
 import de.sealcore.game.entities.inventory.InventorySlot;
+import de.sealcore.game.entities.inventory.InventorySlotType;
 import de.sealcore.game.items.ItemType;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
@@ -33,7 +34,7 @@ public class InventoryStatePacket extends Packet
         {
             JsonObject o = (JsonObject)slotObjects.get(i);
             int index = o.getInt("index");
-            ItemType type = ItemType.values()[o.getInt("type")];
+            InventorySlotType type = InventorySlotType.values()[o.getInt("type")];
             String id = o.getString("id");
             int amount = o.getInt("amount");
             String tag = o.getString("tag");

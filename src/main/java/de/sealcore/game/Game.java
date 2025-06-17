@@ -12,6 +12,7 @@ import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.ChunkAddPacket;
 import de.sealcore.networking.packets.EntityAddPacket;
+import de.sealcore.networking.packets.EntityRemovePacket;
 import de.sealcore.networking.packets.SetFollowCamPacket;
 import de.sealcore.server.Server;
 import de.sealcore.util.ChunkIndex;
@@ -59,6 +60,7 @@ public class Game
         {
             if (entity != player) entity.sendAdd(id);
         }
+        player.inventory.add(5, "grass_block", 1);
     }
 
 
@@ -74,17 +76,34 @@ public class Game
         addMap(nextMapId(), MapLayout.NORMAL);
         loadMap(0);
 
-        var e = new Grassling(0, 0);
+        /*var e = new Grassling(10, 10);
         entities.add(e);
-        e.sendAdd();
+        e.sendAdd();*/
 
-        /*Random rnd = new Random();
+        Random rnd = new Random();
         for (int i = 0; i < 10; i++)
         {
-            var e = new Grassling(rnd.nextDouble(-10, 10), rnd.nextDouble(-10, 10));
+            var e = new Grassling(rnd.nextDouble(-20, 20), rnd.nextDouble(-20, 20));
             entities.add(e);
             e.sendAdd();
-        }*/
+        }
+    }
+
+    public void removeEntity(int id) {
+        for(int i = 0; i < entities.size(); i++) {
+            if(entities.get(i).getID() == id) {
+                entities.remove(i);
+                NetworkHandler.send(new EntityRemovePacket(id));
+                return;
+            }
+        }
+    }
+
+    public Entity getEntity(int id) {
+        for(var e : entities) {
+            if(e.getID() == id) return e;
+        }
+        return null;
     }
 
     public void addMap(int id, MapLayout layout)

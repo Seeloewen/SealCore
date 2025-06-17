@@ -31,15 +31,20 @@ public class OverlayManager {
         if(showInventory) Client.instance.inventoryState.render();
         Client.instance.inventoryState.renderHotbar();
 
-        PrimitiveRenderer.drawRectangle(
-                new Rectangle(Resolution.WIDTH/2 - 2, Resolution.HEIGHT/2 - 2, Resolution.WIDTH/2 + 2, Resolution.HEIGHT/2 + 2),
-                new Color(0), -0.5f);
+        Client.instance.playerState.render();
     }
 
 
 
     public static void handleMousePress(int button, int action) {
-        Client.instance.inventoryState.handleMouseClick(button, action);
+        if(showInventory) {
+            Client.instance.inventoryState.handleMouseClick(button, action);
+        } else {
+            if(action == GLFW.GLFW_PRESS) {
+                Client.instance.playerState.handleMousePress(button);
+            }
+        }
+
     }
 
     public static void handleKeyPress(int key) {
