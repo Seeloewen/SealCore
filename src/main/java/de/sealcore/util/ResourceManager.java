@@ -4,10 +4,8 @@ import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.URL;
 import java.util.stream.Collectors;
 
 public class ResourceManager
@@ -21,10 +19,11 @@ public class ResourceManager
      */
     public static String getResourceFileAsString(String fileName) throws IOException
     {
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        try (InputStream is = classLoader.getResourceAsStream(fileName))
+        fileName = "/" + fileName;
+
+        try (InputStream is = ResourceManager.class.getResourceAsStream(fileName))
         {
-            if (is == null) return null;
+            if (is == null) throw new FileNotFoundException("Resource not found: " + fileName);
             try (InputStreamReader isr = new InputStreamReader(is);
                  BufferedReader reader = new BufferedReader(isr))
             {
@@ -33,12 +32,15 @@ public class ResourceManager
         }
     }
 
+
     /**
      * Returns an ImageIcon, or null if the path was invalid.
      */
     public static ImageIcon createImageIcon(String path)
     {
-        java.net.URL imgURL = ClassLoader.getSystemClassLoader().getResource(path);
+        path = "/" + path;
+
+        URL imgURL = ResourceManager.class.getResource(path);
         if (imgURL != null)
         {
             return new ImageIcon(imgURL, "");
@@ -49,4 +51,5 @@ public class ResourceManager
             return null;
         }
     }
+
 }

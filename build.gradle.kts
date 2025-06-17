@@ -1,6 +1,11 @@
 group = "de.sealcore"
 version = "1.0-SNAPSHOT"
+
 val lwjglVersion = "3.3.6"
+var jacksonDatabindVersion = "2.19.0"
+var jomlVersion = "1.10.8"
+var flatlafVersion = "3.6"
+
 val lwjglNatives = "natives-windows"
 
 plugins {
@@ -34,10 +39,33 @@ dependencies {
     runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = lwjglNatives)
 
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion")
 
-    implementation("org.joml:joml:1.10.8")
+    implementation("org.joml:joml:$jomlVersion")
 
-    implementation("com.formdev:flatlaf:3.4")
+    implementation("com.formdev:flatlaf:$flatlafVersion")
 
+}
+
+tasks {
+    val fatJar = register<Jar>("fatJar") {
+        dependsOn("compileJava", "processResources")
+        archiveClassifier.set("standalone") //
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+        manifest {
+            attributes(mapOf("Main-Class" to application.mainClass.get()))
+        }
+
+        val sourcesMain = sourceSets.main.get()
+        val contents = configurations.runtimeClasspath.get()
+            .map { if (it.isDirectory) it else zipTree(it) } +
+                sourcesMain.output
+
+        from(contents)
+    }
+
+    build {
+        dependsOn(fatJar)
+    }
 }

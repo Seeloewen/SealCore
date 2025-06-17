@@ -2,7 +2,6 @@ package de.sealcore.game.items;
 
 import de.sealcore.game.InteractableObject;
 import de.sealcore.util.json.JsonObject;
-import net.bytebuddy.utility.nullability.MaybeNull;
 
 public abstract class Item extends InteractableObject
 {
@@ -39,7 +38,6 @@ public abstract class Item extends InteractableObject
         writeTag(tag, String.valueOf(value));
     }
 
-    @MaybeNull
     public String getStringTag(String tag)
     {
         //Converts tags string to JSON object and reads the requested tag
@@ -48,7 +46,6 @@ public abstract class Item extends InteractableObject
         return t.getString(tag); //Warning: Maybe null
     }
 
-    @MaybeNull
     public int getIntTag(String tag)
     {
         //Converts tags string to JSON object and reads the requested tag
@@ -57,7 +54,6 @@ public abstract class Item extends InteractableObject
         return t.getInt(tag); //Warning: Maybe null
     }
 
-    @MaybeNull
     public double getDoubleTag(String tag)
     {
         //Converts tags string to JSON object and reads the requested tag
@@ -66,7 +62,6 @@ public abstract class Item extends InteractableObject
         return t.getDouble(tag); //Warning: Maybe null
     }
 
-    @MaybeNull
     public boolean getBoolTag(String tag)
     {
         //Converts tags string to JSON object and reads the requested tag
