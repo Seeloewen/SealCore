@@ -1,12 +1,12 @@
 package de.sealcore.client;
 
 import de.sealcore.client.input.KeyBinds;
+import de.sealcore.client.menus.MainMenu;
 import de.sealcore.client.state.inventory.InventoryState;
 import de.sealcore.client.state.world.GameState;
 import de.sealcore.client.input.CamMoveInput;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.input.PlayerMoveInputState;
-import de.sealcore.client.ui.overlay.DebugOverlay;
 import de.sealcore.client.ui.rendering.Renderer;
 import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.overlay.OverlayManager;
@@ -20,7 +20,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.*;
 
 
-import java.time.LocalDateTime;
+import javax.swing.*;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -29,8 +29,10 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 public class Client {
 
+    private MainMenu menu;
+
     public static Client instance;
-    private long lastTime = 0;
+    private int failedConnectAttempts = 0;
 
     private long window;
 
@@ -39,22 +41,30 @@ public class Client {
     public GameState gameState;
     public InventoryState inventoryState;
 
-    private Client() {
-        //MainMenu main = new MainMenu();
-        //main.setVisible(true);
-
-        init();
+    public static void start(String ip, int port)
+    {
+        if(instance.init(ip, port)) instance.loop();
     }
 
-    private void init()
+    private boolean init(String ip, int port)
     {
+        failedConnectAttempts = 0;
         Client.instance = this;
 
-        while(!NetworkHandler.init(NetworkType.CLIENT)) {
+        //Try connecting to the server
+        while(!NetworkHandler.init(ip, port, NetworkType.CLIENT)) {
             try {
+                failedConnectAttempts++;
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
+            }
+
+            if(failedConnectAttempts >= 3)
+            {
+                JOptionPane.showMessageDialog(null, "Connection to the server failed.", "Error", JOptionPane.ERROR_MESSAGE);
+                menu.connectMenu.setConnectingState(false);
+                return false;
             }
         }
 
@@ -89,6 +99,7 @@ public class Client {
 
         OverlayManager.init();
 
+        return true;
     }
 
     private void loop() {
@@ -126,13 +137,15 @@ public class Client {
         // Terminate GLFW and free the error callback
         glfwTerminate();
         glfwSetErrorCallback(null).free();
+
+        System.exit(0);
     }
 
 
     public static void main() {
-        Client client = new Client();
-
-        client.loop();
+        instance = new Client();
+        instance.menu = new MainMenu();
+        instance.menu.setVisible(true);
     }
 
 }

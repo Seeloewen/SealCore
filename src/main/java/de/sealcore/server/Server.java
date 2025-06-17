@@ -21,7 +21,7 @@ public class Server
         game = new Game();
 
         //Initialize networking
-        NetworkHandler.init(NetworkType.SERVER);
+        NetworkHandler.init("", 5000, NetworkType.SERVER);
     }
 
     public static void main()

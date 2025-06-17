@@ -12,7 +12,7 @@ public class NetworkHandler
 
     public static boolean verboseLogging = false; //Debug switch, shows all sent and received packets when toggled on
 
-    public static boolean init(NetworkType instance)
+    public static boolean init(String ip, int port, NetworkType instance)
     {
         try
         {
@@ -20,12 +20,12 @@ public class NetworkHandler
             if (instance == NetworkType.SERVER)
             {
                 NetworkHandler.server = new TcpServer();
-                NetworkHandler.server.start(5000);
+                NetworkHandler.server.start(port);
             }
             else if (instance == NetworkType.CLIENT)
             {
                 NetworkHandler.client = new TcpClient(0);
-                NetworkHandler.client.connect("localhost", 5000);
+                NetworkHandler.client.connect(ip, port);
             }
         }
         catch (Exception ex)

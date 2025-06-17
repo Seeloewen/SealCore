@@ -12,6 +12,9 @@ import static de.sealcore.util.logging.LogType.RENDERING;
 
 public class MainMenu extends JFrame
 {
+    private final AboutMenu aboutMenu = new AboutMenu();
+    public final ConnectMenu connectMenu = new ConnectMenu(this);
+
     private final int WIDTH = 900;
     private final int HEIGHT = 500;
 
@@ -30,6 +33,8 @@ public class MainMenu extends JFrame
 
         setLayout(null);
         setSize(WIDTH, HEIGHT);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         try
         {
@@ -43,7 +48,7 @@ public class MainMenu extends JFrame
         setupUi();
     }
 
-    public void setupUi()
+    private void setupUi()
     {
         layeredPane.setSize(WIDTH, HEIGHT);
 
@@ -69,14 +74,17 @@ public class MainMenu extends JFrame
         //Play Button
         btnPlay.setBounds(260, 150, 350, 50);
         btnPlay.setFont(new Font("Arial", Font.PLAIN, 26));
+        btnPlay.addActionListener(e -> connectMenu.setVisible(true));
 
         //About Button
         btnAbout.setBounds(260, 215, 350, 50);
         btnAbout.setFont(new Font("Arial", Font.PLAIN, 26));
+        btnAbout.addActionListener(e -> aboutMenu.setVisible(true));
 
         //Exit Button
         btnExit.setBounds(260, 280, 350, 50);
         btnExit.setFont(new Font("Arial", Font.PLAIN, 26));
+        btnExit.addActionListener(e -> System.exit(0));
 
         layeredPane.add(lblImage, Integer.valueOf(0));
         layeredPane.add(btnPlay, Integer.valueOf(1));
