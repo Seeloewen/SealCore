@@ -2,7 +2,7 @@ group = "de.sealcore"
 version = "1.0-SNAPSHOT"
 
 val lwjglVersion = "3.3.6"
-var jacksonDatabindVersion = "2.19.0"
+var jacksonDatabindVersion = "2.19.1"
 var jomlVersion = "1.10.8"
 var flatlafVersion = "3.6"
 
