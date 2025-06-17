@@ -1,5 +1,6 @@
 package de.sealcore.client;
 
+import de.sealcore.Main;
 import de.sealcore.client.config.Items;
 import de.sealcore.client.input.KeyBinds;
 import de.sealcore.client.menus.MainMenu;
@@ -63,7 +64,7 @@ public class Client {
                 throw new RuntimeException(e);
             }
 
-            if(failedConnectAttempts >= 3)
+            if(failedConnectAttempts >= 3 && !Main.bypassMenu)
             {
                 JOptionPane.showMessageDialog(null, "Connection to the server failed.", "Error", JOptionPane.ERROR_MESSAGE);
                 menu.connectMenu.setConnectingState(false);
@@ -151,7 +152,16 @@ public class Client {
     public static void main() {
         instance = new Client();
         instance.menu = new MainMenu();
-        instance.menu.setVisible(true);
+
+        if(Main.bypassMenu)
+        {
+            start("localhost", 5000);
+        }
+        else
+        {
+            instance.menu.setVisible(true);
+        }
+
     }
 
 }

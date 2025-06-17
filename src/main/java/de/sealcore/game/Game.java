@@ -76,17 +76,17 @@ public class Game
         addMap(nextMapId(), MapLayout.NORMAL);
         loadMap(0);
 
-        /*var e = new Grassling(10, 10);
+        var e = new Grassling(10, 10);
         entities.add(e);
-        e.sendAdd();*/
+        e.sendAdd();
 
-        Random rnd = new Random();
+        /*Random rnd = new Random();
         for (int i = 0; i < 10; i++)
         {
             var e = new Grassling(rnd.nextDouble(-20, 20), rnd.nextDouble(-20, 20));
             entities.add(e);
             e.sendAdd();
-        }
+        }*/
     }
 
     public void removeEntity(int id) {

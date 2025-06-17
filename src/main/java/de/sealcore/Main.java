@@ -17,6 +17,8 @@ public class Main
     public static final String VERSION = "Dev";
     public static final String BUILDDATE = "13.06.2025";
 
+    public static boolean bypassMenu = false;
+
     public static void main(String[] args)
     {
         //*
@@ -56,6 +58,10 @@ public class Main
             if(arg.equals("verbose"))
             {
                 NetworkHandler.verboseLogging = true;
+            }
+            else if(arg.equals("bypassMenu"))
+            {
+                bypassMenu = true;
             }
         }
     }
