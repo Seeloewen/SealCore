@@ -84,6 +84,7 @@ public class NetworkHandler
             case PacketType.SETFOLLOWCAM -> p = SetFollowCamPacket.fromJson(args);
             case PacketType.PLAYERINTERACT -> p = PlayerInteractPacket.fromJson(args);
             case PacketType.SETHP -> p = SetHPPacket.fromJson(args);
+            case PacketType.SETCOOLDOWN -> p = SetCooldownPacket.fromJson(args);
         }
 
         //Set the client id if the sender is a client

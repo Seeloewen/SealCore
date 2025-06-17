@@ -15,5 +15,6 @@ public enum PacketType
     MOVEINPUT,
     SETFOLLOWCAM,
     PLAYERINTERACT,
-    SETHP
+    SETHP,
+    SETCOOLDOWN,
 }

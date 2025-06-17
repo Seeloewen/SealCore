@@ -130,6 +130,8 @@ public class Client {
 
             camera.updateTargeted();
 
+            playerState.update(dt);
+
             renderer.render(camera);
             glfwSwapBuffers(window); // swap the color buffers
 

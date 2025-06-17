@@ -7,6 +7,7 @@ import de.sealcore.game.items.ItemType;
 import de.sealcore.game.items.weapons.Weapon;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.ChunkUnloadPacket;
+import de.sealcore.networking.packets.SetCooldownPacket;
 import de.sealcore.networking.packets.SetHPPacket;
 import de.sealcore.server.Server;
 import de.sealcore.util.ChunkIndex;
@@ -65,6 +66,9 @@ public class Player extends Entity{
                          int tfx, int tfy, double dtf) {
         var slot = inventory.getSlot(slotIndex);
         Item item = ItemRegister.getItem(slot.id);
+
+        NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
+
         /*if(item instanceof Weapon w && w.info.type() == ItemType.WEAPON_RANGED) {
             int a = w.getIntTag("ammoAmount");
             if(a > 0) {

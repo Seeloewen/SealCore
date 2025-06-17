@@ -13,9 +13,9 @@ public abstract class Weapon extends Item
 {
     public WeaponInfo weaponInfo;
 
-    protected Weapon(String id, String name, ItemType type, int maxAmount, WeaponType wType, int damage, double range, int magSize)
+    protected Weapon(String id, String name, ItemType type, int maxAmount, WeaponType wType, int damage, double range, int magSize, double cooldown)
     {
-        super(id, name, type, maxAmount);
+        super(id, name, type, maxAmount, cooldown);
         weaponInfo = new WeaponInfo(wType, damage, range, magSize);
 
         writeTag("ammoId", Weapon.getDefaultAmmo(wType));
