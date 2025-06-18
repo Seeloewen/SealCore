@@ -9,8 +9,6 @@ public class FloorRegister
         {
             case "f:grass" -> new Grass();
             case "f:water" -> new Water();
-            case "f:stone" -> new Stone();
-            case "f:stone_bricks" -> new StoneBricks();
             default -> null;
         };
     }

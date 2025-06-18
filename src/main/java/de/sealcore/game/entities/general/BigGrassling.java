@@ -2,24 +2,25 @@ package de.sealcore.game.entities.general;
 
 import java.util.Random;
 
-public class Grassling extends Entity {
-
-    final int DAMAGE = 2;
-    final double RANGE_SQR = 2*2;
+public class BigGrassling extends Entity
+{
+    final int DAMAGE = 4;
+    final double RANGE_SQR = 3 * 3;
     final double COOLDOWN = 1;
 
     double attackCooldown = 0;
 
-    public Grassling(double x, double y) {
-        super("e:grassling", 10, x, y);
-        sizeX = 0.7;
-        sizeY = 0.7;
+    public BigGrassling(double x, double y)
+    {
+        super("e:big_grassling", 15, x, y);
+        sizeX = 0.95;
+        sizeY = 0.95;
         sizeZ = 2;
 
         pathFinder = new PathFinder(this);
 
         Random rnd = new Random();
-        moveSpeed = rnd.nextDouble(0.5, 2);
+        moveSpeed = rnd.nextDouble(1, 2.5);
     }
 
     @Override
@@ -28,10 +29,12 @@ public class Grassling extends Entity {
         pathFinder.doStep();
 
         var p = pathFinder.playerTarget;
-        if(p != null && attackCooldown <= 0) {
-            var dx = p.posX-posX;
-            var dy = p.posY-posY;
-            if(dx*dx+dy*dy <= RANGE_SQR) {
+        if (p != null && attackCooldown <= 0)
+        {
+            var dx = p.posX - posX;
+            var dy = p.posY - posY;
+            if (dx * dx + dy * dy <= RANGE_SQR)
+            {
                 p.damage(DAMAGE, getID());
                 attackCooldown = COOLDOWN;
             }

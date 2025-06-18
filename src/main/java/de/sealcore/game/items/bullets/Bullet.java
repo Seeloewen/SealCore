@@ -8,14 +8,9 @@ public abstract class Bullet extends Item
 {
     public BulletInfo bulletInfo;
 
-    protected Bullet(String id, String name, ItemType type, int maxAmount, BulletType bType, int damage, int range)
+    protected Bullet(String id, String name, ItemType type, int maxAmount, int damage)
     {
         super(id, name, type, maxAmount, 0);
-        bulletInfo = new BulletInfo(bType, damage, range);
-    }
-
-    public void onHit(Weapon w, Object e) //TODO: Entity e
-    {
-        //TODO: e.damage(w.weaponInfo.damage + bulletInfo.damage)
+        bulletInfo = new BulletInfo(damage);
     }
 }

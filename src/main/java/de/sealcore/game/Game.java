@@ -7,9 +7,7 @@ import de.sealcore.game.entities.general.Entity;
 import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventoryManager;
 import de.sealcore.game.entities.general.*;
-import de.sealcore.game.items.Grass_Block;
 import de.sealcore.game.items.Item;
-import de.sealcore.game.items.ItemRegister;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
@@ -57,9 +55,6 @@ public class Game
         {
             if (entity != player) entity.sendAdd(id);
         }
-        Item i = new Grass_Block();
-        player.inventory.add(5, i.info.id(), 50, i.tags);
-        player.inventory.add(7, i.info.id(), 5, i.tags);
     }
 
 

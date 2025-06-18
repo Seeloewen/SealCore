@@ -1,5 +1,7 @@
 package de.sealcore.game.blocks;
 
-public record BlockInfo(String id, String name, boolean isSolid)
+import de.sealcore.game.items.tools.ToolType;
+
+public record BlockInfo(String id, String name, boolean isSolid, ToolType requiredTool)
 {
 }
