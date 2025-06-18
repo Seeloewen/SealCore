@@ -12,6 +12,7 @@ import de.sealcore.networking.packets.SetCooldownPacket;
 import de.sealcore.networking.packets.SetHPPacket;
 import de.sealcore.server.Server;
 import de.sealcore.util.ChunkIndex;
+import de.sealcore.util.MathUtil;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -68,7 +69,7 @@ public class Player extends Entity{
         var slot = inventory.getSlot(slotIndex);
         Item item = ItemRegister.getItem(slot.id);
 
-        NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
+
 
         /*if(item instanceof Weapon w && w.info.type() == ItemType.WEAPON_RANGED) {
             int a = w.getIntTag("ammoAmount");
@@ -77,8 +78,9 @@ public class Player extends Entity{
                 Log.debug("ammo"+w.getIntTag("ammoAmount"));
             }
         }*/
-
+        //if entity is targeted
         if(dte >= 0 && (dtb < 0 || dte < dtb) && (dtf < 0 || dte < dtf)) {
+            NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
             switch (item.info.type()) {
                 case WEAPON_MELEE -> {
                     Weapon weapon = (Weapon) item;
@@ -101,9 +103,25 @@ public class Player extends Entity{
                     Log.debug("ammo"+ (ammo-1));
                 }
             }
-
+        //if block is targeted
         } else if(dtb >= 0 && (dte < 0 || dtb < dte) && (dtf < 0 || dtb < dtf)) {
             Log.info(LogType.GAME, "interact on block " + tbx + "|" + tby + " left=" + leftClick);
+            /*var chunk = Server.game.getCurrentMap().getChunk(MathUtil.toChunk(tbx), MathUtil.toChunk(tby));
+            int x = MathUtil.safeMod(tbx, 8);
+            int y = MathUtil.safeMod(tby, 8);
+            var block = chunk.getBlock(x, y);
+            if(dtb <= 2.5) { //range check
+                if(block != null && block.info.toolID().equals(item.info.id())) {
+                    chunk.setBlock(x, y, null, true);
+                    block.onDestroy(getID());
+                    //send cooldown only when
+                    NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
+                } else {
+
+                }
+            }
+*/
+        //if floor is targeted
         } else if(dtf >= 0 && (dte < 0 || dtf < dte) && (dtb < 0 || dtf < dtb)) {
             Log.info(LogType.GAME, "interact on floor " + tfx + "|" + tfy + " left=" + leftClick);
         }

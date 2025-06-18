@@ -80,12 +80,10 @@ public class GameState {
     //chunk creation parameters have to be added
     public void loadChunk(int id, String[] floors, String[] blocks) {
         loadedChunks.put(id, new ChunkState(id, floors, blocks));
-        Log.info(LogType.RENDERING, "loaded chunk " + id);
     }
 
     public void unloadChunk(int id) {
         loadedChunks.remove(id);
-        Log.info(LogType.RENDERING, "unloaded chunk " + id);
     }
 
     public void updateFloorChunk(int id, String floorID, int index) {
