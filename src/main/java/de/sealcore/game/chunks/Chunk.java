@@ -3,6 +3,7 @@ package de.sealcore.game.chunks;
 import de.sealcore.game.blocks.Block;
 import de.sealcore.game.floors.Floor;
 import de.sealcore.game.floors.FloorRegister;
+import de.sealcore.networking.packets.ChunkUpdatePacket;
 import de.sealcore.util.ChunkIndex;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.ChunkAddPacket;
@@ -57,6 +58,15 @@ public class Chunk
     {
         //Set blocks at specified location
         blocks[Chunk.coordsToIndex(x, y)] = b;
+    }
+
+    public void setBlock(int x, int y, Block b, boolean sync)
+    {
+        //Set blocks at specified location
+        blocks[Chunk.coordsToIndex(x, y)] = b;
+        if(sync) {
+            NetworkHandler.send(new ChunkUpdatePacket(index, false, b==null?"null":b.info.id(), coordsToIndex(x, y)));
+        }
     }
 
     public Block getBlock(int x, int y)
