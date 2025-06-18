@@ -17,7 +17,7 @@ public class PlayerState {
     public static int playerChunkX;
     public static int playerChunkY;
 
-    int selectedSlot = 5;
+    public int selectedSlot = 5;
 
     public double cooldownProgress = 1;
     public double cooldownTotal = 1;
@@ -81,11 +81,8 @@ public class PlayerState {
 
     }
 
-    public void setSelectedSlot(int i) {
-        selectedSlot = i;
-        String id = ""; //=inventorystate.getItem(i);
-
-
+    public void setSelectedHotbarSlot(int i) {
+       selectedSlot = Client.instance.inventoryState.hotbarToSlot(i);
     }
 
 }

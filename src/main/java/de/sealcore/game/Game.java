@@ -1,5 +1,6 @@
 package de.sealcore.game;
 
+import de.sealcore.game.blocks.BlockRegister;
 import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.crafting.CraftingHandler;
 import de.sealcore.game.entities.general.Entity;
@@ -8,6 +9,7 @@ import de.sealcore.game.entities.inventory.InventoryManager;
 import de.sealcore.game.entities.general.*;
 import de.sealcore.game.items.Grass_Block;
 import de.sealcore.game.items.Item;
+import de.sealcore.game.items.ItemRegister;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
@@ -49,14 +51,15 @@ public class Game
         players.put(id, player);
         player.sendAdd();
         NetworkHandler.sendOnly(id, new SetFollowCamPacket(player.getID()));
-        Log.info(LogType.GAME, "player " + id + " joined the game");
+        Log.info(LogType.GAME, "Player #" + id + " joined the game");
         player.updateLoadedChunks();
         for (Entity entity : entities)
         {
             if (entity != player) entity.sendAdd(id);
         }
         Item i = new Grass_Block();
-        player.inventory.add(5, i.info.id(), 1, i.tags);
+        player.inventory.add(5, i.info.id(), 50, i.tags);
+        player.inventory.add(7, i.info.id(), 5, i.tags);
     }
 
 
@@ -71,6 +74,11 @@ public class Game
         //Create initial map
         addMap(nextMapId(), MapLayout.NORMAL);
         loadMap(0);
+
+        getCurrentMap().getChunk(0,0).setBlock(0,0, BlockRegister.getBlock("b:core_1"));
+        getCurrentMap().getChunk(-1,0).setBlock(7,0, BlockRegister.getBlock("b:core_4"));
+        getCurrentMap().getChunk(0,-1).setBlock(0,7, BlockRegister.getBlock("b:core_2"));
+        getCurrentMap().getChunk(-1,-1).setBlock(7,7, BlockRegister.getBlock("b:core_3"));
 
         var e = new Grassling(10, 10);
         entities.add(e);

@@ -62,8 +62,10 @@ public class InventorySlot
     public int move(InventorySlot source, int amount)
     {
         //Check how many items are available for moving
+        int sourceAmount = source.amount;
         int remainingAmount = source.remove(amount);
-        int moveableAmount = source.amount - remainingAmount;
+        int moveableAmount = sourceAmount - remainingAmount;
+        setItem(source.id, source.tag);
         add(moveableAmount);
 
         return remainingAmount; //Return the amount of items are still in the first slot.
@@ -85,6 +87,8 @@ public class InventorySlot
         counter.id = id;
         counter.amount = amount;
         counter.tag = tag;
+
+        NetworkHandler.sendOnly(inv.id, new InventoryStatePacket(inv));
     }
 
     public int remove(int amount)

@@ -13,6 +13,8 @@ public class InventoryState
     private final int WIDTH = 380;
     private final int HEIGHT = 320;
 
+    public SlotState selectedSlot;
+
     private int x = 20;
     private int y = 20;
 
@@ -110,11 +112,10 @@ public class InventoryState
 
     public void initHotbar()
     {
-        getSlotN(InventorySlotType.WEAPON, 0).isHotbar = true;
-        getSlotN(InventorySlotType.WEAPON, 1).isHotbar = true;
-        getSlotN(InventorySlotType.MATERIAL, 0).isHotbar = true;
+        getSlotN(InventorySlotType.WEAPON, 0).setAsHotbar(1);
+        getSlotN(InventorySlotType.WEAPON, 1).setAsHotbar(2);
+        getSlotN(InventorySlotType.MATERIAL, 0).setAsHotbar(3);
     }
-
 
     public void handleMouseClick(int button, int action)
     {
@@ -136,7 +137,7 @@ public class InventoryState
 
     public void renderHotbar()
     {
-        PrimitiveRenderer.drawRectangle(new Rectangle(25, Resolution.HEIGHT - 120, 290, Resolution.HEIGHT - 25), new Color(69, 69, 42), 0.02f); //Hotbar background
+        PrimitiveRenderer.drawRectangle(new Rectangle(25, Resolution.HEIGHT - 120, 290, Resolution.HEIGHT - 25), new Color(0.5f, 0.5f, 0.5f), 0.02f); //Hotbar background
         for (SlotState s : slots) if (s.isHotbar) s.render(); //Hotbar slots
     }
 
@@ -155,6 +156,16 @@ public class InventoryState
         }
 
         return null;
+    }
+
+    public int hotbarToSlot(int i)
+    {
+        for(SlotState s : slots)
+        {
+            if(s.hotbarSlotIndex == i) return s.index;
+        }
+
+        return -1;
     }
 
     private SlotState getSlot(int i)
