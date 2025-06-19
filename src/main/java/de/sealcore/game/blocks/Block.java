@@ -11,4 +11,8 @@ public abstract class Block extends InteractableObject
     {
         info = new BlockInfo(id, name, isSolid, requiredTool);
     }
+
+    public void onDestroy(int source) {
+
+    }
 }

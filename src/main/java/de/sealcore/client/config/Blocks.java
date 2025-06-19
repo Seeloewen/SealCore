@@ -9,36 +9,29 @@ import de.sealcore.util.logging.LogType;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class Items {
+public class Blocks {
 
-    public static HashMap<String, JsonObject> itemConfigs;
+    public static HashMap<String, JsonObject> blockConfigs;
 
     public static void init() {
-        itemConfigs = new HashMap<>();
+        blockConfigs = new HashMap<>();
         try {
-            var o = JsonObject.fromString(ResourceManager.getResourceFileAsString("client_content_config/items.json"));
-            var itemObjects = o.getArray("items");
+            var o = JsonObject.fromString(ResourceManager.getResourceFileAsString("client_content_config/blocks.json"));
+            var itemObjects = o.getArray("blocks");
             for(Object j : itemObjects) {
                 var itemObject = (JsonObject) j;
                 String id = itemObject.getString("id");
-                itemConfigs.put(id, itemObject);
-                TextureRenderer.loadTexture(id, itemObject.getString("texture"));
+                blockConfigs.put(id, itemObject);
             }
 
         } catch (IOException e) {
-            Log.error(LogType.GAME, "error reading client item config \n" + e);
+            Log.error(LogType.GAME, "error reading client block config \n" + e);
         }
     }
 
 
     public static JsonObject get(String id) {
-        return itemConfigs.get(id);
+        return blockConfigs.get(id);
     }
-
-
-
-
-
-
 
 }

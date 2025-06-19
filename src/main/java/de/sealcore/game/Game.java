@@ -8,6 +8,8 @@ import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventoryManager;
 import de.sealcore.game.entities.general.*;
 import de.sealcore.game.items.Item;
+import de.sealcore.game.items.TagHandler;
+import de.sealcore.game.items.weapons.Pistol;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
@@ -55,6 +57,11 @@ public class Game
         {
             if (entity != player) entity.sendAdd(id);
         }
+        player.inventory.add(5, "i:sword", 1);
+        Pistol p = new Pistol();
+        TagHandler.writeTag(p, "ammoAmount", 8);
+        player.inventory.add(6, p.info.id(), 1, p.tags);
+        player.inventory.add(0, "i:axe", 1);
     }
 
 

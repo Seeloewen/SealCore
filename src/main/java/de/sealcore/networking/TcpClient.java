@@ -64,6 +64,9 @@ public class TcpClient
             try
             {
                 String data = reader.readLine();
+                if(data == null) {
+                    Log.info(LogType.NETWORKING, "hs");
+                }
                 NetworkHandler.parseData(this, data); //Parse data to packet
             }
             catch (Exception ex)

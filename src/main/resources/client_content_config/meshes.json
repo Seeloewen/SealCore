@@ -1,0 +1,69 @@
+{
+  "meshes": [
+    {
+      "id": "b:core_1",
+      "path": "objects/Core_1.txt",
+      "scale": 0.125
+    },
+    {
+      "id": "b:core_2",
+      "path": "objects/Core_2.txt",
+      "scale": 0.125
+    },
+    {
+      "id": "b:core_3",
+      "path": "objects/Core_3.txt",
+      "scale": 0.125
+    },
+    {
+      "id": "b:core_4",
+      "path": "objects/Core_4.txt",
+      "scale": 0.125
+    },
+    {
+      "id": "f:grass",
+      "path": "objects/Grass.txt",
+      "scale": 0.125
+    },
+    {
+      "id": "e:grassling",
+      "path": "objects/Grass_Enemy.txt",
+      "scale": 0.1125
+    },
+    {
+      "id": "e:big_grassling",
+      "path": "objects/Grass_Enemy.txt",
+      "scale": 0.225
+    },
+    {
+      "id": "e:jabbus",
+      "path": "objects/Jabbus.txt",
+      "scale": 0.25
+    },
+    {
+      "id": "e:player",
+      "path": "objects/Player.txt",
+      "scale": 0.09
+    },
+    {
+      "id": "b:small_rock",
+      "path": "objects/Rock.txt",
+      "scale": 0.2
+    },
+    {
+      "id": "b:oak_tree",
+      "path": "objects/Tree.txt",
+      "scale": 0.1
+    },
+    {
+      "id": "f:water",
+      "path": "objects/Water.txt",
+      "scale": 0.125
+    },
+    {
+      "id": "b:Workbench",
+      "path": "objects/Workbench.txt",
+      "scale": 0.125
+    }
+  ]
+}

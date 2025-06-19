@@ -6,6 +6,6 @@ public class Axe extends Tool
 {
     public Axe()
     {
-        super("i:axe", "Axe", ItemType.TOOL, 1, 2, ToolType.AXE);
+        super("i:axe", "Axe", ItemType.TOOL, 1, 2, 2, ToolType.AXE);
     }
 }

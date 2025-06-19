@@ -1,0 +1,57 @@
+{
+  "items": [
+    {
+      "id": "i:rifle",
+      "type": "it:weapon",
+      "range": 60.0,
+      "texture": "textures/Rifle.png"
+    },
+    {
+      "id": "i:pistol",
+      "type": "it:weapon",
+      "range": 40.0,
+      "texture": "textures/Pistol.png"
+    },
+    {
+      "id": "i:sword",
+      "type": "it:weapon",
+      "range": 3.0,
+      "texture": "textures/Stone_Sword.png"
+    },
+    {
+      "id": "i:pickaxe",
+      "type": "it:tool",
+      "tt": "tt:stone",
+      "range": 1.5,
+      "texture": "textures/Stone_Pickaxe.png"
+    },
+    {
+      "id": "i:axe",
+      "type": "it:tool",
+      "tt": "tt:wood",
+      "range": 1.5,
+      "texture": "textures/Stone_Axe.png"
+    },
+    {
+      "id": "i:log",
+      "type": "it:material",
+      "texture": "textures/Log.png"
+    },
+    {
+      "id": "i:rock",
+      "type": "it:material",
+      "texture": "textures/Rock.png"
+    },
+    {
+      "id": "i:workbench",
+      "type": "it:placeable",
+      "range": 5,
+      "texture": "textures/Workbench.png"
+    },
+    {
+      "id": "i:bullet",
+      "type": "it:ammo",
+      "texture": "textures/Bullet.png"
+    }
+  ]
+}

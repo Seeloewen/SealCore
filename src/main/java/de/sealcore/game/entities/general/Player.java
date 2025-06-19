@@ -1,10 +1,12 @@
 package de.sealcore.game.entities.general;
 
+import de.sealcore.game.blocks.Block;
 import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.items.Item;
 import de.sealcore.game.items.ItemRegister;
 import de.sealcore.game.items.ItemType;
 import de.sealcore.game.items.TagHandler;
+import de.sealcore.game.items.tools.Tool;
 import de.sealcore.game.items.weapons.Weapon;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.ChunkUnloadPacket;
@@ -106,21 +108,21 @@ public class Player extends Entity{
         //if block is targeted
         } else if(dtb >= 0 && (dte < 0 || dtb < dte) && (dtf < 0 || dtb < dtf)) {
             Log.info(LogType.GAME, "interact on block " + tbx + "|" + tby + " left=" + leftClick);
-            /*var chunk = Server.game.getCurrentMap().getChunk(MathUtil.toChunk(tbx), MathUtil.toChunk(tby));
-            int x = MathUtil.safeMod(tbx, 8);
-            int y = MathUtil.safeMod(tby, 8);
-            var block = chunk.getBlock(x, y);
-            if(dtb <= 2.5) { //range check
-                if(block != null && block.info.toolID().equals(item.info.id())) {
-                    chunk.setBlock(x, y, null, true);
-                    block.onDestroy(getID());
-                    //send cooldown only when
-                    NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
-                } else {
+            if(item instanceof Tool tool) {
+                var chunk = Server.game.getCurrentMap().getChunk(MathUtil.toChunk(tbx), MathUtil.toChunk(tby));
+                int x = MathUtil.safeMod(tbx, 8);
+                int y = MathUtil.safeMod(tby, 8);
+                Block block = chunk.getBlock(x, y);
+                if (dtb <= tool.range) { //range check
+                    if (block != null && block.info.requiredTool() == tool.toolType) {
+                        chunk.setBlock(x, y, null, true);
+                        block.onDestroy(getID());
+                        NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
+                    } else {
 
+                    }
                 }
             }
-*/
         //if floor is targeted
         } else if(dtf >= 0 && (dte < 0 || dtf < dte) && (dtb < 0 || dtf < dtb)) {
             Log.info(LogType.GAME, "interact on floor " + tfx + "|" + tfy + " left=" + leftClick);
@@ -176,7 +178,9 @@ public class Player extends Entity{
         if(c == null) {
             c = map.genChunk(i);
         }
-        c.sendAddPacket(clientID);
+        if(!loadedChunks.contains(c)) {
+            c.sendAddPacket(clientID);
+        }
         loadedChunks.add(i);
     }
 

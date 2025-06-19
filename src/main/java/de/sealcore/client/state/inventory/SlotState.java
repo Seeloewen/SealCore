@@ -23,7 +23,7 @@ public class SlotState
     public final int index;
     public final InventorySlotType type;
 
-    private String id = "";
+    String id = "";
     private int amount;
 
     public boolean isHotbar = false;

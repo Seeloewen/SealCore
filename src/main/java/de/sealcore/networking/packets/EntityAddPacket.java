@@ -14,12 +14,9 @@ public class EntityAddPacket extends Packet
     private double x;
     private double y;
     private double z;
-    private double sizeX;
-    private double sizeY;
-    private double sizeZ;
     private double angleX;
 
-    public EntityAddPacket(int id, String entityType, double x, double y, double z, double sizeX, double sizeY, double sizeZ, double angleX)
+    public EntityAddPacket(int id, String entityType, double x, double y, double z, double angleX)
     {
         super(PacketType.ENTITYADD);
 
@@ -28,9 +25,6 @@ public class EntityAddPacket extends Packet
         this.x = x;
         this.y = y;
         this.z = z;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
-        this.sizeZ = sizeZ;
         this.angleX = angleX;
     }
 
@@ -44,12 +38,9 @@ public class EntityAddPacket extends Packet
         double x = args.getDouble("x");
         double y = args.getDouble("x");
         double z = args.getDouble("z");
-        double sizeX = args.getDouble("sizeX");
-        double sizeY = args.getDouble("sizeY");
-        double sizeZ = args.getDouble("sizeZ");
         double angleX = args.getDouble("angleX");
 
-        return new EntityAddPacket(id, entityType, x, y, z, sizeX, sizeY, sizeZ, angleX);
+        return new EntityAddPacket(id, entityType, x, y, z, angleX);
     }
 
     public String toJson()
@@ -64,9 +55,6 @@ public class EntityAddPacket extends Packet
         args.addDouble("x", x);
         args.addDouble("y", x);
         args.addDouble("z", x);
-        args.addDouble("sizeX", sizeX);
-        args.addDouble("sizeY", sizeY);
-        args.addDouble("sizeZ", sizeZ);
         args.addDouble("angleX", x);
         obj.addObject("args", args);
 
@@ -75,6 +63,6 @@ public class EntityAddPacket extends Packet
 
     public void onHandle()
     {
-        Client.instance.gameState.addMesh(id, entityType, x, y, z, sizeX, sizeY, sizeZ);
+        Client.instance.gameState.addMesh(id, entityType, x, y, z);
     }
 }

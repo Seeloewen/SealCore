@@ -6,6 +6,6 @@ public class Pickaxe extends Tool
 {
     public Pickaxe()
     {
-        super("i:pickaxe", "Pickaxe", ItemType.TOOL, 1, 2, ToolType.PICKAXE);
+        super("i:pickaxe", "Pickaxe", ItemType.TOOL, 1, 2, 2, ToolType.PICKAXE);
     }
 }

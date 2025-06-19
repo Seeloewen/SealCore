@@ -66,6 +66,10 @@ public class InventoryState
         }
     }
 
+    public String getSelectedItem(int i) {
+        return slots[i].id;
+    }
+
     public void setLocation(int x, int y)
     {
         this.x = x;

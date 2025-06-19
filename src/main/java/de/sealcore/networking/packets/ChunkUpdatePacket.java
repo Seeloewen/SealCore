@@ -2,6 +2,9 @@ package de.sealcore.networking.packets;
 
 import com.fasterxml.jackson.databind.node.TextNode;
 import de.sealcore.client.Client;
+import de.sealcore.client.state.world.BlockState;
+import de.sealcore.server.Server;
+import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 
@@ -57,6 +60,9 @@ public class ChunkUpdatePacket extends Packet
 
     public void onHandle()
     {
-        //
+        if(!isFloor) {
+            //holy jeses
+            Client.instance.gameState.loadedChunks.get(cId).blocks[index] = floorBlockId.equals("") ? null : new BlockState(floorBlockId, ChunkIndex.toX(cId)*8 + index % 8, ChunkIndex.toY(cId) + index / 8);
+        }
     }
 }

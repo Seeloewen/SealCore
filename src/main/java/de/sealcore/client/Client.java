@@ -1,6 +1,8 @@
 package de.sealcore.client;
 
 import de.sealcore.Main;
+import de.sealcore.client.config.Blocks;
+import de.sealcore.client.config.Entities;
 import de.sealcore.client.config.Items;
 import de.sealcore.client.input.KeyBinds;
 import de.sealcore.client.menus.MainMenu;
@@ -98,13 +100,16 @@ public class Client {
 
         glfwSwapInterval(0);
 
-        Items.init();
 
         gameState = new GameState();
         inventoryState = new InventoryState(Player.WEAPON_SLOTS, Player.AMMO_SLOTS, Player.MAT_SLOTS, Player.UNI_SLOTS);
         playerState = new PlayerState();
 
         renderer = new Renderer(gameState);
+
+        Items.init();
+        Blocks.init();
+        Entities.init();
 
         camera = new Camera();
 

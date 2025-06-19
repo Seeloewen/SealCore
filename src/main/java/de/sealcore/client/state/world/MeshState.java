@@ -1,5 +1,6 @@
 package de.sealcore.client.state.world;
 
+import de.sealcore.client.config.Entities;
 import de.sealcore.client.ui.rendering.line.LineRenderer;
 import de.sealcore.client.ui.rendering.mesh.MeshRenderer;
 import org.joml.Matrix4f;
@@ -24,14 +25,15 @@ public class MeshState {
 
     public boolean visible = true;
 
-    MeshState(String modelID, double posX, double posY, double posZ, double sizeX, double sizeY, double sizeZ) {
+    MeshState(String modelID, double posX, double posY, double posZ) {
         this.meshID = modelID;
         this.posX = posX;
         this.posY = posY;
         this.posZ = posZ;
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
-        this.sizeZ = sizeZ;
+        var json = Entities.get(modelID);
+        this.sizeX = json.getDouble("width");
+        this.sizeY = json.getDouble("width");
+        this.sizeZ = json.getDouble("height");
     }
 
     void setPosition(double x, double y, double z, double rotZ, double velX, double velY) {

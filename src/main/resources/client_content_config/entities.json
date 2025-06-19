@@ -1,0 +1,24 @@
+{
+  "entities": [
+    {
+      "id": "e:player",
+      "width": 0.9,
+      "height": 1.8
+    },
+    {
+      "id": "e:grassling",
+      "width": 0.9,
+      "height": 1.6
+    },
+    {
+      "id": "e:big_grassling",
+      "width": 0.9,
+      "height": 1.8
+    },
+    {
+      "id": "e:jabbus",
+      "width": 0.9,
+      "height": 1.8
+    }
+  ]
+}

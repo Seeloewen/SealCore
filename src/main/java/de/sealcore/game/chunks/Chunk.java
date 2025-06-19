@@ -65,7 +65,7 @@ public class Chunk
         //Set blocks at specified location
         blocks[Chunk.coordsToIndex(x, y)] = b;
         if(sync) {
-            NetworkHandler.send(new ChunkUpdatePacket(index, false, b==null?"null":b.info.id(), coordsToIndex(x, y)));
+            NetworkHandler.send(new ChunkUpdatePacket(index, false, b==null?"":b.info.id(), coordsToIndex(x, y)));
         }
     }
 

@@ -37,17 +37,8 @@ public class MeshRenderer {
                 new Vector3f(0f,0f,1f)
         );
 
+        MeshLoader.loadMeshes();
 
-        loadMesh( "f:grass");
-        loadMesh( "e:player" );
-        loadMesh( "e:grassling");
-        loadMesh( "f:water" );
-        loadMesh( "b:spruce_tree" );
-        loadMesh( "b:oak_tree");
-        loadMesh( "b:core_1");
-        loadMesh( "b:core_2");
-        loadMesh( "b:core_3");
-        loadMesh( "b:core_4");
     }
 
     public static void refreshProjection() {
@@ -62,8 +53,8 @@ public class MeshRenderer {
         shader.setUniformMat4("view_rot", viewRot);
     }
 
-    public static void loadMesh(String meshID) {
-        Mesh m = MeshLoader.loadMesh(meshID);
+    public static void loadMesh(String meshID, String path, double scale) {
+        Mesh m = MeshLoader.loadMesh(path, scale);
         loadedMeshes.put(meshID, m);
     }
 

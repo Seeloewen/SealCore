@@ -2,6 +2,8 @@ package de.sealcore.client.state;
 
 
 import de.sealcore.client.Client;
+import de.sealcore.client.config.Blocks;
+import de.sealcore.client.config.Items;
 import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
 import de.sealcore.client.ui.rendering.primitives.Rectangle;
@@ -14,8 +16,8 @@ import org.lwjgl.glfw.GLFW;
 
 public class PlayerState {
 
-    public static int playerChunkX;
-    public static int playerChunkY;
+    public static int playerChunkX = 0;
+    public static int playerChunkY = 0;
 
     public int selectedSlot = 5;
 
@@ -33,6 +35,9 @@ public class PlayerState {
 
     public int hp = 10;
 
+    private boolean targeting;
+
+
     public void handleMousePress(int button) {
         if(cooldownProgress < cooldownTotal) return;
         NetworkHandler.send(new PlayerInteractPacket(selectedSlot, button == GLFW.GLFW_MOUSE_BUTTON_LEFT,
@@ -46,8 +51,44 @@ public class PlayerState {
 
     public void update(double dt) {
         var p = Client.instance.gameState.loadedMeshes.get(Client.instance.camera.following);
-        playerChunkX = MathUtil.toChunk(MathUtil.toBlock(p.posX));
-        playerChunkY = MathUtil.toChunk(MathUtil.toBlock(p.posY));
+        if(p != null) {
+            playerChunkX = MathUtil.toChunk(MathUtil.toBlock(p.posX));
+            playerChunkY = MathUtil.toChunk(MathUtil.toBlock(p.posY));
+        }
+
+        targeting = false;
+        var itemID = Client.instance.inventoryState.getSelectedItem(selectedSlot);
+        var item = Items.get(itemID);
+        switch (item.getString("type")) {
+            case "it:weapon" -> {
+                if(distTargetEntity >= 0
+                        && (distTargetEntity < distTargetBlock || distTargetBlock <= 0)
+                        && (distTargetEntity < distTargetFloor || distTargetFloor <= 0)
+                        && item.getDouble("range") >= distTargetEntity) {
+                    targeting = true;
+                }
+            }
+            case "it:tool" -> {
+                if(distTargetBlock >= 0
+                        && (distTargetBlock < distTargetFloor || distTargetFloor <= 0)
+                        && (distTargetBlock < distTargetEntity || distTargetEntity <= 0)
+                        && item.getDouble("range") >= distTargetBlock) {
+                    var chunk = Client.instance.gameState.loadedChunks.get(ChunkIndex.toI(MathUtil.toChunk(targetBlockX),MathUtil.toChunk( targetBlockY)));
+                    var blockState = chunk.blocks[MathUtil.safeMod(targetBlockX, 8) + 8* MathUtil.safeMod(targetBlockY, 8)];
+                    targeting = Blocks.get(blockState.type).getString("tt").equals(item.getString("tt"));
+                }
+            }
+            case "it:placeable" -> {
+                if(distTargetFloor >= 0
+                        && (distTargetFloor < distTargetBlock || distTargetBlock <= 0)
+                        && (distTargetFloor < distTargetEntity || distTargetEntity <= 0)
+                        && item.getDouble("range") >= distTargetFloor) {
+                    var chunk = Client.instance.gameState.loadedChunks.get(ChunkIndex.toI(MathUtil.toChunk(targetFloorX),MathUtil.toChunk( targetFloorY)));
+                    var floorState = chunk.floors[MathUtil.safeMod(targetFloorX, 8) + 8* MathUtil.safeMod(targetFloorY, 8)];
+                    targeting = floorState.type.equals("f:grass");
+                }
+            }
+        }
 
         if(cooldownProgress < cooldownTotal) {
             cooldownProgress += dt;
@@ -66,10 +107,10 @@ public class PlayerState {
 
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 100, 100, Resolution.WIDTH / 2 + 100, 115),
-                new Color(0.7f), -0.5f);
+                new Color(targeting ?  0.9f : 0.7f), -0.5f);
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 100, 100, (int) (Resolution.WIDTH / 2 -100 + 200*(cooldownProgress/cooldownTotal)), 115),
-                new Color(0.2f), -0.6f);
+                new Color(targeting ? 0.4f : 0.2f), -0.6f);
 
         drawCrosshair();
     }

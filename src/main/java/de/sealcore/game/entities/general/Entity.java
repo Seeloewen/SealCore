@@ -157,11 +157,11 @@ public abstract class Entity {
     }
 
     public void sendAdd() {
-        NetworkHandler.send(new EntityAddPacket(getID(), entityType, posX, posY, 0, sizeX, sizeY, 1.8, 0));
+        NetworkHandler.send(new EntityAddPacket(getID(), entityType, posX, posY, 0, 0));
     }
 
     public void sendAdd(int id) {
-        NetworkHandler.sendOnly(id, new EntityAddPacket(getID(), entityType, posX, posY, 0, sizeX, sizeY, 1.8, 0));
+        NetworkHandler.sendOnly(id, new EntityAddPacket(getID(), entityType, posX, posY, 0, 0));
     }
 
 

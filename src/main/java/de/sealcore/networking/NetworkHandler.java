@@ -63,6 +63,7 @@ public class NetworkHandler
 
         //Convert data to json object and get type
         JsonObject obj = JsonObject.fromString(data);
+        if(obj == null) Log.error(LogType.NETWORKING, "Unable to parse packet to json: " + data);
         PacketType type = PacketType.values()[obj.getInt("type")];
 
         //Construct packet from type

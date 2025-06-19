@@ -127,12 +127,15 @@ public class TcpServer
         //Sends data to all clients
         for(TcpClient client : clients)
         {
-            client.writer.println(data);
+            sendOnly(client, data);
         }
     }
 
     public void sendOnly(TcpClient client, String data)
     {
+        if(data == null) {
+            Log.debug("SS");
+        }
         //Sends data to only the specified client
         client.writer.println(data);
     }

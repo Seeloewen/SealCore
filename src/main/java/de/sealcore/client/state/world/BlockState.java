@@ -11,14 +11,14 @@ import org.joml.Matrix4f;
 
 public class BlockState {
 
-    private String type;
+    public String type;
     private int x;
     private int y;
     private Matrix4f pos;
 
 
 
-    BlockState(String id, int globalX, int globalY) {
+    public BlockState(String id, int globalX, int globalY) {
         type = id;
         x = globalX;
         y = globalY;

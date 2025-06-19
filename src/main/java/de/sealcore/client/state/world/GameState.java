@@ -52,22 +52,24 @@ public class GameState {
     public void render() {
         var rotZ = Client.instance.camera.angleHor;
         var p = Client.instance.gameState.loadedMeshes.get(Client.instance.camera.following);
-        double dy = Math.sin(rotZ);
-        double dx = Math.cos(rotZ);
-        double x = p.posX;
-        double y = p.posY;
-        x -= dx * 8;
-        y -= dy * 8;
+        if(p != null) {
+            double dy = Math.sin(rotZ);
+            double dx = Math.cos(rotZ);
+            double x = p.posX;
+            double y = p.posY;
+            x -= dx * 8;
+            y -= dy * 8;
 
 
-        for(var state : loadedChunks.values()) {
-            int i = state.index;
-            int cx = ChunkIndex.toX(i)*8+4;
-            int cy = ChunkIndex.toY(i)*8+4;
-            double cAngle = Math.atan2(cy-y, cx -x);
-            boolean cull2 = Math.abs(rotZ - cAngle) >= 0.9 && Math.abs(rotZ - cAngle) <= Math.PI*2-0.9;
-            if(!cull2) {
-                state.render();
+            for (var state : loadedChunks.values()) {
+                int i = state.index;
+                int cx = ChunkIndex.toX(i) * 8 + 4;
+                int cy = ChunkIndex.toY(i) * 8 + 4;
+                double cAngle = Math.atan2(cy - y, cx - x);
+                boolean cull2 = Math.abs(rotZ - cAngle) >= 0.9 && Math.abs(rotZ - cAngle) <= Math.PI * 2 - 0.9;
+                if (!cull2) {
+                    state.render();
+                }
             }
         }
         for(var mesh : loadedMeshes.values()) {
@@ -95,8 +97,8 @@ public class GameState {
     }
 
 
-    public void addMesh(int id, String entityID, double x, double y, double z, double sizeX, double sizeY, double sizeZ) {
-        loadedMeshes.put(id, new MeshState(entityID, x, y, z, sizeX, sizeY, sizeZ));
+    public void addMesh(int id, String entityID, double x, double y, double z) {
+        loadedMeshes.put(id, new MeshState(entityID, x, y, z));
     }
 
     public void updateMeshPos(int id, double x, double y, double z, double rotZ, double velX, double velY) {

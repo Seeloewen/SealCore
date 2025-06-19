@@ -8,7 +8,7 @@ import org.joml.Matrix4f;
 
 public class FloorState {
 
-    private String type;
+    public String type;
     private int x;
     private int y;
     private String meshID;

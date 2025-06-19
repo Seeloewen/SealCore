@@ -4,8 +4,8 @@ import de.sealcore.util.ChunkIndex;
 
 public class ChunkState {
 
-    FloorState[] floors;
-    BlockState[] blocks;
+    public FloorState[] floors;
+    public BlockState[] blocks;
     final int index;
 
 
