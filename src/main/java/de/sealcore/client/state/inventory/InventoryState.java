@@ -90,8 +90,8 @@ public class InventoryState
         {
             if (i != 0) offset = offset + 85;
 
-            if (i != 2) getSlotN(InventorySlotType.WEAPON, i).setLocation(35 + offset, Resolution.HEIGHT - 110);
-            else getSlotN(InventorySlotType.MATERIAL, 0).setLocation(35 + offset, Resolution.HEIGHT - 110);
+            if (i != 2) getSlotN(InventorySlotType.WEAPON, i).setLocation(35 + offset, Resolution.HEIGHT - 110, true);
+            else getSlotN(InventorySlotType.MATERIAL, 0).setLocation(35 + offset, Resolution.HEIGHT - 110, true);
         }
 
         //Material slots
@@ -99,7 +99,7 @@ public class InventoryState
         for (int i = 1; i < m; i++)
         {
             if (i != 1) offset = offset + 85;
-            getSlotN(InventorySlotType.MATERIAL, i).setLocation(35 + offset, y + 50);
+            getSlotN(InventorySlotType.MATERIAL, i).setLocation(35 + offset, y + 50, false);
         }
 
         //Ammo slots
@@ -107,11 +107,11 @@ public class InventoryState
         for (int i = 0; i < a; i++)
         {
             if (i != 0) offset = offset + 85;
-            getSlotN(InventorySlotType.AMMO, i).setLocation(35 + offset, y + 135);
+            getSlotN(InventorySlotType.AMMO, i).setLocation(35 + offset, y + 135, false);
         }
 
         //Weapon slot
-        getSlotN(InventorySlotType.WEAPON, 2).setLocation(35, y + 220);
+        getSlotN(InventorySlotType.WEAPON, 2).setLocation(35, y + 220, false);
     }
 
     public void initHotbar()

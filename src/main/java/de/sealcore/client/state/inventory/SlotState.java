@@ -2,6 +2,7 @@ package de.sealcore.client.state.inventory;
 
 import de.sealcore.client.Client;
 import de.sealcore.client.input.InputHandler;
+import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
 import de.sealcore.client.ui.rendering.primitives.Rectangle;
 import de.sealcore.client.ui.rendering.text.TextRenderer;
@@ -19,6 +20,7 @@ public class SlotState
 
     private int x;
     private int y;
+    private boolean alignedBot; //true if y is aligned to bottom
 
     public final int index;
     public final InventorySlotType type;
@@ -41,10 +43,15 @@ public class SlotState
         this.id = id;
     }
 
-    public void setLocation(int x, int y)
+    public void setLocation(int x, int y, boolean alignedBot)
     {
         this.x = x;
-        this.y = y;
+        if(alignedBot) {
+            this.y = Resolution.HEIGHT-y;
+        } else {
+            this.y = y;
+        }
+        this.alignedBot = alignedBot;
     }
 
     public void handleMouseClick(int button, int action)
@@ -80,16 +87,38 @@ public class SlotState
     {
         SlotState selSlot = Client.instance.inventoryState.selectedSlot;
 
-        PrimitiveRenderer.drawRectangle(new Rectangle(x, y, x + WIDTH, y + HEIGHT), getBorderColor(), 0.01f); //Slot border
-        PrimitiveRenderer.drawRectangle(new Rectangle(x + 3, y + 3, x + WIDTH - 3, y + HEIGHT - 3),getSlotColor() , 0f); //Actual slot
+        if(alignedBot) {
+            PrimitiveRenderer.drawRectangle(new Rectangle(x, Resolution.HEIGHT-y, x + WIDTH, Resolution.HEIGHT-y + HEIGHT), getBorderColor(), 0.01f); //Slot border
+            PrimitiveRenderer.drawRectangle(new Rectangle(x + 3, Resolution.HEIGHT-y + 3, x + WIDTH - 3, Resolution.HEIGHT-y + HEIGHT - 3),getSlotColor() , 0f); //Actual slot
+        } else {
+            PrimitiveRenderer.drawRectangle(new Rectangle(x, y, x + WIDTH, y + HEIGHT), getBorderColor(), 0.01f); //Slot border
+            PrimitiveRenderer.drawRectangle(new Rectangle(x + 3, y + 3, x + WIDTH - 3, y + HEIGHT - 3), getSlotColor(), 0f); //Actual slot
+        }
+
 
         //If the slot is not empty, render the item and possibly amount
         if (!id.isEmpty() && amount > 0)
         {
-            TextureRenderer.drawTexture(id, new Rectangle(x + 8, y + 8, x + WIDTH - 8, y + HEIGHT - 8), -0.01f);
+            if(alignedBot) {
+                TextureRenderer.drawTexture(id, new Rectangle(x + 8, Resolution.HEIGHT-y + 8, x + WIDTH - 8, Resolution.HEIGHT-y + HEIGHT - 8), -0.01f);
+            } else {
+                TextureRenderer.drawTexture(id, new Rectangle(x + 8, y + 8, x + WIDTH - 8, y + HEIGHT - 8), -0.01f);
+            }
 
-            if (amount > 1)
-                TextRenderer.drawString(x + WIDTH - 40, y + HEIGHT - 30, 3, String.valueOf(amount), -0.02f);
+
+            if(alignedBot) {
+                if (amount > 1) {
+                    TextRenderer.drawString(x + WIDTH - 40, Resolution.HEIGHT-y + HEIGHT - 30, 3, String.valueOf(amount), -0.02f);
+                } else {
+                    TextRenderer.drawString(x + WIDTH - 40, Resolution.HEIGHT-y + HEIGHT - 30, 3, String.valueOf(amount), -0.02f);
+                }
+            } else {
+                if (amount > 1) {
+                    TextRenderer.drawString(x + WIDTH - 40, y + HEIGHT - 30, 3, String.valueOf(amount), -0.02f);
+                } else {
+                    TextRenderer.drawString(x + WIDTH - 40, y + HEIGHT - 30, 3, String.valueOf(amount), -0.02f);
+                }
+            }
         }
     }
 
@@ -123,8 +152,13 @@ public class SlotState
 
     public boolean isMouseOver()
     {
-        return InputHandler.mouseX >= x && InputHandler.mouseX <= x + WIDTH
-                && InputHandler.mouseY >= y && InputHandler.mouseY <= y + HEIGHT;
+        if(!alignedBot) {
+            return InputHandler.mouseX >= x && InputHandler.mouseX <= x + WIDTH
+                    && InputHandler.mouseY >= y && InputHandler.mouseY <= y + HEIGHT;
+        } else {
+            return InputHandler.mouseX >= x && InputHandler.mouseX <= x + WIDTH
+                    && InputHandler.mouseY >= Resolution.HEIGHT-y && InputHandler.mouseY <= Resolution.HEIGHT-y + HEIGHT;
+        }
     }
 
     public void setAsHotbar(int hIndex)
