@@ -53,7 +53,7 @@ public class Player extends Entity{
 
     private void setHP(int hp) {
         this.hp = hp;
-        NetworkHandler.sendOnly(clientID, new SetHPPacket(hp));
+        NetworkHandler.sendOnly(clientID, new SetHPPacket(hp, false));
     }
 
 

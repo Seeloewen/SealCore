@@ -6,12 +6,14 @@ import de.sealcore.util.json.JsonObject;
 public class SetHPPacket extends Packet
 {
     private int hp;
+    private boolean core;
 
-    public SetHPPacket(int hp)
+    public SetHPPacket(int hp, boolean core)
     {
         super(PacketType.SETHP);
 
         this.hp = hp;
+        this.core = core;
     }
 
     public static Packet fromJson(String json)
@@ -20,8 +22,9 @@ public class SetHPPacket extends Packet
         JsonObject args = JsonObject.fromString(json);
 
         int hp = args.getInt("hp");
+        boolean core = args.getBool("core");
 
-        return new SetHPPacket(hp);
+        return new SetHPPacket(hp, core);
     }
 
     public String toJson()
@@ -32,6 +35,7 @@ public class SetHPPacket extends Packet
 
         JsonObject args = JsonObject.fromScratch();
         args.addInt("hp", hp);
+        args.addBool("core", core);
         obj.addObject("args", args);
 
         return obj.toString();
@@ -39,6 +43,10 @@ public class SetHPPacket extends Packet
 
     public void onHandle()
     {
-        Client.instance.playerState.hp = hp;
+        if(!core) {
+            Client.instance.playerState.hp = hp;
+        } else {
+            Client.instance.playerState.coreHP = hp;
+        }
     }
 }

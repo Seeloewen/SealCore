@@ -15,6 +15,7 @@ import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.EntityRemovePacket;
 import de.sealcore.networking.packets.SetFollowCamPacket;
+import de.sealcore.networking.packets.SetHPPacket;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -35,6 +36,8 @@ public class Game
     public HashMap<Integer, Player> players;
 
 
+    int coreHP = 20;
+
     public void tick(double dt)
     {
         for(int i = 0; i< entities.size(); i++)
@@ -43,6 +46,10 @@ public class Game
         }
     }
 
+    public void damageCore(int damage) {
+        coreHP -= damage;
+        NetworkHandler.send(new SetHPPacket(coreHP, true));
+    }
 
     public void addPlayer(int id)
     {
@@ -62,6 +69,7 @@ public class Game
         TagHandler.writeTag(p, "ammoAmount", 8);
         player.inventory.add(6, p.info.id(), 1, p.tags);
         player.inventory.add(0, "i:axe", 1);
+        NetworkHandler.sendOnly(id, new SetHPPacket(coreHP, true));
     }
 
 
