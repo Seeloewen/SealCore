@@ -6,6 +6,6 @@ public class Rifle extends Weapon
 {
     public Rifle()
     {
-        super("i:rifle", "Rifle", ItemType.WEAPON_RANGED, 1, 3, 40, 30, 0.2);
+        super("i:rifle", "Rifle", ItemType.WEAPON_RANGED, 1, 3, 60, 30, 0.2);
     }
 }

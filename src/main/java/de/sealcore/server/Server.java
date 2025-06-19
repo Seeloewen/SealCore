@@ -5,6 +5,7 @@ import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
 import de.sealcore.server.commands.CommandHandler;
+import de.sealcore.server.waves.WaveManager;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 import de.sealcore.util.timing.DeltaTimer;
@@ -15,7 +16,7 @@ public class Server
 {
     public static Game game;
 
-    private final double TICKRATE = 1/40d;
+    public final double TICKRATE = 1/40d;
 
     public int ticksToEvent;
 
@@ -38,6 +39,8 @@ public class Server
         Thread t = new Thread(() -> getCommands(), "command input reader");
         t.start();
 
+        WaveManager.init();
+
         //Actual server main loop
         Server server = new Server();
         server.loop();
@@ -56,6 +59,7 @@ public class Server
                 PacketHandler.handleNext();
             }
             if(!DeltaTimer.blockToTarget(TICKRATE)) Log.warn(LogType.PERFORMANCE, "last server tick exceeded tickrate");
+            WaveManager.update(TICKRATE);
             game.tick(TICKRATE);
             ticksToEvent--;
         }
