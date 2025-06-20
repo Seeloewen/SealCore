@@ -1,5 +1,7 @@
 package de.sealcore.game.entities.general;
 
+import de.sealcore.server.Server;
+
 import java.util.Random;
 
 public class Jabbus extends Entity
@@ -42,5 +44,12 @@ public class Jabbus extends Entity
         attackCooldown -= dt;
 
         super.doPhysicsTick(dt);
+    }
+
+    @Override
+    protected void onDeath(int source)
+    {
+        super.onDeath(source);
+        Server.game.players.get(source).inventory.add("i:rock", 10);
     }
 }

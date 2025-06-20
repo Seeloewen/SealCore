@@ -51,4 +51,11 @@ public class Grassling extends Entity {
 
         super.doPhysicsTick(dt);
     }
+
+    @Override
+    protected void onDeath(int source)
+    {
+        super.onDeath(source);
+        Server.game.players.get(source).inventory.add("i:rock", 1);
+    }
 }
