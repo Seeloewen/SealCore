@@ -7,6 +7,7 @@ import de.sealcore.client.config.Items;
 import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
 import de.sealcore.client.ui.rendering.primitives.Rectangle;
+import de.sealcore.client.ui.rendering.text.TextRenderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.PlayerInteractPacket;
 import de.sealcore.util.ChunkIndex;
@@ -37,6 +38,9 @@ public class PlayerState {
     public int coreHP = 19;
 
     private boolean targeting;
+
+    public String text1 = "-0:00";
+    public String text2 = "Game started";
 
 
     public void handleMousePress(int button) {
@@ -97,6 +101,10 @@ public class PlayerState {
     }
 
     public void render() {
+
+        TextRenderer.drawString(15, Resolution.HEIGHT-180, 3, text1, -0.5f);
+        TextRenderer.drawString(15, Resolution.HEIGHT-150, 4, text2, -0.5f);
+
         double hpRatio = hp/15.0;
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 200, 50, Resolution.WIDTH / 2 + 200, 90),

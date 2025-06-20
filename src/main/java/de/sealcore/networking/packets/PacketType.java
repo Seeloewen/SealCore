@@ -16,4 +16,5 @@ public enum PacketType
     PLAYERINTERACT,
     SETHP,
     SETCOOLDOWN,
+    SETTEXT
 }

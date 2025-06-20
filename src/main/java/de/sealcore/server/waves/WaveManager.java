@@ -1,5 +1,7 @@
 package de.sealcore.server.waves;
 
+import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.SetTextPacket;
 import de.sealcore.server.Server;
 import de.sealcore.util.ResourceManager;
 import de.sealcore.util.json.JsonArray;
@@ -44,6 +46,7 @@ public class WaveManager {
             var wave = waves.get(nextWave);
             Server.game.spawnWave(wave.grasslings(), wave.big_grasslings(), wave.jabbus());
             nextWave++;
+            NetworkHandler.send(new SetTextPacket("Wave " + nextWave + " spawned", 2));
         }
     }
 

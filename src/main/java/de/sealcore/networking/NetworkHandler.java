@@ -85,6 +85,7 @@ public class NetworkHandler
             case PacketType.SETHP -> p = SetHPPacket.fromJson(args);
             case PacketType.SETCOOLDOWN -> p = SetCooldownPacket.fromJson(args);
             case PacketType.INVENTORYSWAP -> p = InventorySwapPacket.fromJson(args);
+            case PacketType.SETTEXT -> p = SetTextPacket.fromJson(args);
         }
 
         //Set the client id if the sender is a client
