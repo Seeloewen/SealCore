@@ -61,15 +61,6 @@ public class Server
             if(!DeltaTimer.blockToTarget(TICKRATE)) Log.warn(LogType.PERFORMANCE, "last server tick exceeded tickrate");
             WaveManager.update(TICKRATE);
             game.tick(TICKRATE);
-            totalTime += TICKRATE;
-            if((int)totalTime > seconds) {
-                seconds++;
-                if(seconds%60<10) {
-                    NetworkHandler.send(new SetTextPacket((seconds/60) + ":0" + (seconds%60), 1));
-                } else {
-                    NetworkHandler.send(new SetTextPacket((seconds/60) + ":" + (seconds%60), 1));
-                }
-            }
         }
     }
 

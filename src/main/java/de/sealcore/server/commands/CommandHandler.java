@@ -1,6 +1,7 @@
 package de.sealcore.server.commands;
 
 import de.sealcore.server.debugrenderer.DebugRenderer;
+import de.sealcore.server.waves.WaveManager;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -27,7 +28,7 @@ public class CommandHandler
         }
 
         //Call respective command
-        switch(cmd[0])
+        switch(cmd[0].toLowerCase())
         {
             case "ping":
                 Commands.handlePong(args);
@@ -37,6 +38,12 @@ public class CommandHandler
                 break;
             case "additem":
                 Commands.handleAddItem(args);
+                break;
+            case "start":
+                WaveManager.enabled = true;
+                break;
+            case "pause":
+                WaveManager.enabled = false;
                 break;
             default:
                 Log.info(LogType.MAIN, "Unknown Command.");

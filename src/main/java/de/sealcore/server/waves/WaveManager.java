@@ -12,12 +12,13 @@ import java.util.ArrayList;
 
 public class WaveManager {
 
+    private static int seconds = 0;
     private static double currentTime;
 
     private static ArrayList<Wave> waves;
     private static int nextWave;
 
-    public static boolean enabled = true;
+    public static boolean enabled = false;
 
     public static void init() {
         currentTime = 0;
@@ -50,6 +51,16 @@ public class WaveManager {
                 Server.game.spawnWave(wave.grasslings(), wave.big_grasslings(), wave.jabbus());
                 nextWave++;
                 NetworkHandler.send(new SetTextPacket("Wave " + nextWave + " spawned", 2));
+
+
+            }
+            if((int)currentTime > seconds) {
+                seconds++;
+                if(seconds%60<10) {
+                    NetworkHandler.send(new SetTextPacket((seconds/60) + ":0" + (seconds%60), 1));
+                } else {
+                    NetworkHandler.send(new SetTextPacket((seconds/60) + ":" + (seconds%60), 1));
+                }
             }
         }
     }
