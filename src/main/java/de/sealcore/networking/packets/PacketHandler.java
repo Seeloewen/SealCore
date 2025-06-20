@@ -1,5 +1,8 @@
 package de.sealcore.networking.packets;
 
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
+
 import java.util.ArrayDeque;
 
 public class PacketHandler
@@ -20,6 +23,15 @@ public class PacketHandler
     public static void handleNext()
     {
         //Take the next packet out of the queue and handle it
-        packetQueue.poll().handle();
+         var p = packetQueue.poll();
+
+         if(p != null)
+         {
+             p.handle();
+         }
+         else
+         {
+             Log.error(LogType.NETWORKING, "Could not pull next packet from queue");
+         }
     }
 }

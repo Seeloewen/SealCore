@@ -83,7 +83,7 @@ public class Client {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-        window = glfwCreateWindow(Resolution.WIDTH, Resolution.HEIGHT, "SealCore (dev)", NULL, NULL);
+        window = glfwCreateWindow(Resolution.WIDTH, Resolution.HEIGHT, "SealCore", NULL, NULL);
         if(window == NULL) throw new RuntimeException("Failed to create window");
 
         org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback(window, (window, w, h) -> {

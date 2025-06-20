@@ -17,7 +17,7 @@ public class TagHandler
 
         slot.tag = t.toString();
 
-        NetworkHandler.send(new InventoryStatePacket(slot.inv));
+        NetworkHandler.sendOnly(slot.inv.id, new InventoryStatePacket(slot.inv));
     }
 
     public static void writeTag(Item item, String tag, String value)

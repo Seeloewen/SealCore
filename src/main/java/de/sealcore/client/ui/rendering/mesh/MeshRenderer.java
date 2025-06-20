@@ -42,7 +42,7 @@ public class MeshRenderer {
     }
 
     public static void refreshProjection() {
-        perspective = new Matrix4f().perspective(1f, 1/Resolution.RATIO, 0.1f, 100f);
+        perspective = new Matrix4f().perspective(1f, 1/Resolution.RATIO, 0.1f, 150f);
     }
 
     public static void setCamera(Camera camera) {

@@ -17,7 +17,7 @@
       }
     },
     {
-      "time": 60,
+      "time": 50,
       "spawns": {
         "e:grassling": 10,
         "e:big_grassling": 3,
@@ -25,7 +25,7 @@
       }
     },
     {
-      "time": 120,
+      "time": 80,
       "spawns": {
         "e:grassling": 15,
         "e:big_grassling": 4,
@@ -33,11 +33,27 @@
       }
     },
     {
-      "time": 200,
+      "time": 120,
       "spawns": {
         "e:grassling": 20,
         "e:big_grassling": 6,
         "e:jabbus": 3
+      }
+    },
+    {
+      "time": 150,
+      "spawns": {
+        "e:grassling": 35,
+        "e:big_grassling": 12,
+        "e:jabbus": 6
+      }
+    },
+    {
+      "time": 200,
+      "spawns": {
+        "e:grassling": 50,
+        "e:big_grassling": 20,
+        "e:jabbus": 10
       }
     }
   ]

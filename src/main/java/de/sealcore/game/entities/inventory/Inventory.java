@@ -5,7 +5,7 @@ import de.sealcore.game.items.ItemType;
 
 public class Inventory
 {
-    final int id;
+    public final int id;
     private final InventorySlot[] slots;
 
     Inventory(int id, int materialSlots, int weaponSlots, int ammoSlot, int universalSlots)
