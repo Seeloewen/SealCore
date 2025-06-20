@@ -144,8 +144,8 @@ public class Inventory
         //Check if the item type specified is allowed by the slot
         return switch(slotType)
         {
-            case WEAPON -> itemType == ItemType.WEAPON_MELEE || itemType == ItemType.WEAPON_RANGED ||itemType == ItemType.TOOL;
-            case MATERIAL -> itemType == ItemType.MATERIAL || itemType == ItemType.PLACEABLE;
+            case WEAPON -> itemType == ItemType.WEAPON_MELEE || itemType == ItemType.WEAPON_RANGED;
+            case MATERIAL -> itemType == ItemType.MATERIAL || itemType == ItemType.PLACEABLE || itemType == ItemType.TOOL;
             case AMMO -> itemType == ItemType.AMMO;
             case UNIVERSAL -> true;
         };
