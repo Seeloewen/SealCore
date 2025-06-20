@@ -8,21 +8,18 @@ import de.sealcore.server.Server;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
-import java.util.Scanner;
-
 import static org.lwjgl.glfw.GLFW.glfwInit;
 
 public class Main
 {
-    public static final String VERSION = "Dev";
-    public static final String BUILDDATE = "17.06.2025";
+    public static final String VERSION = "1.0.0-pre1";
+    public static final String BUILDDATE = "20.06.2025";
 
     public static boolean bypassMenu = false;
 
     public static void main(String[] args)
     {
-        Log.info(LogType.MAIN, "SealCore Development Build");
-        Scanner scanner = new Scanner(System.in);
+        Log.info(LogType.MAIN, "SealCore " + VERSION + " (" + BUILDDATE + ")");
 
         FlatLightLaf.setup();
 

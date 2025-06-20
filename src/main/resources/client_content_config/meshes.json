@@ -48,7 +48,7 @@
     {
       "id": "b:small_rock",
       "path": "objects/Rock.txt",
-      "scale": 0.2
+      "scale": 0.1
     },
     {
       "id": "b:oak_tree",
