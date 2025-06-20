@@ -78,9 +78,9 @@ public class InventoryState
         this.y = y;
     }
 
-    public void updateSlot(int index, String id, int amount)
+    public void updateSlot(int index, String id, int amount, String tag)
     {
-        getSlot(index).update(id, amount);
+        getSlot(index).update(id, amount, tag);
     }
 
     public void positionSlots()
@@ -174,7 +174,7 @@ public class InventoryState
         return -1;
     }
 
-    private SlotState getSlot(int i)
+    public SlotState getSlot(int i)
     {
         //Get the slot with the specified id
         for (SlotState s : slots)

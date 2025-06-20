@@ -2,11 +2,23 @@ package de.sealcore.client.ui.overlay;
 
 import de.sealcore.client.Client;
 import de.sealcore.client.input.InputHandler;
+import de.sealcore.client.state.inventory.InventoryState;
+import de.sealcore.client.state.inventory.SlotState;
+import de.sealcore.client.ui.Resolution;
+import de.sealcore.client.ui.rendering.text.TextRenderer;
 import de.sealcore.client.ui.rendering.texture.TextureRenderer;
 import de.sealcore.game.crafting.CraftingHandler;
+import de.sealcore.game.entities.inventory.InventorySlotType;
+import de.sealcore.game.items.Item;
+import de.sealcore.game.items.ItemRegister;
+import de.sealcore.game.items.ItemType;
+import de.sealcore.game.items.TagHandler;
+import de.sealcore.game.items.weapons.Weapon;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.Random;
 
 public class OverlayManager
 {
@@ -32,8 +44,17 @@ public class OverlayManager
         }
 
         Client.instance.inventoryState.renderHotbar();
-
         Client.instance.playerState.render();
+
+        //Check if the player is holding a weapon, render the ammo amount
+        SlotState selectedSlot = Client.instance.inventoryState.getSlot(Client.instance.playerState.selectedSlot);
+        if(selectedSlot.type == InventorySlotType.WEAPON && selectedSlot.amount > 0)
+        {
+            //We can assume that the item as weapon
+            Weapon w = (Weapon)ItemRegister.getItem(selectedSlot.id);
+            if(w.info.type() == ItemType.WEAPON_RANGED) TextRenderer.drawString(Resolution.WIDTH - 95, Resolution.HEIGHT - 30, 3,
+                    TagHandler.getIntTag(selectedSlot.tag, "ammoAmount") + "/" + w.weaponInfo.magSize(), 0f);
+        }
     }
 
 

@@ -82,7 +82,7 @@ public class InventoryStatePacket extends Packet
     {
         for(InventorySlot s : inventory.getSlots())
         {
-            Client.instance.inventoryState.updateSlot(s.index, s.id, s.amount);
+            Client.instance.inventoryState.updateSlot(s.index, s.id, s.amount, s.tag);
         }
     }
 }

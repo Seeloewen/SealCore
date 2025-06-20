@@ -1,6 +1,8 @@
 package de.sealcore.game.items;
 
 import de.sealcore.game.entities.inventory.InventorySlot;
+import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.InventoryStatePacket;
 import de.sealcore.util.json.JsonObject;
 
 public class TagHandler
@@ -14,6 +16,8 @@ public class TagHandler
         t.addString(tag, value);
 
         slot.tag = t.toString();
+
+        NetworkHandler.send(new InventoryStatePacket(slot.inv));
     }
 
     public static void writeTag(Item item, String tag, String value)
@@ -27,7 +31,7 @@ public class TagHandler
         item.tags = t.toString();
     }
 
-    public static void  writeTag(InventorySlot slot, String tag, int value)
+    public static void writeTag(InventorySlot slot, String tag, int value)
     {
         writeTag(slot, tag, String.valueOf(value));
     }

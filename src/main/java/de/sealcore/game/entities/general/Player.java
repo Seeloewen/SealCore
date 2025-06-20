@@ -91,7 +91,7 @@ public class Player extends Entity{
                     Weapon weapon = (Weapon) item;
                     double range = weapon.weaponInfo.range();
                     if(range >= dte) {
-                        int damage = weapon.weaponInfo.damage();
+                        int damage  = weapon.weaponInfo.damage();
                         Server.game.getEntity(te).damage(damage, getID());
                     }
                 }
@@ -99,13 +99,11 @@ public class Player extends Entity{
                     Weapon weapon = (Weapon) item;
                     double range = weapon.weaponInfo.range();
                     int ammo = TagHandler.getIntTag(slot.tag, "ammoAmount");
-                    //TagHandler.writeTag(slot, "ammoAmount", ammo-1); temp cheat
                     if(range >= dte && ammo > 0) {
                         int damage = weapon.weaponInfo.damage();
                         Server.game.getEntity(te).damage(damage, getID());
                         Log.debug("shot");
                     }
-                    Log.debug("ammo"+ (ammo-1));
                 }
             }
         //if block is targeted
@@ -129,6 +127,12 @@ public class Player extends Entity{
         //if floor is targeted
         } else if(dtf >= 0 && (dte < 0 || dtf < dte) && (dtb < 0 || dtf < dtb)) {
             Log.info(LogType.GAME, "interact on floor " + tfx + "|" + tfy + " left=" + leftClick);
+        }
+
+        if(item.info.type() == ItemType.WEAPON_RANGED)
+        {
+            int ammo = TagHandler.getIntTag(slot.tag, "ammoAmount");
+            TagHandler.writeTag(slot, "ammoAmount", ammo-1);
         }
     }
 

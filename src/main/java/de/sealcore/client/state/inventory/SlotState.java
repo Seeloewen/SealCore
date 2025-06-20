@@ -25,8 +25,9 @@ public class SlotState
     public final int index;
     public final InventorySlotType type;
 
-    String id = "";
-    int amount;
+    public String id = "";
+    public int amount;
+    public String tag = "";
 
     public boolean isHotbar = false;
     public int hotbarSlotIndex = -1;
@@ -37,10 +38,11 @@ public class SlotState
         this.type = type;
     }
 
-    public void update(String id, int amount)
+    public void update(String id, int amount, String tag)
     {
         this.amount = amount;
         this.id = id;
+        this.tag = tag;
     }
 
     public void setLocation(int x, int y, boolean alignedBot)

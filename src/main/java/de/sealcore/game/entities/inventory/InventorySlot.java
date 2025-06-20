@@ -7,7 +7,7 @@ import de.sealcore.networking.packets.InventoryStatePacket;
 
 public class InventorySlot
 {
-    private Inventory inv;
+    public Inventory inv;
 
     public int index;
     public String id = "";
