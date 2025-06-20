@@ -50,7 +50,7 @@ public class MainMenu extends JFrame
         lblHeader.setForeground(new Color(255, 255, 255));
 
         //Version Label
-        lblVersion.setBounds(20, HEIGHT - 120, 300, 100);
+        lblVersion.setBounds(20, HEIGHT - 120, 400, 100);
         lblVersion.setFont(new Font("Arial", Font.PLAIN, 22));
         lblVersion.setForeground(new Color(255, 255, 255));
 

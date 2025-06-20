@@ -1,6 +1,8 @@
 package de.sealcore.game.crafting;
 
 import de.sealcore.game.entities.general.Player;
+import de.sealcore.game.items.Item;
+import de.sealcore.game.items.ItemRegister;
 import de.sealcore.server.Server;
 import de.sealcore.util.ResourceManager;
 import de.sealcore.util.json.JsonArray;
@@ -81,7 +83,8 @@ public class CraftingHandler
             //Add all the outputs to the players inv
             for (RecipePart output : r.output())
             {
-                int remaining = p.inventory.add(output.id(), output.amount());
+                Item out = ItemRegister.getItem(output.id());
+                int remaining = p.inventory.add(out.info.id(), output.amount(), out.tags);
 
                 if (remaining > 0) //If the player didn't have enough space for everything to be added, remove the items again and cancel process
                 {
