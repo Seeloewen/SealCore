@@ -53,7 +53,7 @@ public abstract class Entity {
 
     public void damage(int damage, int source) {
         hp -= damage;
-        Log.info(LogType.GAME, "damage");
+        //Log.info(LogType.GAME, "damage");
         if(hp <= 0) {
             onDeath(source);
         }

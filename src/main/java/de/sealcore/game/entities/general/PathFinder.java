@@ -8,13 +8,21 @@ import de.sealcore.util.Point;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
-public class PathFinder {
+import java.util.Random;
+
+public class PathFinder
+{
+
     private final Entity source;
+    private final Random rnd = new Random();
 
     public boolean isEnabled = true;
 
     public final boolean canFocusPlayer = true;
     public final boolean canFocusCore = true;
+
+    public int randomMovementAmount = 0; //The amount of ticks that an entity will move in the current random direction
+    public Direction randomDirection;
 
     public Player playerTarget;
 
@@ -24,12 +32,31 @@ public class PathFinder {
     private Direction lastTempDir = Direction.LEFT;
 
 
-    public PathFinder(Entity source) {
+    public PathFinder(Entity source)
+    {
         this.source = source;
     }
 
-    public void doStep() {
+    public void doStep()
+    {
+        //Why is this method the definition of if-ception
+
         if (!isEnabled) return;
+
+        //If the entity is set to move randomly to unstuck, only do that
+        if(randomMovementAmount > 0)
+        {
+            switch(randomDirection)
+            {
+                case LEFT -> source.updateInputs(0, 1, source.rotZ);
+                case RIGHT -> source.updateInputs(0, -1, source.rotZ);
+                case FORWARD -> source.updateInputs(1, 0, source.rotZ);
+                case BACKWARD -> source.updateInputs(-1, 0, source.rotZ);
+            }
+
+            randomMovementAmount--;
+            return;
+        }
 
         //If the no dodge target is set or no main target is set or the target was reached, reset the target
         if (dodgeTarget == null || target == null || targetReached()) target = updateTarget();
@@ -42,21 +69,23 @@ public class PathFinder {
         //If going towars main target, there might be the need for going around an obstacle
         if (dodgeTarget == null) newRot = avoidObstacle(newRot);
 
-
         source.updateInputs(1, 0, newRot);
     }
 
-    public boolean targetReached() {
+    public boolean targetReached()
+    {
         //Check if the difference between the source and targets coordinates are so small, that we can assume it has reached the target
         return (Math.abs(source.posX - target.x) < 0.2 && Math.abs(source.posY - target.y) < 0.2)
                 || (dodgeTarget != null && Math.abs(source.posX - dodgeTarget.x) < 0.2 && Math.abs(source.posY - dodgeTarget.y) < 0.2);
     }
 
-    private double calcRot(double targetX, double targetY) {
+    private double calcRot(double targetX, double targetY)
+    {
         return Math.atan2(targetY - source.posY, targetX - source.posX);
     }
 
-    private double avoidObstacle(double rot) {
+    private double avoidObstacle(double rot)
+    {
         //Get the coords of the blocks around the current location
         Point[] coordsAround = getCoordsAround(rot);
         Point front = coordsAround[0];
@@ -77,19 +106,36 @@ public class PathFinder {
         if (tryDodgeTarget(left.x, left.y) || tryDodgeTarget(behind.x, behind.y) || tryDodgeTarget(left.x, left.y))
             return calcRot(dodgeTarget.x, dodgeTarget.y);
 
-        //If the entity still couldn't decide on a direction, it's probably stuck. I don`t even know what to do here anymore.
+        //If the entity still couldn't decide on a direction, it's probably stuck.
         //Log.warn(LogType.GAME, "Entity " + source.getID() + " might be stuck");
+        randomDirection = getRandomDirection();
+        randomMovementAmount = 20; //Try to move in the specified random direction for x ticks to hopefully unstuck
 
         return calcRot(target.x, target.y);
     }
 
-    private boolean sloppyWorkaround(double frontX, double frontY, double sourceX) {
+    private Direction getRandomDirection()
+    {
+        return switch(rnd.nextInt(0, 4))
+        {
+            case 0 -> Direction.FORWARD;
+            case 1 -> Direction.BACKWARD;
+            case 2 -> Direction.LEFT;
+            case 3 -> Direction.RIGHT;
+            default -> Direction.FORWARD;
+        };
+    }
+
+    private boolean sloppyWorkaround(double frontX, double frontY, double sourceX)
+    {
         return frontX > sourceX && isOccupied(frontX, frontY - 1) && !isOccupied(frontX, frontY) && !isOccupied(frontX, frontY + 1);
     }
 
-    private boolean tryDodgeTarget(double x, double y) {
+    private boolean tryDodgeTarget(double x, double y)
+    {
         //Check if the specified location is available as a dodge target and set it as such if so
-        if (!isOccupied(x, y)) {
+        if (!isOccupied(x, y))
+        {
             dodgeTarget = new Point(x, y);
             return true;
         }
@@ -97,7 +143,8 @@ public class PathFinder {
         return false;
     }
 
-    private Point[] getCoordsAround(double rot) {
+    private Point[] getCoordsAround(double rot)
+    {
         double sx = Math.floor(source.posX);
         double sy = Math.floor(source.posY);
 
@@ -117,21 +164,27 @@ public class PathFinder {
             left = new Point(sx, sy + 1);
             right = new Point(sx, sy - 1);
             behind = new Point(sx - 1, sy);
-        } else if (rot >= Math.PI / 4 && rot < 3 * Math.PI / 4) {
+        }
+        else if (rot >= Math.PI / 4 && rot < 3 * Math.PI / 4)
+        {
             front = new Point(sx, sy + 1);
             frontLeft = new Point(sx - 1, sy + 1);
             frontRight = new Point(sx + 1, sy + 1);
             left = new Point(sx - 1, sy);
             right = new Point(sx + 1, sy);
             behind = new Point(sx, sy - 1);
-        } else if (rot >= 3 * Math.PI / 4 || rot < -3 * Math.PI / 4) {
+        }
+        else if (rot >= 3 * Math.PI / 4 || rot < -3 * Math.PI / 4)
+        {
             front = new Point(sx - 1, sy);
             frontLeft = new Point(sx - 1, sy - 1);
             frontRight = new Point(sx - 1, sy + 1);
             left = new Point(sx, sy - 1);
             right = new Point(sx, sy + 1);
             behind = new Point(sx + 1, sy);
-        } else {
+        }
+        else
+        {
             front = new Point(sx, sy - 1);
             frontLeft = new Point(sx + 1, sy - 1);
             frontRight = new Point(sx - 1, sy - 1);
@@ -152,25 +205,38 @@ public class PathFinder {
         return points;
     }
 
-    private boolean isOccupied(double x, double y) {
+    private boolean isOccupied(double x, double y)
+    {
         //Check if either the floor or the block at the specified location doesn't allow passing through
         Block b = Server.game.getCurrentMap().getBlock((int) Math.floor(x), (int) Math.floor(y));
         Floor f = Server.game.getCurrentMap().getFloor((int) Math.floor(x), (int) Math.floor(y));
 
         if (b != null && b.info.isSolid()) return true;
-        return !f.info.isSolid();
+
+        if(f != null)
+        {
+            return !f.info.isSolid();
+        }
+        else
+        {
+            return true;
+        }
     }
 
-    private Point updateTarget() {
+    private Point updateTarget()
+    {
         dodgeTarget = null; //Disable the dodge target
 
-        if (Server.game != null && !Server.game.players.isEmpty()) {
+        if (Server.game != null && !Server.game.players.isEmpty())
+        {
             //Take player closest to entity if enabled
-            if (canFocusPlayer) {
+            if (canFocusPlayer)
+            {
                 double closestPlayerDistance = Integer.MAX_VALUE;
                 Player closestPlayer = null;
 
-                for (int i = 0; i < Server.game.players.size(); i++) {
+                for (int i = 0; i < Server.game.players.size(); i++)
+                {
                     Player p = Server.game.players.get(i);
 
                     double dx = p.posX - source.posX;
@@ -178,20 +244,23 @@ public class PathFinder {
                     double distance = Math.sqrt(dx * dx + dy * dy);
 
                     //If this player has the closest distance, store it
-                    if (distance < closestPlayerDistance) {
+                    if (distance < closestPlayerDistance)
+                    {
                         closestPlayerDistance = distance;
                         closestPlayer = p;
                     }
                 }
 
-                if (closestPlayerDistance < 10) {
+                if (closestPlayerDistance < 10)
+                {
                     playerTarget = closestPlayer;
                     return new Point(closestPlayer.posX, closestPlayer.posY);
                 }
             }
 
             //If no player in range, select core as target if enabled
-            if (canFocusCore) {
+            if (canFocusCore)
+            {
                 playerTarget = null;
                 return new Point(0, 0); //TODO: Actual coords of core
             }
