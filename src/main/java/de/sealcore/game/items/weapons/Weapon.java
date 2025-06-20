@@ -24,7 +24,7 @@ public abstract class Weapon extends Item
 
     public void reload(int playerId)
     {
-        if(TagHandler.getIntTag(tags, "ammoAmount") == weaponInfo.magSize()) return; //Don't reload if the mag is full
+        if(TagHandler.getIntTag(tags, "ammoAmount") >= weaponInfo.magSize()) return; //Don't reload if the mag is full
 
         Player p = Server.game.players.get(playerId);
 

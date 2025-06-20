@@ -3,10 +3,10 @@ package de.sealcore.game.chunks;
 import de.sealcore.game.blocks.Block;
 import de.sealcore.game.floors.Floor;
 import de.sealcore.game.floors.FloorRegister;
+import de.sealcore.networking.packets.ChunkAddPacket;
 import de.sealcore.networking.packets.ChunkUpdatePacket;
 import de.sealcore.util.ChunkIndex;
 import de.sealcore.networking.NetworkHandler;
-import de.sealcore.networking.packets.ChunkAddPacket;
 
 import java.util.ArrayList;
 

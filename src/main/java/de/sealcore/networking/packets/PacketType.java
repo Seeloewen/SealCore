@@ -18,5 +18,6 @@ public enum PacketType
     SETCOOLDOWN,
     RECIPEINIT,
     CRAFTING,
-    SETTEXT
+    SETTEXT,
+    RELOAD
 }

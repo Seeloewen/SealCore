@@ -88,6 +88,7 @@ public class NetworkHandler
             case PacketType.SETTEXT -> p = SetTextPacket.fromJson(args);
             case PacketType.RECIPEINIT -> p = RecipeInitPacket.fromJson(args);
             case PacketType.CRAFTING -> p = CraftingPacket.fromJson(args);
+            case PacketType.RELOAD -> p = ReloadPacket.fromJson(args);
         }
 
         //Set the client id if the sender is a client

@@ -1,12 +1,9 @@
 package de.sealcore.networking.packets;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import de.sealcore.client.Client;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
-import de.sealcore.util.logging.Log;
-import de.sealcore.util.logging.LogType;
 
 import java.util.ArrayList;
 

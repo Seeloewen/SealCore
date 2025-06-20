@@ -14,9 +14,12 @@ import de.sealcore.game.items.ItemRegister;
 import de.sealcore.game.items.ItemType;
 import de.sealcore.game.items.TagHandler;
 import de.sealcore.game.items.weapons.Weapon;
+import de.sealcore.networking.NetworkHandler;
+import de.sealcore.networking.packets.ReloadPacket;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL;
 
 import java.util.Random;
 
@@ -98,6 +101,10 @@ public class OverlayManager
         else if (key == GLFW.GLFW_KEY_3)
         {
             Client.instance.playerState.setSelectedHotbarSlot(3);
+        }
+        else if(key == GLFW.GLFW_KEY_R)
+        {
+            NetworkHandler.send(new ReloadPacket(Client.instance.playerState.selectedSlot));
         }
     }
 
