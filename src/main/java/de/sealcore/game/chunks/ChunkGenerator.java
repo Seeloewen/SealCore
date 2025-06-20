@@ -1,6 +1,7 @@
 package de.sealcore.game.chunks;
 
 import de.sealcore.game.maps.MapLayout;
+import de.sealcore.util.ChunkIndex;
 
 import java.util.Random;
 
@@ -25,6 +26,13 @@ public class ChunkGenerator
     {
         //Creates a new chunk, generates the terrain and blocks (structures)
         Chunk c = Chunk.getEmptyChunk(cX, cY);
+
+        int cI = ChunkIndex.toI(cX, cY);
+
+        if (cI >= 0 && cI < 4)
+        {
+            return c; //If it's one of the spawn chunks, just leave it alone
+        }
 
         genTerrain(c);
         genBlocks(c);
@@ -56,7 +64,7 @@ public class ChunkGenerator
                 if (!c.getFloor(x, y).info.isSolid()) continue; //Skip all floors that are not solid
 
                 //Roll the structure to generate
-                int structure = (int)(Math.random() * 2);
+                int structure = (int) (Math.random() * 2);
 
                 if (structure == 0) blockGenerator.genTree(c, x, y); //Trees
                 else if (structure == 1) blockGenerator.genRock(c, x, y); //Rocks
