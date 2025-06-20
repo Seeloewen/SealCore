@@ -107,7 +107,10 @@ public class Player extends Entity{
 
                     if (dtb <= tool.range) { //range check
                         if (block != null && block.info.requiredTool() == tool.toolType) {//null check can probably be skipped; im not brave enough
-                            chunk.setBlock(x, y, null, true);
+                            block.hp--;
+                            if(block.hp <= 0) {
+                                chunk.setBlock(x, y, null, true);
+                            }
                             block.onDestroy(getID());
                             NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
                         }

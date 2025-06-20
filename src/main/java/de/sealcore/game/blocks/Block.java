@@ -10,6 +10,7 @@ public abstract class Block extends InteractableObject
 {
     public BlockInfo info;
     Random rnd = new Random();
+    public int hp = 3;
 
     protected Block(String id, String name, boolean isSolid, ToolType requiredTool)
     {
