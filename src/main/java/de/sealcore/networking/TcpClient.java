@@ -1,5 +1,6 @@
 package de.sealcore.networking;
 
+import de.sealcore.server.Server;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -41,6 +42,7 @@ public class TcpClient
     {
         try
         {
+            Server.game.removePlayer(id);
             //Try closing the connection to the server
             socket.close();
         }

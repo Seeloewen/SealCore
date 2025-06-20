@@ -39,7 +39,7 @@ public class PlayerState {
 
     private boolean targeting;
 
-    public String text1 = "-0:00";
+    public String text1 = "0:00";
     public String text2 = "Game started";
 
 

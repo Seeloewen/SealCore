@@ -1,5 +1,7 @@
 package de.sealcore.client.ui;
 
+import de.sealcore.client.ui.overlay.CraftingOverlay;
+import de.sealcore.client.ui.overlay.RecipeOverlay;
 import de.sealcore.client.ui.rendering.mesh.MeshRenderer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL33;
@@ -32,6 +34,7 @@ public class Resolution {
         HEIGHT = height;
         RATIO = (float) HEIGHT / WIDTH;
         MeshRenderer.refreshProjection();
+        CraftingOverlay.setLocation(WIDTH-300,20);
         GL33.glViewport(0, 0, width, height);
     }
 
