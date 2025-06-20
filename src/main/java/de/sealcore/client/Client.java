@@ -157,7 +157,7 @@ public class Client {
 
         // Terminate GLFW and free the error callback
         glfwTerminate();
-        glfwSetErrorCallback(null).free();
+        //glfwSetErrorCallback(null).free(); //TODO: why is this here if it just throws exceptions??
 
         System.exit(0);
     }
