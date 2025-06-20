@@ -6,7 +6,7 @@ public class WorkBench extends Block
 {
     public WorkBench()
     {
-        super("b:work_bench", "Work Bench", true, ToolType.AXE);
+        super("b:work_bench", "Work Bench", true, ToolType.UNBREAKABLE);
     }
 
     @Override
