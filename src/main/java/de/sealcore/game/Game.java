@@ -128,6 +128,11 @@ public class Game
         NetworkHandler.sendOnly(id, new SetHPPacket(coreHP, true));
     }
 
+    public void removePlayer(int clientID) {
+        Entity e = players.get(clientID);
+        removeEntity(e.getID());
+    }
+
 
     public Game()
     {
