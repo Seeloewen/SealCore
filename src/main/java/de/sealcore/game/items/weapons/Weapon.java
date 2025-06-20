@@ -41,11 +41,13 @@ public abstract class Weapon extends Item
 
         int invAmount = p.inventory.getAmount(ammoId);
         int magAmount = TagHandler.getIntTag(tags, "ammoAmount");
+        int possibleAmount = weaponInfo.magSize() - magAmount;
+        int reloadAmount = Math.min(possibleAmount, invAmount); //Either reload all bullets that fit in the mag or the max amount of bullets available in inv, whatever is smaller
 
         TagHandler.writeTag(this, "ammoId", ammoId);
-        TagHandler.writeTag(this, "ammoAmount", Math.min(weaponInfo.magSize(), invAmount)); //Either reload the entire mag or the max amount of bullets available in inv, whatever is smaller
+        TagHandler.writeTag(this, "ammoAmount", magAmount + reloadAmount);
 
-        p.inventory.remove(ammoId, weaponInfo.magSize() - magAmount); //Remove the reloaded amount of bullets from player
+        p.inventory.remove(ammoId, reloadAmount); //Remove the reloaded amount of bullets from player
     }
 
     @Override
