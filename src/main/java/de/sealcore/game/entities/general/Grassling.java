@@ -1,5 +1,7 @@
 package de.sealcore.game.entities.general;
 
+import de.sealcore.server.Server;
+
 import java.util.Random;
 
 public class Grassling extends Entity {
@@ -27,13 +29,22 @@ public class Grassling extends Entity {
     {
         pathFinder.doStep();
 
-        var p = pathFinder.playerTarget;
-        if(p != null && attackCooldown <= 0) {
-            var dx = p.posX-posX;
-            var dy = p.posY-posY;
-            if(dx*dx+dy*dy <= RANGE_SQR) {
-                p.damage(DAMAGE, getID());
-                attackCooldown = COOLDOWN;
+        if (attackCooldown <= 0) {
+            var p = pathFinder.playerTarget;
+            if(p != null) {
+                var dx = p.posX-posX;
+                var dy = p.posY-posY;
+                if(dx*dx+dy*dy <= RANGE_SQR) {
+                    p.damage(DAMAGE, getID());
+                    attackCooldown = COOLDOWN;
+                }
+            } else {
+                var dx = posX;
+                var dy = posY;
+                if(dx*dx+dy*dy <= RANGE_SQR) {
+                    Server.game.damageCore(DAMAGE);
+                    attackCooldown = COOLDOWN;
+                }
             }
         }
         attackCooldown -= dt;

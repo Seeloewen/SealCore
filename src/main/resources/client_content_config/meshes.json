@@ -33,12 +33,12 @@
     {
       "id": "e:big_grassling",
       "path": "objects/Grass_Enemy.txt",
-      "scale": 0.225
+      "scale": 0.17
     },
     {
       "id": "e:jabbus",
       "path": "objects/Jabbus.txt",
-      "scale": 0.25
+      "scale": 0.12
     },
     {
       "id": "e:player",

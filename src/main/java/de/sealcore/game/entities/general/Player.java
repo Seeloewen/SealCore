@@ -34,11 +34,13 @@ public class Player extends Entity{
     private HashSet<Integer> loadedChunks;
 
     public Player(int clientID) {
-        super("e:player", 10, 0, 0);
+        super("e:player", 15, 0, 0);
         this.clientID = clientID;
         sizeX = 0.6;
         sizeY = sizeX * 16.0/10;
         sizeZ = sizeX * 32.0/10;
+
+        onDeath(-1);
 
         loadedChunks = new HashSet<>();
         inventory = Server.game.inventoryManager.createInventory(clientID, MAT_SLOTS, WEAPON_SLOTS, AMMO_SLOTS, UNI_SLOTS);
@@ -53,14 +55,15 @@ public class Player extends Entity{
 
     private void setHP(int hp) {
         this.hp = hp;
-        NetworkHandler.sendOnly(clientID, new SetHPPacket(hp));
+        NetworkHandler.sendOnly(clientID, new SetHPPacket(hp, false));
     }
 
 
     @Override
     protected void onDeath(int source) {
-        posX = 0;
-        posY = 0;
+        posX = clientID%2==0?-5:5;
+        posY = clientID%2==1?-5:5;
+
         setHP(15);
     }
 
@@ -96,7 +99,7 @@ public class Player extends Entity{
                     Weapon weapon = (Weapon) item;
                     double range = weapon.weaponInfo.range();
                     int ammo = TagHandler.getIntTag(slot.tag, "ammoAmount");
-                    TagHandler.writeTag(slot, "ammoAmount", ammo-1);
+                    //TagHandler.writeTag(slot, "ammoAmount", ammo-1); temp cheat
                     if(range >= dte && ammo > 0) {
                         int damage = weapon.weaponInfo.damage();
                         Server.game.getEntity(te).damage(damage, getID());

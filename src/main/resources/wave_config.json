@@ -1,0 +1,44 @@
+{
+  "waves": [
+    {
+      "time": 10,
+      "spawns": {
+        "e:grassling": 2,
+        "e:big_grassling": 0,
+        "e:jabbus": 0
+        }
+      },
+    {
+      "time": 20,
+      "spawns": {
+        "e:grassling": 5,
+        "e:big_grassling": 1,
+        "e:jabbus": 0
+      }
+    },
+    {
+      "time": 40,
+      "spawns": {
+        "e:grassling": 10,
+        "e:big_grassling": 3,
+        "e:jabbus": 0
+      }
+    },
+    {
+      "time": 60,
+      "spawns": {
+        "e:grassling": 15,
+        "e:big_grassling": 4,
+        "e:jabbus": 1
+      }
+    },
+    {
+      "time": 90,
+      "spawns": {
+        "e:grassling": 20,
+        "e:big_grassling": 6,
+        "e:jabbus": 3
+      }
+    }
+  ]
+}

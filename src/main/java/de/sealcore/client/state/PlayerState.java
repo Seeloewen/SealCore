@@ -7,6 +7,7 @@ import de.sealcore.client.config.Items;
 import de.sealcore.client.ui.Resolution;
 import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
 import de.sealcore.client.ui.rendering.primitives.Rectangle;
+import de.sealcore.client.ui.rendering.text.TextRenderer;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.PlayerInteractPacket;
 import de.sealcore.util.ChunkIndex;
@@ -34,8 +35,12 @@ public class PlayerState {
     public double distTargetFloor;
 
     public int hp = 10;
+    public int coreHP = 19;
 
     private boolean targeting;
+
+    public String text1 = "-0:00";
+    public String text2 = "Game started";
 
 
     public void handleMousePress(int button) {
@@ -96,6 +101,10 @@ public class PlayerState {
     }
 
     public void render() {
+
+        TextRenderer.drawString(15, Resolution.HEIGHT-180, 3, text1, -0.5f);
+        TextRenderer.drawString(15, Resolution.HEIGHT-150, 4, text2, -0.5f);
+
         double hpRatio = hp/15.0;
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 200, 50, Resolution.WIDTH / 2 + 200, 90),
@@ -103,6 +112,14 @@ public class PlayerState {
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 200, 50, (int) (Resolution.WIDTH / 2 -200 + 400*hpRatio), 90),
                 new Color(1f,0f,0f), -0.6f);
+
+        double coreHpRatio = coreHP/20.0;
+        PrimitiveRenderer.drawRectangle(
+                new Rectangle(Resolution.WIDTH / 2 - 200, 10, Resolution.WIDTH / 2 + 200, 50),
+                new Color(0), -0.5f);
+        PrimitiveRenderer.drawRectangle(
+                new Rectangle(Resolution.WIDTH / 2 - 200, 10, (int) (Resolution.WIDTH / 2 -200 + 400*coreHpRatio), 50),
+                new Color(0.2f,0.2f,1f), -0.6f);
 
 
         PrimitiveRenderer.drawRectangle(

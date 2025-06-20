@@ -17,5 +17,6 @@ public enum PacketType
     SETHP,
     SETCOOLDOWN,
     RECIPEINIT,
-    CRAFTING
+    CRAFTING,
+    SETTEXT
 }
