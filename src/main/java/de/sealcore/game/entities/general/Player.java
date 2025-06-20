@@ -61,8 +61,8 @@ public class Player extends Entity{
 
     @Override
     protected void onDeath(int source) {
-        posX = clientID%2==0?-5:5;
-        posY = clientID%2==1?-5:5;
+        posX = clientID%2==0?-7:7;
+        posY = clientID%2==1?-7:7;
 
         setHP(15);
     }
@@ -74,65 +74,47 @@ public class Player extends Entity{
         var slot = inventory.getSlot(slotIndex);
         Item item = ItemRegister.getItem(slot.id);
 
-
-
-        /*if(item instanceof Weapon w && w.info.type() == ItemType.WEAPON_RANGED) {
-            int a = w.getIntTag("ammoAmount");
-            if(a > 0) {
-                w.writeTag("ammoAmount", a-1);
-                Log.debug("ammo"+w.getIntTag("ammoAmount"));
-            }
-        }*/
-        //if entity is targeted
-        if(dte >= 0 && (dtb < 0 || dte < dtb) && (dtf < 0 || dte < dtf)) {
-            NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
-            switch (item.info.type()) {
-                case WEAPON_MELEE -> {
-                    Weapon weapon = (Weapon) item;
-                    double range = weapon.weaponInfo.range();
-                    if(range >= dte) {
-                        int damage  = weapon.weaponInfo.damage();
-                        Server.game.getEntity(te).damage(damage, getID());
+        switch(item) {
+            case Weapon weapon -> {
+                //handle ammo
+                if(weapon.info.type() == ItemType.WEAPON_RANGED) {
+                    int ammo = TagHandler.getIntTag(slot.tag, "ammoAmount");
+                    if(ammo > 0) {
+                        TagHandler.writeTag(slot, "ammoAmount", ammo-1);
+                    } else {
+                        return;
                     }
                 }
-                case WEAPON_RANGED -> {
-                    Weapon weapon = (Weapon) item;
-                    double range = weapon.weaponInfo.range();
-                    int ammo = TagHandler.getIntTag(slot.tag, "ammoAmount");
-                    if(range >= dte && ammo > 0) {
+
+                NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
+
+                //check if entity is targeted
+                if(dte >= 0 && (dtb < 0 || dte < dtb) && (dtf < 0 || dte < dtf)) {
+                    if (weapon.weaponInfo.range() >= dte) {
                         int damage = weapon.weaponInfo.damage();
                         Server.game.getEntity(te).damage(damage, getID());
-                        Log.debug("shot");
                     }
                 }
             }
-        //if block is targeted
-        } else if(dtb >= 0 && (dte < 0 || dtb < dte) && (dtf < 0 || dtb < dtf)) {
-            Log.info(LogType.GAME, "interact on block " + tbx + "|" + tby + " left=" + leftClick);
-            if(item instanceof Tool tool) {
-                var chunk = Server.game.getCurrentMap().getChunk(MathUtil.toChunk(tbx), MathUtil.toChunk(tby));
-                int x = MathUtil.safeMod(tbx, 8);
-                int y = MathUtil.safeMod(tby, 8);
-                Block block = chunk.getBlock(x, y);
-                if (dtb <= tool.range) { //range check
-                    if (block != null && block.info.requiredTool() == tool.toolType) {
-                        chunk.setBlock(x, y, null, true);
-                        block.onDestroy(getID());
-                        NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
-                    } else {
+            case Tool tool -> {
+                //check if block is targeted
+                if(dtb >= 0 && (dte < 0 || dtb < dte) && (dtf < 0 || dtb < dtf)) {
+                    //get targeted block
+                    var chunk = Server.game.getCurrentMap().getChunk(MathUtil.toChunk(tbx), MathUtil.toChunk(tby));
+                    int x = MathUtil.safeMod(tbx, 8);
+                    int y = MathUtil.safeMod(tby, 8);
+                    Block block = chunk.getBlock(x, y);
 
+                    if (dtb <= tool.range) { //range check
+                        if (block != null && block.info.requiredTool() == tool.toolType) {//null check can probably be skipped; im not brave enough
+                            chunk.setBlock(x, y, null, true);
+                            block.onDestroy(getID());
+                            NetworkHandler.sendOnly(clientID, new SetCooldownPacket(item.info.cooldown()));
+                        }
                     }
                 }
             }
-        //if floor is targeted
-        } else if(dtf >= 0 && (dte < 0 || dtf < dte) && (dtb < 0 || dtf < dtb)) {
-            Log.info(LogType.GAME, "interact on floor " + tfx + "|" + tfy + " left=" + leftClick);
-        }
-
-        if(item.info.type() == ItemType.WEAPON_RANGED)
-        {
-            int ammo = TagHandler.getIntTag(slot.tag, "ammoAmount");
-            TagHandler.writeTag(slot, "ammoAmount", ammo-1);
+            default -> {}
         }
     }
 

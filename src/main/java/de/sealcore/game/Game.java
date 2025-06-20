@@ -9,17 +9,16 @@ import de.sealcore.game.entities.general.Entity;
 import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventoryManager;
 import de.sealcore.game.entities.general.*;
+import de.sealcore.game.floors.Floor;
 import de.sealcore.game.items.TagHandler;
 import de.sealcore.game.items.weapons.Pistol;
 import de.sealcore.game.items.weapons.Rifle;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
-import de.sealcore.networking.packets.EntityRemovePacket;
-import de.sealcore.networking.packets.RecipeInitPacket;
-import de.sealcore.networking.packets.SetFollowCamPacket;
+import de.sealcore.networking.packets.*;
 import de.sealcore.server.Server;
-import de.sealcore.networking.packets.SetHPPacket;
+import de.sealcore.server.waves.WaveManager;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -52,7 +51,13 @@ public class Game
 
     public void damageCore(int damage) {
         coreHP -= damage;
-        NetworkHandler.send(new SetHPPacket(coreHP, true));
+        if(coreHP <= 0) {
+            NetworkHandler.send(new SetHPPacket(0, true));
+            NetworkHandler.send(new SetTextPacket("Game over", 2));
+            WaveManager.enabled = false;
+        } else {
+            NetworkHandler.send(new SetHPPacket(coreHP, true));
+        }
     }
 
     public void spawn(Entity e) {
@@ -66,7 +71,8 @@ public class Game
             double angle = Math.random()*Math.PI*2;
             int x = toBlock(Math.cos(angle)*spawnRadius);
             int y = toBlock(Math.sin(angle)*spawnRadius);
-            if(currentMap.getFloor(x, y).info.isSolid()) {
+            Floor floor = currentMap.getFloor(x, y);
+            if(floor != null && floor.info.isSolid()) {
                 spawn(new Grassling(x, y));
             } else {
                 i--;
@@ -76,7 +82,8 @@ public class Game
             double angle = Math.random()*Math.PI*2;
             int x = toBlock(Math.cos(angle)*spawnRadius);
             int y = toBlock(Math.sin(angle)*spawnRadius);
-            if(currentMap.getFloor(x, y).info.isSolid()) {
+            Floor floor = currentMap.getFloor(x, y);
+            if(floor != null && floor.info.isSolid()) {
                 spawn(new BigGrassling(x, y));
             } else {
                 i--;
@@ -86,7 +93,8 @@ public class Game
             double angle = Math.random()*Math.PI*2;
             int x = toBlock(Math.cos(angle)*spawnRadius);
             int y = toBlock(Math.sin(angle)*spawnRadius);
-            if(currentMap.getFloor(x, y).info.isSolid()) {
+            Floor floor = currentMap.getFloor(x, y);
+            if(floor != null && floor.info.isSolid()) {
                 spawn(new Jabbus(x, y));
             } else {
                 i--;
@@ -115,10 +123,8 @@ public class Game
         }
 
         player.inventory.add(5, "i:sword", 1);
-        Rifle p = new Rifle();
-        TagHandler.writeTag(p, "ammoAmount", 30);
-        player.inventory.add(6, p.info.id(), 1, p.tags);
         player.inventory.add(0, "i:axe", 1);
+        player.inventory.add(1, "i:pickaxe", 1);
         NetworkHandler.sendOnly(id, new SetHPPacket(coreHP, true));
     }
 

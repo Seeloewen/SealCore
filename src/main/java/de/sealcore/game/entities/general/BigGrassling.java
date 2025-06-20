@@ -30,16 +30,24 @@ public class BigGrassling extends Entity
     {
         pathFinder.doStep();
 
-        var p = pathFinder.playerTarget;
-        if (p != null && attackCooldown <= 0)
-        {
-            var dx = p.posX - posX;
-            var dy = p.posY - posY;
-            if (dx * dx + dy * dy <= RANGE_SQR)
-            {
-                p.damage(DAMAGE, getID());
+        if (attackCooldown <= 0) {
+            var p = pathFinder.playerTarget;
+            if(p != null) {
+                var dx = p.posX-posX;
+                var dy = p.posY-posY;
+                if(dx*dx+dy*dy <= RANGE_SQR) {
+                    p.damage(DAMAGE, getID());
+                    attackCooldown = COOLDOWN;
+                }
+            }
+
+            var dx = posX;
+            var dy = posY;
+            if(dx*dx+dy*dy <= 10) {
+                Server.game.damageCore(DAMAGE);
                 attackCooldown = COOLDOWN;
             }
+
         }
         attackCooldown -= dt;
 

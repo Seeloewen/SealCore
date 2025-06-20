@@ -17,6 +17,8 @@ public class WaveManager {
     private static ArrayList<Wave> waves;
     private static int nextWave;
 
+    public static boolean enabled = true;
+
     public static void init() {
         currentTime = 0;
         waves = new ArrayList<>();
@@ -40,13 +42,15 @@ public class WaveManager {
     }
 
     public static void update(double dt) {
-        currentTime += dt;
-        if(waves.size() <= nextWave) return;
-        if(currentTime >= waves.get(nextWave).time()) {
-            var wave = waves.get(nextWave);
-            Server.game.spawnWave(wave.grasslings(), wave.big_grasslings(), wave.jabbus());
-            nextWave++;
-            NetworkHandler.send(new SetTextPacket("Wave " + nextWave + " spawned", 2));
+        if(enabled) {
+            currentTime += dt;
+            if (waves.size() <= nextWave) return;
+            if (currentTime >= waves.get(nextWave).time()) {
+                var wave = waves.get(nextWave);
+                Server.game.spawnWave(wave.grasslings(), wave.big_grasslings(), wave.jabbus());
+                nextWave++;
+                NetworkHandler.send(new SetTextPacket("Wave " + nextWave + " spawned", 2));
+            }
         }
     }
 

@@ -17,7 +17,7 @@
       }
     },
     {
-      "time": 40,
+      "time": 60,
       "spawns": {
         "e:grassling": 10,
         "e:big_grassling": 3,
@@ -25,7 +25,7 @@
       }
     },
     {
-      "time": 60,
+      "time": 120,
       "spawns": {
         "e:grassling": 15,
         "e:big_grassling": 4,
@@ -33,7 +33,7 @@
       }
     },
     {
-      "time": 90,
+      "time": 200,
       "spawns": {
         "e:grassling": 20,
         "e:big_grassling": 6,

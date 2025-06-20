@@ -43,7 +43,7 @@
     {
       "id": "e:player",
       "path": "objects/Player.txt",
-      "scale": 0.09
+      "scale": 0.05
     },
     {
       "id": "b:small_rock",

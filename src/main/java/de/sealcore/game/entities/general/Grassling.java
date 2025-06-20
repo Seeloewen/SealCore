@@ -38,14 +38,15 @@ public class Grassling extends Entity {
                     p.damage(DAMAGE, getID());
                     attackCooldown = COOLDOWN;
                 }
-            } else {
-                var dx = posX;
-                var dy = posY;
-                if(dx*dx+dy*dy <= RANGE_SQR) {
-                    Server.game.damageCore(DAMAGE);
-                    attackCooldown = COOLDOWN;
-                }
             }
+
+            var dx = posX;
+            var dy = posY;
+            if(dx*dx+dy*dy <= 10) {
+                Server.game.damageCore(DAMAGE);
+                attackCooldown = COOLDOWN;
+            }
+
         }
         attackCooldown -= dt;
 
