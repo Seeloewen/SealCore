@@ -3,6 +3,7 @@ package de.sealcore.client.ui.overlay;
 import de.sealcore.client.Client;
 import de.sealcore.client.input.InputHandler;
 import de.sealcore.client.ui.rendering.texture.TextureRenderer;
+import de.sealcore.game.crafting.CraftingHandler;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 import org.lwjgl.glfw.GLFW;
@@ -17,14 +18,18 @@ public class OverlayManager
 
     public static void init()
     {
-
+        CraftingOverlay.init();
     }
 
 
     public static void render()
     {
         if (showDebugOverlay) DebugOverlay.render();
-        if (showInventory) Client.instance.inventoryState.render();
+        if (showInventory)
+        {
+            Client.instance.inventoryState.render();
+            CraftingOverlay.render();
+        }
 
         Client.instance.inventoryState.renderHotbar();
 
@@ -37,6 +42,7 @@ public class OverlayManager
         if (showInventory)
         {
             Client.instance.inventoryState.handleMouseClick(button, action);
+            CraftingOverlay.handleMouseClick(button, action);
         }
         else
         {

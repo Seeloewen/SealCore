@@ -49,7 +49,7 @@
       "texture": "textures/Workbench.png"
     },
     {
-      "id": "i:bullet",
+      "id": "i:normal_bullet",
       "type": "it:ammo",
       "texture": "textures/Bullet.png"
     }

@@ -8,6 +8,8 @@ import de.sealcore.client.ui.rendering.text.TextRenderer;
 import de.sealcore.game.entities.inventory.InventorySlotType;
 import de.sealcore.util.Color;
 
+import java.util.Objects;
+
 public class InventoryState
 {
     private final int WIDTH = 380;
@@ -181,5 +183,16 @@ public class InventoryState
         }
 
         return null;
+    }
+
+    public int getAvailableAmount(String id)
+    {
+        int a = 0;
+        for(SlotState s : slots)
+        {
+            if(s.id.equals(id) && s.amount > 0) a += s.amount;
+        }
+
+        return a;
     }
 }

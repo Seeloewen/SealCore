@@ -14,18 +14,18 @@ public class Inventory
 
         slots = new InventorySlot[materialSlots + ammoSlot + weaponSlots + universalSlots];
 
+        int m = materialSlots;
+        int a = ammoSlot;
+        int w = weaponSlots;
+        int u = universalSlots;
+
         //Construct the inventory slot list
         for (int i = 0; i < slots.length; i++)
         {
-            int m = materialSlots;
-            int a = ammoSlot;
-            int w = weaponSlots;
-            int u = universalSlots;
-
             //Add all different slot types
             if (u > 0)
             {
-                slots[i] = new InventorySlot(this, i);
+                slots[i] = new InventorySlot(this, i, InventorySlotType.UNIVERSAL);
                 u--;
             }
             else if (m > 0)
@@ -114,7 +114,7 @@ public class Inventory
 
         for (InventorySlot slot : slots) //Go through all slots and check whether they contain the item
         {
-            if (slot.id.equals(id)) remainingAmount = slot.add(remainingAmount);
+            if (slot.id.equals(id)) remainingAmount = slot.remove(remainingAmount);
             if (remainingAmount <= 0) return 0; //Break early if all items are removed
         }
 

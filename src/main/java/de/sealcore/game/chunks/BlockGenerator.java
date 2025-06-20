@@ -62,10 +62,9 @@ public class BlockGenerator
     public void genRock(Chunk c, int x, int y)
     {
         //Generate a random tree
-        switch (rnd.nextInt(0, 2))
+        switch (rnd.nextInt(0, 1))
         {
             case 0 -> c.setBlock(x, y, BlockRegister.getBlock("b:small_rock")); //Small
-            case 1 -> c.setBlock(x, y, BlockRegister.getBlock("b:big_rock")); //Big
         }
     }
 }

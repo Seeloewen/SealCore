@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class CraftingHandler
 {
-    private ArrayList<Recipe> recipes = new ArrayList<>();
+    public ArrayList<Recipe> recipes = new ArrayList<>();
 
     public CraftingHandler()
     {

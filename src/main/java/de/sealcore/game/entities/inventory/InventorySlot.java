@@ -23,13 +23,6 @@ public class InventorySlot
         this.inv = inv;
     }
 
-    public InventorySlot(Inventory inv, int index)
-    {
-        this.type = null;
-        this.index = index;
-        this.inv = inv;
-    }
-
     public InventorySlot(int index, InventorySlotType type, String id, int amount, String tag)
     {
         this.index = index;

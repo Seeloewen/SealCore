@@ -1,8 +1,10 @@
 package de.sealcore.game;
 
+import de.sealcore.client.ui.overlay.CraftingOverlay;
 import de.sealcore.game.blocks.BlockRegister;
 import de.sealcore.game.chunks.Chunk;
 import de.sealcore.game.crafting.CraftingHandler;
+import de.sealcore.game.crafting.Recipe;
 import de.sealcore.game.entities.general.Entity;
 import de.sealcore.game.entities.general.Player;
 import de.sealcore.game.entities.inventory.InventoryManager;
@@ -10,11 +12,17 @@ import de.sealcore.game.entities.general.*;
 import de.sealcore.game.items.Item;
 import de.sealcore.game.items.TagHandler;
 import de.sealcore.game.items.weapons.Pistol;
+import de.sealcore.game.items.weapons.Pistol;
+import de.sealcore.game.items.weapons.Rifle;
+import de.sealcore.game.items.weapons.Pistol;
+import de.sealcore.game.items.weapons.Rifle;
 import de.sealcore.game.maps.Map;
 import de.sealcore.game.maps.MapLayout;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.EntityRemovePacket;
+import de.sealcore.networking.packets.RecipeInitPacket;
 import de.sealcore.networking.packets.SetFollowCamPacket;
+import de.sealcore.server.Server;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
@@ -56,12 +64,20 @@ public class Game
         for (Entity entity : entities)
         {
             if (entity != player) entity.sendAdd(id);
+        };
+
+        //Sync all recipes over to the client
+        for(Recipe r : Server.game.craftingHandler.recipes)
+        {
+            NetworkHandler.sendOnly(id, new RecipeInitPacket(r.id(), r.output()[0].id(), r.ingredients()));
         }
+
         player.inventory.add(5, "i:sword", 1);
         Pistol p = new Pistol();
         TagHandler.writeTag(p, "ammoAmount", 8);
         player.inventory.add(6, p.info.id(), 1, p.tags);
         player.inventory.add(0, "i:axe", 1);
+        player.inventory.add(2, "i:rock", 3);
     }
 
 
@@ -77,14 +93,11 @@ public class Game
         addMap(nextMapId(), MapLayout.NORMAL);
         loadMap(0);
 
+        //Create core
         getCurrentMap().getChunk(0,0).setBlock(0,0, BlockRegister.getBlock("b:core_1"));
         getCurrentMap().getChunk(-1,0).setBlock(7,0, BlockRegister.getBlock("b:core_4"));
         getCurrentMap().getChunk(0,-1).setBlock(0,7, BlockRegister.getBlock("b:core_2"));
         getCurrentMap().getChunk(-1,-1).setBlock(7,7, BlockRegister.getBlock("b:core_3"));
-
-        var e = new Grassling(10, 10);
-        entities.add(e);
-        e.sendAdd();
 
         /*Random rnd = new Random();
         for (int i = 0; i < 10; i++)
