@@ -1,5 +1,5 @@
 group = "de.sealcore"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 val lwjglVersion = "3.3.6"
 var jacksonDatabindVersion = "2.19.1"

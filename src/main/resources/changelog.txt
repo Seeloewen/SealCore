@@ -1,2 +1,2 @@
-Version 1.0.0 (x)
-- Release
+Version 1.0.0 (22.06.2025)
+- First Release
