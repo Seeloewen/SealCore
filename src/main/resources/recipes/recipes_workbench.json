@@ -1,0 +1,58 @@
+{
+  "workstationId": "workbench",
+  "recipes": [
+    {
+      "id": "recipe_pistol",
+      "ingredients": [
+        {
+          "id": "i:log",
+          "amount": 5
+        },
+        {
+          "id": "i:rock",
+          "amount": 20
+        }
+      ],
+      "output":[
+        {
+          "id": "i:pistol",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "recipe_rifle",
+      "ingredients": [
+        {
+          "id": "i:log",
+          "amount": 10
+        },
+        {
+          "id": "i:rock",
+          "amount": 30
+        }
+      ],
+      "output":[
+        {
+          "id": "i:rifle",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "recipe_bullet",
+      "ingredients": [
+        {
+          "id": "i:rock",
+          "amount": 2
+        }
+      ],
+      "output":[
+        {
+          "id": "i:normal_bullet",
+          "amount": 8
+        }
+      ]
+    }
+  ]
+}

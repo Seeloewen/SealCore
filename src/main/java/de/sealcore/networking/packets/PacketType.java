@@ -1,0 +1,23 @@
+package de.sealcore.networking.packets;
+
+public enum PacketType
+{
+    CHUNKUNLOAD,
+    CHUNKUPDATE,
+    ENTITYADD,
+    ENTITYREMOVE,
+    ENTITYUPDATEPOS,
+    INVENTORYSTATE,
+    INVENTORYMOVE,
+    INVENTORYSWAP,
+    CHUNKADD,
+    MOVEINPUT,
+    SETFOLLOWCAM,
+    PLAYERINTERACT,
+    SETHP,
+    SETCOOLDOWN,
+    RECIPEINIT,
+    CRAFTING,
+    SETTEXT,
+    RELOAD
+}

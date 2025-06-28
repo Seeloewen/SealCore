@@ -1,0 +1,41 @@
+{
+  "blocks": [
+    {
+      "id": "b:small_rock",
+      "height": 2.0,
+      "tt": "tt:stone"
+    },
+    {
+      "id": "b:oak_tree",
+      "height": 2.0,
+      "tt": "tt:wood"
+    },
+    {
+      "id": "b:workbench",
+      "height": 2.0,
+      "tt": "tt:wood"
+    },
+    {
+      "id": "b:core_1",
+      "height": 2.0,
+      "tt": "tt:ohio"
+    },
+    {
+      "id": "b:core_2",
+      "height": 2.0,
+      "tt": "tt:ohio"
+    },
+    {
+      "id": "b:core_3",
+      "height": 2.0,
+      "tt": "tt:ohio"
+    },
+    {
+      "id": "b:core_4",
+      "height": 2.0,
+      "tt": "tt:ohio"
+    }
+  ]
+}
+
+
