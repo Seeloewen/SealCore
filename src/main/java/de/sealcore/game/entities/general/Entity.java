@@ -1,14 +1,12 @@
 package de.sealcore.game.entities.general;
 
+import de.sealcore.game.entities.general.pathfinding.PathFinder;
 import de.sealcore.game.entities.inventory.Inventory;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.EntityAddPacket;
 import de.sealcore.networking.packets.EntityUpdatePosPacket;
-import de.sealcore.networking.packets.SetHPPacket;
 import de.sealcore.server.Server;
 import de.sealcore.util.MathUtil;
-import de.sealcore.util.logging.Log;
-import de.sealcore.util.logging.LogType;
 
 public abstract class Entity {
 
@@ -27,8 +25,8 @@ public abstract class Entity {
     protected double sizeZ = 0.8;
     //sizeZ/sizeX of grass enemy : 1.5
 
-    protected double posX;
-    protected double posY;
+    public double posX;
+    public double posY;
     protected double velX;
     protected double velY;
 
