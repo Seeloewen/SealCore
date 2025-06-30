@@ -7,10 +7,7 @@ import de.sealcore.game.floors.Floor;
 import de.sealcore.server.Server;
 import org.joml.Vector2d;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class PathFinder
 {
@@ -29,7 +26,7 @@ public class PathFinder
     public boolean canFocusCore = true;
 
     private Node waypoint;
-    private ArrayList<Node> waypoints = new ArrayList<>();
+    private ArrayDeque<Node> waypoints = new ArrayDeque<>();
     private boolean constructingWaypoints;
 
     private int originX;
@@ -53,6 +50,7 @@ public class PathFinder
         //If the target is set or the target was reached or the world was updated
         if (target == null || targetReached(target.x, target.y) || globalWorldUpdate > localWorldUpdate)
         {
+            source.hasCollision = true;
             updateThread = new Thread(() -> updateTarget());
             updateThread.start();
             return;
@@ -60,7 +58,10 @@ public class PathFinder
 
         //If the current waypoint is not set or reached, get the next one
         if ((waypoint == null || targetReached(waypoint.x, waypoint.y)) && !constructingWaypoints)
+        {
+            source.hasCollision = false;
             waypoint = getNextWaypoint();
+        }
 
         if (waypoint == null || target == null) return;
 
@@ -74,7 +75,7 @@ public class PathFinder
     {
         if (!waypoints.isEmpty())
         {
-            return waypoints.getFirst();
+            return waypoints.removeLast();
         }
         return null;
     }
@@ -82,7 +83,7 @@ public class PathFinder
     public boolean targetReached(double targetX, double targetY)
     {
         //Check if the difference between the source and targets coordinates are so small, that we can assume it has reached the target
-        return (Math.abs(source.posX - targetX) < 0.2 && Math.abs(source.posY - targetY) < 0.2);
+        return Math.abs(source.posX - targetX) < 0.2 && Math.abs(source.posY - targetY) < 0.2;
     }
 
     private double calcRot(double targetX, double targetY)
@@ -96,7 +97,7 @@ public class PathFinder
         Block b = Server.game.getCurrentMap().getBlock((int) Math.floor(x), (int) Math.floor(y));
         Floor f = Server.game.getCurrentMap().getFloor((int) Math.floor(x), (int) Math.floor(y));
 
-        if (b != null && b.info.isSolid()) return true;
+        if (b != null && b.info.isSolid() && !b.info.name().equals("Core")) return true;
 
         if (f != null)
         {
@@ -191,6 +192,7 @@ public class PathFinder
                 System.out.println("Pathfinding took " + (endTime - startTime) / 1000000 + "ms");
                 constructPath(currentNode);
 
+                constructingWaypoints = false;
                 return;
             }
 
@@ -212,7 +214,6 @@ public class PathFinder
             waypoints.add(currentNode);
             currentNode = currentNode.predecessor;
         }
-        Collections.reverse(waypoints);
     }
 
     public void createNodes()
@@ -233,6 +234,7 @@ public class PathFinder
                 //Replace with actual implementation for the specific cases
                 nodes[i] = n;
             }
+
         }
     }
 
