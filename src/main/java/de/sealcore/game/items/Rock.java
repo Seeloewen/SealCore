@@ -4,6 +4,6 @@ public class Rock extends Item
 {
     public Rock()
     {
-        super("i:rock", "Rock", ItemType.MATERIAL, 64, 0);
+        super("i:rock", "Rock", ItemType.MATERIAL, 1024, 0);
     }
 }

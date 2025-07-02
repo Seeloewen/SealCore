@@ -4,6 +4,6 @@ public class Log extends Item
 {
     public Log()
     {
-        super("i:log", "Log", ItemType.MATERIAL, 64, 0);
+        super("i:log", "Log", ItemType.MATERIAL, 1024, 0);
     }
 }
