@@ -1,2 +1,6 @@
+Version 1.0.1 (02.07.2025)
+* Rebalanced waves to scale more slowly over a longer amount of time
+* Changed Log and Rock stack limit to 1024
+
 Version 1.0.0 (22.06.2025)
 - First Release
