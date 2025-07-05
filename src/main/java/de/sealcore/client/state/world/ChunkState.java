@@ -1,5 +1,6 @@
 package de.sealcore.client.state.world;
 
+import de.sealcore.game.floors.Floor;
 import de.sealcore.util.ChunkIndex;
 
 public class ChunkState {

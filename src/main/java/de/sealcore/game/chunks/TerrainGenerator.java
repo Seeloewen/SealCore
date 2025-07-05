@@ -17,8 +17,7 @@ public class TerrainGenerator
 
     private float getNoise(int x, int y)
     {
-        //Noise normally generates between -1 and 1. This shifts it to 0 to 1.
-        return (noise.GetNoise(x, y) + 1.0f) / 2.0f;
+        return (noise.GetNoise(x, y) * 10);
     }
 
     //--------------------------------------------------//
@@ -30,9 +29,9 @@ public class TerrainGenerator
         {
             for (int x = 0; x < Chunk.WIDTH; x++)
             {
-                float n = getNoise(x + Chunk.WIDTH * c.x, y + Chunk.HEIGHT * c.y);
+                int n = Math.round(getNoise(x + Chunk.WIDTH * c.x, y + Chunk.HEIGHT * c.y));
 
-                c.setFloor(x, y, FloorRegister.getFloor(n >= 0.7 ? "f:water" : "f:grass"));
+                c.setFloor(x, y, FloorRegister.getFloor("f:grass", n));
             }
         }
     }
@@ -44,7 +43,7 @@ public class TerrainGenerator
         {
             for (int y = 0; y < Chunk.HEIGHT; y++)
             {
-                c.setFloor(x, y, FloorRegister.getFloor("f:stone"));
+                c.setFloor(x, y, FloorRegister.getFloor("f:stone", 0));
             }
         }
     }
@@ -56,7 +55,7 @@ public class TerrainGenerator
         {
             for (int y = 0; y < Chunk.HEIGHT; y++)
             {
-                c.setFloor(x, y, FloorRegister.getFloor("f:stone_bricks"));
+                c.setFloor(x, y, FloorRegister.getFloor("f:stone_bricks", 0));
             }
         }
     }

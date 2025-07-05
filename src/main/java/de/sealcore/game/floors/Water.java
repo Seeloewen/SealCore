@@ -2,8 +2,8 @@ package de.sealcore.game.floors;
 
 public class Water extends Floor
 {
-    public Water()
+    public Water(int height)
     {
-        super("f:water", "Water", false);
+        super("f:water", "Water", false, height);
     }
 }

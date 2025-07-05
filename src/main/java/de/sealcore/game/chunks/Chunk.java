@@ -18,7 +18,7 @@ public class Chunk
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;
 
-    private Floor[] floors = new Floor[64];
+    private Floor[] floors = new Floor[256];
     private Block[] blocks = new Block[64];
 
     private Chunk(int x, int y)
@@ -30,7 +30,7 @@ public class Chunk
         //Fill all chunks with grass by default to avoid null pointers later on
         for(int i = 0; i < floors.length; i++)
         {
-            floors[i] = FloorRegister.getFloor("f:grass");
+            floors[i] = FloorRegister.getFloor("f:grass", 0);
         }
     }
 

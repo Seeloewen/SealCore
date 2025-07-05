@@ -2,6 +2,9 @@ package de.sealcore.networking.packets;
 
 import com.fasterxml.jackson.databind.node.TextNode;
 import de.sealcore.client.Client;
+import de.sealcore.client.config.Blocks;
+import de.sealcore.game.floors.Floor;
+import de.sealcore.game.floors.FloorRegister;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
 
@@ -11,13 +14,15 @@ public class ChunkAddPacket extends Packet
 {
     private int id;
     private String[] floors;
+    private int[] floorHeights;
     private String[] blocks;
 
-    public ChunkAddPacket(String[] f, String[] b, int id)
+    public ChunkAddPacket(String[] f, int[] fh, String[] b, int id)
     {
         super(PacketType.CHUNKADD);
 
         floors = f;
+        floorHeights = fh;
         blocks = b;
         this.id = id;
     }
@@ -29,22 +34,23 @@ public class ChunkAddPacket extends Packet
         JsonArray floorObjects = args.getArray("floors");
         JsonArray blockObjects = args.getArray("blocks");
 
-        ArrayList<String> floors = new ArrayList<String>();
-        for (Object o : floorObjects)
+        String[] floors = new String[floorObjects.getSize()];
+        int[] floorHeights = new int[floorObjects.getSize()];
+        for (int i = 0; i < floorObjects.getSize(); i++)
         {
-            //o is only string in this case
-            floors.add(((TextNode) o).asText());
+            JsonObject f = (JsonObject)floorObjects.get(i);
+            floors[i] = f.getString("id");
+            floorHeights[i] = f.getInt("height");
         }
-        ArrayList<String> blocks = new ArrayList<String>();
-        for (Object o : blockObjects)
+        String[] blocks = new String[blockObjects.getSize()];
+        for (int i = 0; i < blockObjects.getSize(); i++)
         {
-            //o is only string in this case
-            blocks.add(((TextNode) o).asText());
+            blocks[i] = ((TextNode)(blockObjects.get(i))).asText();
         }
 
         int id = args.getInt("id");
 
-        return new ChunkAddPacket(floors.toArray(new String[0]), blocks.toArray(new String[0]), id);
+        return new ChunkAddPacket(floors, floorHeights, blocks, id);
     }
 
     public String toJson()
@@ -57,9 +63,13 @@ public class ChunkAddPacket extends Packet
         JsonArray floors = JsonArray.fromScratch();
         JsonArray blocks = JsonArray.fromScratch();
 
-        for (String s : this.floors)
+        for (int i = 0; i < this.floors.length; i++)
         {
-            floors.addString(s);
+            JsonObject fo = JsonObject.fromScratch();
+            fo.addString("id", this.floors[i]);
+            fo.addInt("height", this.floorHeights[i]);
+
+            floors.addObject(fo);
         }
         for(String s : this.blocks) {
             blocks.addString(s);

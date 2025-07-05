@@ -2,6 +2,7 @@ package de.sealcore.client.state.world;
 
 
 import de.sealcore.client.Client;
+import de.sealcore.game.floors.Floor;
 import de.sealcore.util.ChunkIndex;
 import de.sealcore.util.MathUtil;
 import de.sealcore.util.logging.Log;
