@@ -1,6 +1,5 @@
 package de.sealcore.game.entities.general;
 
-import de.sealcore.game.entities.general.pathfinding.PathFinder;
 import de.sealcore.server.Server;
 
 import java.util.Random;
