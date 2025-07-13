@@ -5,11 +5,31 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
 	
 	
 
 	<ItemGroup>
 		<ProjectReference Include="..\Generators\Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
+	
+	
+
+	<ItemGroup>
+	  <Folder Include="Source\Server\" />
+	</ItemGroup>
+	
+	
+
+	<ItemGroup>
+	  <PackageReference Include="OpenTK" Version="4.9.4" />
 	</ItemGroup>
 
 </Project>
