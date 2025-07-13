@@ -10,7 +10,6 @@ namespace SealCore
         public static void Main()
         {
             Console.WriteLine("Hello Seal");
-            TcpClient.hello();
         }
 
     }
