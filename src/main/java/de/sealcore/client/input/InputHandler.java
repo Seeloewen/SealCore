@@ -2,7 +2,6 @@ package de.sealcore.client.input;
 
 import de.sealcore.client.ui.overlay.OverlayManager;
 
-import java.security.Key;
 import java.util.HashMap;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -16,7 +15,7 @@ public class InputHandler {
 
     public static boolean camMode = false; //will be changed to false in init
 
-    public static boolean showMouse = false;
+    public static boolean hideMouse = false;
 
     private static  HashMap<Integer, Boolean> pressedKeys;
 
@@ -55,15 +54,20 @@ public class InputHandler {
 
 
     public static void changeMouseMode() {
-        if(showMouse) {
+        if(hideMouse) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         } else {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
-        showMouse = !showMouse;
+        hideMouse = !hideMouse;
     }
 
-
+    public static void setMouseMode(boolean visible)
+    {
+        //Set the visibility of the mouse cursor to the specified value
+        glfwSetInputMode(window, GLFW_CURSOR, visible ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
+        hideMouse = !visible;
+    }
 
 
 
@@ -77,7 +81,7 @@ public class InputHandler {
 
         changeMouseMode();
         glfwSetCursorPosCallback(window, (w, x, y) -> {
-            if(init && showMouse) {
+            if(init && hideMouse) {
                 mouseDeltaX += x - mouseX;
                 mouseDeltaY += y - mouseY;
             }

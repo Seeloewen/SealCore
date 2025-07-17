@@ -86,6 +86,12 @@ public class OverlayManager
             if(!showInventory) Client.instance.inventoryState.selectedSlot = null;
             InputHandler.changeMouseMode();
         }
+        if (key == GLFW.GLFW_KEY_ESCAPE)
+        {
+            showInventory = false;
+            Client.instance.inventoryState.selectedSlot = null;
+            InputHandler.setMouseMode(false);
+        }
         else if (key == GLFW.GLFW_KEY_F3)
         {
             showDebugOverlay = !showDebugOverlay;

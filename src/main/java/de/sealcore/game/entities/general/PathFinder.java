@@ -64,7 +64,7 @@ public class PathFinder
         if (target == null && dodgeTarget == null) return;
 
         //Calculate angle towards either dodge target or main target
-        double newRot = calcRot(dodgeTarget != null ? dodgeTarget.x : target.y, dodgeTarget != null ? dodgeTarget.y : target.y);
+        double newRot = calcRot(dodgeTarget != null ? dodgeTarget.x : target.x, dodgeTarget != null ? dodgeTarget.y : target.y);
 
         //If going towars main target, there might be the need for going around an obstacle
         if (dodgeTarget == null) newRot = avoidObstacle(newRot);
