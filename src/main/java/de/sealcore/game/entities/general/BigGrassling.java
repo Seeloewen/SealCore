@@ -14,7 +14,7 @@ public class BigGrassling extends Entity
 
     public BigGrassling(double x, double y)
     {
-        super("e:big_grassling", 15, x, y);
+        super("e:big_grassling", "Big Grassling", 15, x, y);
         sizeX = 0.95;
         sizeY = 0.95;
         sizeZ = 2;

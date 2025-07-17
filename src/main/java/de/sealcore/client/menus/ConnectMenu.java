@@ -9,13 +9,15 @@ import java.awt.*;
 public class ConnectMenu extends JFrame
 {
     private final int WIDTH = 500;
-    private final int HEIGHT = 260;
+    private final int HEIGHT = 298;
 
     private final JLabel lblHeader = new JLabel("Connect to server...");
     private final JLabel lblIp = new JLabel("IP:");
     private final JLabel lblPort = new JLabel("Port:");
+    private final JLabel lblDisplayName = new JLabel("Name:");
     private final JTextField tbIp = new JTextField();
     private final JTextField tbPort = new JTextField("5000");
+    private final JTextField tbDisplayName = new JTextField("");
     private final JButton btnCancel = new JButton("Cancel");
     private final JButton btnConnect = new JButton("Connect");
 
@@ -42,12 +44,16 @@ public class ConnectMenu extends JFrame
         lblPort.setBounds(20, 118, 100, 30);
         lblPort.setFont(new Font("Arial", Font.BOLD, 16));
 
-        tbIp.setBounds(70, 80, 395, 30);
-        tbPort.setBounds(70, 118, 395, 30);
+        lblDisplayName.setBounds(20, 156, 100, 30);
+        lblDisplayName.setFont(new Font("Arial", Font.BOLD, 16));
+
+        tbIp.setBounds(80, 80, 385, 30);
+        tbPort.setBounds(80, 118, 385, 30);
+        tbDisplayName.setBounds(80, 156, 385, 30);
 
         btnConnect.setBounds(20, HEIGHT - 100, 215, 40);
         btnConnect.setFont(new Font("Arial", Font.PLAIN, 18));
-        btnConnect.addActionListener(e -> connect(tbIp.getText(), tbPort.getText()));
+        btnConnect.addActionListener(e -> connect(tbIp.getText(), tbPort.getText(), tbDisplayName.getText()));
         btnCancel.setBounds(WIDTH - 250, HEIGHT - 100, 215, 40);
         btnCancel.setFont(new Font("Arial", Font.PLAIN, 18));
         btnCancel.addActionListener(e -> setVisible(false));
@@ -57,11 +63,13 @@ public class ConnectMenu extends JFrame
         add(lblHeader);
         add(lblIp);
         add(lblPort);
+        add(lblDisplayName);
         add(tbIp);
         add(tbPort);
+        add(tbDisplayName);
     }
 
-    public void connect(String ip, String port)
+    public void connect(String ip, String port, String displayName)
     {
         setConnectingState(true);
 
@@ -81,7 +89,7 @@ public class ConnectMenu extends JFrame
             return;
         }
 
-        Client.start(ip, TypeParser.getInt(port));
+        Client.start(ip, TypeParser.getInt(port), displayName);
     }
 
     public void setConnectingState(boolean isConnecting)

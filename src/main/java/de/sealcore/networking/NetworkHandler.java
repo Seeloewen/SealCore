@@ -39,7 +39,7 @@ public class NetworkHandler
     public static void send(Packet packet)
     {
         //Verbose logging
-        if(verboseLogging) Log.info(LogType.NETWORKING, "Sent packet: " + packet.toJson());
+        if (verboseLogging) Log.info(LogType.NETWORKING, "Sent packet: " + packet.toJson());
 
         //Send message depending on the instance
         if (isServer())
@@ -52,24 +52,25 @@ public class NetworkHandler
         }
     }
 
-    public static void sendOnly(int id, Packet packet) {
+    public static void sendOnly(int id, Packet packet)
+    {
         server.sendOnly(NetworkHandler.getClient(id), packet.toJson());
-        if(verboseLogging) Log.info(LogType.NETWORKING, "Sent packet to " + id + ": " + packet.toJson());
+        if (verboseLogging) Log.info(LogType.NETWORKING, "Sent packet to " + id + ": " + packet.toJson());
     }
 
     public static void parseData(Object source, String data)
     {
-        if(verboseLogging) Log.info(LogType.NETWORKING, "Received packet: " + data);
+        if (verboseLogging) Log.info(LogType.NETWORKING, "Received packet: " + data);
 
         //Convert data to json object and get type
         JsonObject obj = JsonObject.fromString(data);
-        if(obj == null) Log.error(LogType.NETWORKING, "Unable to parse packet to json: " + data);
+        if (obj == null) Log.error(LogType.NETWORKING, "Unable to parse packet to json: " + data);
         PacketType type = PacketType.values()[obj.getInt("type")];
 
         //Construct packet from type
         Packet p = null;
         String args = obj.getObject("args").toString();
-        switch(type)
+        switch (type)
         {
             case PacketType.CHUNKUNLOAD -> p = ChunkUnloadPacket.fromJson(args);
             case PacketType.CHUNKADD -> p = ChunkAddPacket.fromJson(args);
@@ -89,12 +90,14 @@ public class NetworkHandler
             case PacketType.RECIPEINIT -> p = RecipeInitPacket.fromJson(args);
             case PacketType.CRAFTING -> p = CraftingPacket.fromJson(args);
             case PacketType.RELOAD -> p = ReloadPacket.fromJson(args);
+            case PacketType.PLAYERNAME -> p = PlayerNamePacket.fromJson(args);
+            case PacketType.RELAYNAMECHANGE -> p = RelayNameChange.fromJson(args);
         }
 
         //Set the client id if the sender is a client
-        if(p != null)
+        if (p != null)
         {
-            if(source instanceof TcpClient)
+            if (source instanceof TcpClient)
             {
                 p.setSender((TcpClient) source);
             }
@@ -110,9 +113,9 @@ public class NetworkHandler
     public static TcpClient getClient(int id)
     {
         //Go through all servers and return the one with the specified id
-        for(TcpClient c : server.clients)
+        for (TcpClient c : server.clients)
         {
-            if(c.id == id) return c;
+            if (c.id == id) return c;
         }
 
         return null;

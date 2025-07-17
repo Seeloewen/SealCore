@@ -10,12 +10,14 @@ import de.sealcore.util.MathUtil;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
-public abstract class Entity {
+public abstract class Entity
+{
 
     protected PathFinder pathFinder;
 
     static private int nextID = 0;
 
+    protected String displayName;
     private final int id;
 
     public double moveSpeed = 6;
@@ -41,9 +43,11 @@ public abstract class Entity {
     int hp;
 
 
-    public Entity(String entityType, int hp, double x, double y) {
+    public Entity(String entityType, String displayName, int hp, double x, double y)
+    {
         this.id = nextID++;
         this.entityType = entityType;
+        this.displayName = displayName;
         posX = x;
         posY = y;
         velX = 0;
@@ -51,21 +55,25 @@ public abstract class Entity {
         this.hp = hp;
     }
 
-    public void damage(int damage, int source) {
+    public void damage(int damage, int source)
+    {
         hp -= damage;
         //Log.info(LogType.GAME, "damage");
-        if(hp <= 0) {
+        if (hp <= 0)
+        {
             onDeath(source);
         }
     }
 
-    protected void onDeath(int source) {
+    protected void onDeath(int source)
+    {
         Server.game.removeEntity(getID());
     }
 
-    public void doPhysicsTick(double dt) {
-        double totalInput = Math.sqrt(moveInputX*moveInputX + moveInputY*moveInputY);
-        double f = totalInput == 0 ? 1 : 1/totalInput;
+    public void doPhysicsTick(double dt)
+    {
+        double totalInput = Math.sqrt(moveInputX * moveInputX + moveInputY * moveInputY);
+        double f = totalInput == 0 ? 1 : 1 / totalInput;
         moveInputX *= f;
         moveInputY *= f;
 
@@ -80,62 +88,81 @@ public abstract class Entity {
     }
 
 
-    private void tryMove(double dx, double dy) {
+    private void tryMove(double dx, double dy)
+    {
         //Skull
         var game = Server.game;
 
-        if(dx < 0) {
+        if (dx < 0)
+        {
             int x1 = MathUtil.toBlock(posX);
-            int x2 = MathUtil.toBlock(posX+dx);
+            int x2 = MathUtil.toBlock(posX + dx);
             posX += dx;
-            if(x1 != x2) {
+            if (x1 != x2)
+            {
                 int top = MathUtil.toBlock(posY + sizeY);
                 int bot = MathUtil.toBlock(posY);
-                for(int y = bot; y <= top; y++) {
-                    if(game.isSolid(x2, y)) {
-                        posX = (double)x2 + 0.001 + 1.0;
-                        velX = 0;
-                    }
-                }
-            }
-        } else if( dx > 0) {
-            int x1 = MathUtil.toBlock(posX+sizeX);
-            int x2 = MathUtil.toBlock(posX+dx+sizeX);
-            posX += dx;
-            if(x1 != x2) {
-                int top = MathUtil.toBlock(posY + sizeY);
-                int bot = MathUtil.toBlock(posY);
-                for(int y = bot; y <= top; y++) {
-                    if(game.isSolid(x2, y)) {
-                        posX = (double)x2 - 0.001 - sizeX;
+                for (int y = bot; y <= top; y++)
+                {
+                    if (game.isSolid(x2, y))
+                    {
+                        posX = (double) x2 + 0.001 + 1.0;
                         velX = 0;
                     }
                 }
             }
         }
-        if(dy < 0) {
+        else if (dx > 0)
+        {
+            int x1 = MathUtil.toBlock(posX + sizeX);
+            int x2 = MathUtil.toBlock(posX + dx + sizeX);
+            posX += dx;
+            if (x1 != x2)
+            {
+                int top = MathUtil.toBlock(posY + sizeY);
+                int bot = MathUtil.toBlock(posY);
+                for (int y = bot; y <= top; y++)
+                {
+                    if (game.isSolid(x2, y))
+                    {
+                        posX = (double) x2 - 0.001 - sizeX;
+                        velX = 0;
+                    }
+                }
+            }
+        }
+        if (dy < 0)
+        {
             int y1 = MathUtil.toBlock(posY);
-            int y2 = MathUtil.toBlock(posY+dy);
+            int y2 = MathUtil.toBlock(posY + dy);
             posY += dy;
-            if(y1 != y2) {
+            if (y1 != y2)
+            {
                 int left = MathUtil.toBlock(posX);
                 int right = MathUtil.toBlock(posX + sizeX);
-                for(int x = left; x <= right; x++) {
-                    if(game.isSolid(x, y2)) {
+                for (int x = left; x <= right; x++)
+                {
+                    if (game.isSolid(x, y2))
+                    {
                         posY = y2 + 1 + 0.001;
                         velY = 0;
                     }
                 }
             }
-        } else if(dy > 0) {
+        }
+        else if (dy > 0)
+        {
             int y1 = MathUtil.toBlock(posY + sizeY);
             int y2 = MathUtil.toBlock(posY + dy + sizeY);
             posY += dy;
-            if(y1 != y2) {
+            if (y1 != y2)
+            {
                 int left = MathUtil.toBlock(posX);
                 int right = MathUtil.toBlock(posX + sizeX);
-                for(int x = left; x <= right; x++) {
-                    if(game.isSolid(x, y2)) {
+                for (int x = left; x <= right; x++)
+                {
+                    if (game.isSolid(x, y2))
+                    {
                         posY = y2 - sizeY - 0.001;
                         velY = 0;
                     }
@@ -150,27 +177,33 @@ public abstract class Entity {
     }
 
 
-    public void updateInputs(int x, int y, double angleHor) {
+    public void updateInputs(int x, int y, double angleHor)
+    {
         moveInputX = x; //forward
         moveInputY = y; //side
         this.rotZ = angleHor; //horizontal dir (0= +x)
     }
 
-    public void sendAdd() {
-        NetworkHandler.send(new EntityAddPacket(getID(), entityType, posX, posY, 0, 0));
+    public void sendAdd()
+    {
+        NetworkHandler.send(new EntityAddPacket(getID(), displayName, entityType, posX, posY, 0));
     }
 
-    public void sendAdd(int id) {
-        NetworkHandler.sendOnly(id, new EntityAddPacket(getID(), entityType, posX, posY, 0, 0));
+    public void sendAdd(int id)
+    {
+        NetworkHandler.sendOnly(id, new EntityAddPacket(getID(), displayName, entityType, posX, posY, 0));
     }
 
 
-    public int getID() {
+    public int getID()
+    {
         return id;
     }
 
-
-
+    public String getName()
+    {
+        return displayName;
+    }
 
 
 }

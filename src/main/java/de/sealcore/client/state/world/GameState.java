@@ -97,8 +97,8 @@ public class GameState {
     }
 
 
-    public void addMesh(int id, String entityID, double x, double y, double z) {
-        loadedMeshes.put(id, new MeshState(entityID, x, y, z));
+    public void addMesh(int id, String entityID, String displayName, double x, double y, double z) {
+        loadedMeshes.put(id, new MeshState(entityID, displayName, x, y, z));
     }
 
     public void updateMeshPos(int id, double x, double y, double z, double rotZ, double velX, double velY) {

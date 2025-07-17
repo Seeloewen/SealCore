@@ -14,7 +14,7 @@ public class Jabbus extends Entity
 
     public Jabbus(double x, double y)
     {
-        super("e:jabbus", 25, x, y);
+        super("e:jabbus", "Jabbus", 25, x, y);
         sizeX = 0.95;
         sizeY = 0.95;
         sizeZ = 3;

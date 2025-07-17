@@ -13,7 +13,7 @@ public class Grassling extends Entity {
     double attackCooldown = 0;
 
     public Grassling(double x, double y) {
-        super("e:grassling", 10, x, y);
+        super("e:grassling", "Grassling", 10, x, y);
         sizeX = 0.7;
         sizeY = 0.7;
         sizeZ = 2;

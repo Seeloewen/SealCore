@@ -10,22 +10,22 @@ import java.util.ArrayList;
 public class EntityAddPacket extends Packet
 {
     private int id;
+    private String displayName;
     String entityType;
     private double x;
     private double y;
     private double z;
-    private double angleX;
 
-    public EntityAddPacket(int id, String entityType, double x, double y, double z, double angleX)
+    public EntityAddPacket(int id, String displayName, String entityType, double x, double y, double z)
     {
         super(PacketType.ENTITYADD);
 
         this.id = id;
+        this.displayName = displayName;
         this.entityType = entityType;
         this.x = x;
         this.y = y;
         this.z = z;
-        this.angleX = angleX;
     }
 
     public static Packet fromJson(String json)
@@ -34,13 +34,13 @@ public class EntityAddPacket extends Packet
         JsonObject args = JsonObject.fromString(json);
 
         int id = args.getInt("id");
+        String displayName = args.getString("display_name");
         String entityType = args.getString("entity_type");
         double x = args.getDouble("x");
         double y = args.getDouble("x");
         double z = args.getDouble("z");
-        double angleX = args.getDouble("angleX");
 
-        return new EntityAddPacket(id, entityType, x, y, z, angleX);
+        return new EntityAddPacket(id, displayName, entityType, x, y, z);
     }
 
     public String toJson()
@@ -51,11 +51,12 @@ public class EntityAddPacket extends Packet
 
         JsonObject args = JsonObject.fromScratch();
         args.addInt("id", id);
+        args.addString("display_name", displayName);
         args.addString("entity_type", entityType);
         args.addDouble("x", x);
         args.addDouble("y", x);
         args.addDouble("z", x);
-        args.addDouble("angleX", x);
+
         obj.addObject("args", args);
 
         return obj.toString();
@@ -63,6 +64,6 @@ public class EntityAddPacket extends Packet
 
     public void onHandle()
     {
-        Client.instance.gameState.addMesh(id, entityType, x, y, z);
+        Client.instance.gameState.addMesh(id, entityType, displayName, x, y, z);
     }
 }

@@ -8,6 +8,7 @@ import org.joml.Vector3f;
 
 public class MeshState {
 
+    public String displayName;
 
     String meshID;
     public double posX;
@@ -25,8 +26,9 @@ public class MeshState {
 
     public boolean visible = true;
 
-    MeshState(String modelID, double posX, double posY, double posZ) {
+    MeshState(String modelID, String displayName, double posX, double posY, double posZ) {
         this.meshID = modelID;
+        this.displayName = displayName;
         this.posX = posX;
         this.posY = posY;
         this.posZ = posZ;

@@ -19,6 +19,7 @@ import de.sealcore.game.entities.general.Player;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
+import de.sealcore.networking.packets.PlayerNamePacket;
 import de.sealcore.util.timing.DeltaTimer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -48,12 +49,12 @@ public class Client {
     public InventoryState inventoryState;
     public PlayerState playerState;
 
-    public static void start(String ip, int port)
+    public static void start(String ip, int port, String displayName)
     {
-        if(instance.init(ip, port)) instance.loop();
+        if(instance.init(ip, port, displayName)) instance.loop();
     }
 
-    private boolean init(String ip, int port)
+    private boolean init(String ip, int port, String displayName)
     {
         failedConnectAttempts = 0;
         Client.instance = this;
@@ -116,6 +117,8 @@ public class Client {
 
         OverlayManager.init();
 
+        NetworkHandler.send(new PlayerNamePacket(displayName));
+
         return true;
     }
 
@@ -169,7 +172,7 @@ public class Client {
 
         if(Main.bypassMenu)
         {
-            start("localhost", 5000);
+            start("localhost", 5000, "Debug");
         }
         else
         {

@@ -19,5 +19,7 @@ public enum PacketType
     RECIPEINIT,
     CRAFTING,
     SETTEXT,
-    RELOAD
+    RELOAD,
+    PLAYERNAME,
+    RELAYNAMECHANGE
 }

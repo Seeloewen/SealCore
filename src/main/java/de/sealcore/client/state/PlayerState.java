@@ -15,7 +15,10 @@ import de.sealcore.util.Color;
 import de.sealcore.util.MathUtil;
 import org.lwjgl.glfw.GLFW;
 
-public class PlayerState {
+public class PlayerState
+{
+
+    public String targetEntityName = "";
 
     public static int playerChunkX = 0;
     public static int playerChunkY = 0;
@@ -43,8 +46,9 @@ public class PlayerState {
     public String text2 = "Game started";
 
 
-    public void handleMousePress(int button) {
-        if(cooldownProgress < cooldownTotal) return;
+    public void handleMousePress(int button)
+    {
+        if (cooldownProgress < cooldownTotal) return;
         NetworkHandler.send(new PlayerInteractPacket(selectedSlot, button == GLFW.GLFW_MOUSE_BUTTON_LEFT,
                 targetEntity, distTargetEntity,
                 targetBlockX, targetBlockY, distTargetBlock,
@@ -54,9 +58,11 @@ public class PlayerState {
 
     }
 
-    public void update(double dt) {
+    public void update(double dt)
+    {
         var p = Client.instance.gameState.loadedMeshes.get(Client.instance.camera.following);
-        if(p != null) {
+        if (p != null)
+        {
             playerChunkX = MathUtil.toChunk(MathUtil.toBlock(p.posX));
             playerChunkY = MathUtil.toChunk(MathUtil.toBlock(p.posY));
         }
@@ -65,86 +71,111 @@ public class PlayerState {
         var itemID = Client.instance.inventoryState.getSelectedItem(selectedSlot);
         var item = Items.get(itemID);
 
-        if(item != null)
+        if (distTargetEntity >= 0
+                && (distTargetEntity < distTargetBlock || distTargetBlock <= 0)
+                && (distTargetEntity < distTargetFloor || distTargetFloor <= 0))
         {
-            switch (item.getString("type")) {
-                case "it:weapon" -> {
-                    if(distTargetEntity >= 0
+            targetEntityName = Client.instance.gameState.loadedMeshes.get(targetEntity).displayName; //💀
+        }
+        else
+        {
+            targetEntityName = "";
+        }
+
+        if (item != null)
+        {
+            switch (item.getString("type"))
+            {
+                case "it:weapon" ->
+                {
+                    if (distTargetEntity >= 0
                             && (distTargetEntity < distTargetBlock || distTargetBlock <= 0)
                             && (distTargetEntity < distTargetFloor || distTargetFloor <= 0)
-                            && item.getDouble("range") >= distTargetEntity) {
+                            && item.getDouble("range") >= distTargetEntity)
+                    {
                         targeting = true;
                     }
                 }
-                case "it:tool" -> {
-                    if(distTargetBlock >= 0
+                case "it:tool" ->
+                {
+                    if (distTargetBlock >= 0
                             && (distTargetBlock < distTargetFloor || distTargetFloor <= 0)
                             && (distTargetBlock < distTargetEntity || distTargetEntity <= 0)
-                            && item.getDouble("range") >= distTargetBlock) {
-                        var chunk = Client.instance.gameState.loadedChunks.get(ChunkIndex.toI(MathUtil.toChunk(targetBlockX),MathUtil.toChunk( targetBlockY)));
-                        var blockState = chunk.blocks[MathUtil.safeMod(targetBlockX, 8) + 8* MathUtil.safeMod(targetBlockY, 8)];
+                            && item.getDouble("range") >= distTargetBlock)
+                    {
+                        var chunk = Client.instance.gameState.loadedChunks.get(ChunkIndex.toI(MathUtil.toChunk(targetBlockX), MathUtil.toChunk(targetBlockY)));
+                        var blockState = chunk.blocks[MathUtil.safeMod(targetBlockX, 8) + 8 * MathUtil.safeMod(targetBlockY, 8)];
                         targeting = Blocks.get(blockState.type).getString("tt").equals(item.getString("tt"));
                     }
                 }
-                case "it:placeable" -> {
-                    if(distTargetFloor >= 0
+                case "it:placeable" ->
+                {
+                    if (distTargetFloor >= 0
                             && (distTargetFloor < distTargetBlock || distTargetBlock <= 0)
                             && (distTargetFloor < distTargetEntity || distTargetEntity <= 0)
-                            && item.getDouble("range") >= distTargetFloor) {
-                        var chunk = Client.instance.gameState.loadedChunks.get(ChunkIndex.toI(MathUtil.toChunk(targetFloorX),MathUtil.toChunk( targetFloorY)));
-                        var floorState = chunk.floors[MathUtil.safeMod(targetFloorX, 8) + 8* MathUtil.safeMod(targetFloorY, 8)];
+                            && item.getDouble("range") >= distTargetFloor)
+                    {
+                        var chunk = Client.instance.gameState.loadedChunks.get(ChunkIndex.toI(MathUtil.toChunk(targetFloorX), MathUtil.toChunk(targetFloorY)));
+                        var floorState = chunk.floors[MathUtil.safeMod(targetFloorX, 8) + 8 * MathUtil.safeMod(targetFloorY, 8)];
                         targeting = floorState.type.equals("f:grass");
                     }
                 }
             }
         }
 
-        if(cooldownProgress < cooldownTotal) {
+        if (cooldownProgress < cooldownTotal)
+        {
             cooldownProgress += dt;
         }
     }
 
-    public void render() {
+    public void render()
+    {
 
-        TextRenderer.drawString(15, Resolution.HEIGHT-180, 3, text1, -0.5f);
-        TextRenderer.drawString(15, Resolution.HEIGHT-150, 4, text2, -0.5f);
+        TextRenderer.drawString(15, Resolution.HEIGHT - 180, 3, text1, -0.5f);
+        TextRenderer.drawString(15, Resolution.HEIGHT - 150, 4, text2, -0.5f);
 
-        double hpRatio = hp/15.0;
+        double hpRatio = hp / 15.0;
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 200, 50, Resolution.WIDTH / 2 + 200, 90),
                 new Color(0), -0.5f);
         PrimitiveRenderer.drawRectangle(
-                new Rectangle(Resolution.WIDTH / 2 - 200, 50, (int) (Resolution.WIDTH / 2 -200 + 400*hpRatio), 90),
-                new Color(1f,0f,0f), -0.6f);
+                new Rectangle(Resolution.WIDTH / 2 - 200, 50, (int) (Resolution.WIDTH / 2 - 200 + 400 * hpRatio), 90),
+                new Color(1f, 0f, 0f), -0.6f);
 
-        double coreHpRatio = coreHP/20.0;
+        double coreHpRatio = coreHP / 20.0;
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 200, 10, Resolution.WIDTH / 2 + 200, 50),
                 new Color(0), -0.5f);
         PrimitiveRenderer.drawRectangle(
-                new Rectangle(Resolution.WIDTH / 2 - 200, 10, (int) (Resolution.WIDTH / 2 -200 + 400*coreHpRatio), 50),
-                new Color(0.2f,0.2f,1f), -0.6f);
+                new Rectangle(Resolution.WIDTH / 2 - 200, 10, (int) (Resolution.WIDTH / 2 - 200 + 400 * coreHpRatio), 50),
+                new Color(0.2f, 0.2f, 1f), -0.6f);
 
 
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 100, 100, Resolution.WIDTH / 2 + 100, 115),
-                new Color(targeting ?  0.9f : 0.7f), -0.5f);
+                new Color(targeting ? 0.9f : 0.7f), -0.5f);
         PrimitiveRenderer.drawRectangle(
-                new Rectangle(Resolution.WIDTH / 2 - 100, 100, (int) (Resolution.WIDTH / 2 -100 + 200*(cooldownProgress/cooldownTotal)), 115),
+                new Rectangle(Resolution.WIDTH / 2 - 100, 100, (int) (Resolution.WIDTH / 2 - 100 + 200 * (cooldownProgress / cooldownTotal)), 115),
                 new Color(targeting ? 0.4f : 0.2f), -0.6f);
+
+        //Targeted Entity
+        if(!targetEntityName.isEmpty()) TextRenderer.drawString(Resolution.WIDTH / 2 - 150, 135, 3, "Target: " + targetEntityName, 0);
 
         drawCrosshair();
     }
 
-    private void drawCrosshair() {
+    private void drawCrosshair()
+    {
         PrimitiveRenderer.drawRectangle(
                 new Rectangle(Resolution.WIDTH / 2 - 2, Resolution.HEIGHT / 2 - 2, Resolution.WIDTH / 2 + 2, Resolution.HEIGHT / 2 + 2),
                 new Color(0), -0.5f);
 
     }
 
-    public void setSelectedHotbarSlot(int i) {
-       selectedSlot = Client.instance.inventoryState.hotbarToSlot(i);
+    public void setSelectedHotbarSlot(int i)
+    {
+        selectedSlot = Client.instance.inventoryState.hotbarToSlot(i);
     }
 
 }

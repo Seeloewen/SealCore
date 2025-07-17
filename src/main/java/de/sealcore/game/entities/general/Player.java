@@ -10,6 +10,7 @@ import de.sealcore.game.items.tools.Tool;
 import de.sealcore.game.items.weapons.Weapon;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.packets.ChunkUnloadPacket;
+import de.sealcore.networking.packets.RelayNameChange;
 import de.sealcore.networking.packets.SetCooldownPacket;
 import de.sealcore.networking.packets.SetHPPacket;
 import de.sealcore.server.Server;
@@ -34,7 +35,7 @@ public class Player extends Entity{
     private HashSet<Integer> loadedChunks;
 
     public Player(int clientID) {
-        super("e:player", 15, 0, 0);
+        super("e:player", "Unnamed Player", 15, 0, 0);
         this.clientID = clientID;
         sizeX = 0.6;
         sizeY = sizeX * 16.0/10;
@@ -67,6 +68,13 @@ public class Player extends Entity{
         setHP(15);
     }
 
+
+    public void setName(String name)
+    {
+        if(name.isEmpty()) name = "Player " + clientID;
+        displayName = name;
+        NetworkHandler.send(new RelayNameChange(getID(), name));
+    }
 
     public void interact(int slotIndex, boolean leftClick, int te, double dte,
                          int tbx, int tby, double dtb,
