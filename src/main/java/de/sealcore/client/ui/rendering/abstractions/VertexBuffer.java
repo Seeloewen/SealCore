@@ -12,7 +12,7 @@ public class VertexBuffer {
         vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_DYNAMIC_DRAW);
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 

@@ -15,6 +15,7 @@ public class FloorState {
     private Matrix4f pos;
 
 
+
     FloorState(String id, int globalX, int globalY) {
         type = id;
         x = globalX;
@@ -23,8 +24,12 @@ public class FloorState {
         pos = new Matrix4f().translate(x, y, -1);
     }
 
-    void render() {
-        MeshRenderer.render(meshID, pos);
+    void render(int lodFloor, boolean topOnly) {
+            if(topOnly) {
+                MeshRenderer.render(String.format("%s:%d:topOnly", type, lodFloor), pos);
+            } else {
+                MeshRenderer.render(String.format("%s:%d", type, lodFloor), pos);
+            }
     }
 
 

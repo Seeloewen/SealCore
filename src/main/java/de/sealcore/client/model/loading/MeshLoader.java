@@ -15,20 +15,16 @@ public class MeshLoader {
 
 
 
-    public static Mesh loadMesh(String path, double scale) {
+
+    public static Builder parseMesh(String path) {
         try {
-            var builder = Parser.parse(path);
-            var sides = MeshGenerator.generate(builder, (float)scale);
-            return new Mesh(sides);
-
-
+            return Parser.parse(path);
         } catch (InvalidFileFormatException e) {
             Log.error(LogType.RENDERING, "Invalid File Format for " + path + "\n" + e.getMessage());
         } catch (IOException e) {
             Log.error(LogType.RENDERING, "IOException occurred on loading mesh for " + path + "\n" + e.getMessage());
         }
-        return new Mesh(new MeshSide[0]);
-
+        return new Builder(0, 0, 0, 0, 0, 0);
     }
 
     public static void loadMeshes() {
@@ -40,7 +36,25 @@ public class MeshLoader {
                 String id = json.getString("id");
                 String path = json.getString("path");
                 double scale = json.getDouble("scale");
-                MeshRenderer.loadMesh(id, path, scale);
+                var builder = parseMesh(path);
+                if(json.keyExists("lod")) {
+                    int lod = json.getInt("lod");
+                    for(int i = 0; i <= lod; i++) {
+                        Mesh m = new Mesh(MeshGenerator.generate(builder, (float)scale, false, true));
+                        MeshRenderer.addMesh(String.format("%s:%d", id, i), m);
+                        if(id.equals("f:grass")) {
+                            Mesh mt = new Mesh(MeshGenerator.generate(builder, (float)scale, true, true));
+                            MeshRenderer.addMesh(String.format("%s:%d:topOnly", id, i), mt);
+                        }
+
+                        builder = builder.genLOD();
+                        scale *= 2;
+                    }
+                } else {
+                    Mesh m = new Mesh(MeshGenerator.generate(builder, (float)scale, false, false));
+                    MeshRenderer.addMesh(id, m);
+                }
+
             }
             
         } catch (IOException e) {

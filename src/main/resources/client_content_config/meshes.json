@@ -23,7 +23,8 @@
     {
       "id": "f:grass",
       "path": "objects/Grass.txt",
-      "scale": 0.125
+      "scale": 0.125,
+      "lod": 2
     },
     {
       "id": "e:grassling",
@@ -48,17 +49,20 @@
     {
       "id": "b:small_rock",
       "path": "objects/Rock.txt",
-      "scale": 0.1
+      "scale": 0.1,
+      "lod": 2
     },
     {
       "id": "b:oak_tree",
       "path": "objects/Tree.txt",
-      "scale": 0.1
+      "scale": 0.1,
+      "lod": 2
     },
     {
       "id": "f:water",
       "path": "objects/Water.txt",
-      "scale": 0.125
+      "scale": 0.125,
+      "lod": 2
     },
     {
       "id": "b:Workbench",

@@ -67,8 +67,9 @@ public class GameState {
                 int cy = ChunkIndex.toY(i) * 8 + 4;
                 double cAngle = Math.atan2(cy - y, cx - x);
                 boolean cull2 = Math.abs(rotZ - cAngle) >= 0.9 && Math.abs(rotZ - cAngle) <= Math.PI * 2 - 0.9;
+                double dist = (x-cx)*(x-cx)+(y-cy)*(y-cy);
                 if (!cull2) {
-                    state.render();
+                    state.render(dist);
                 }
             }
         }

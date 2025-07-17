@@ -25,8 +25,12 @@ public class BlockState {
         pos = new Matrix4f().translate(x, y, 0);
     }
 
-    void render() {
-        MeshRenderer.render(type, pos);
+    void render(int lodBlock) {
+        if(type.equals("b:oak_tree") || type.equals("b:small_rock")) {
+            MeshRenderer.render(String.format("%s:%d", type, lodBlock), pos);
+        } else {
+            MeshRenderer.render(type, pos);
+        }
     }
 
 

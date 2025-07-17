@@ -19,6 +19,7 @@ import de.sealcore.game.entities.general.Player;
 import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
+import de.sealcore.util.logging.Log;
 import de.sealcore.util.timing.DeltaTimer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -127,28 +128,37 @@ public class Client {
 
         while ( !glfwWindowShouldClose(window) && !InputHandler.isPressed(KeyBinds.EXIT)) {
 
+            long l1 = System.nanoTime();
             double dt = DeltaTimer.getDeltaTime();
-
+            long l2 = System.nanoTime() - l1;
             int queueSize = PacketHandler.getQueueSize();
             for(int i = 0; i < queueSize; i++)
             {
                 PacketHandler.handleNext();
             }
 
+            long l3 = System.nanoTime() - l1;
             gameState.interpolate(dt);
 
+            long l4 = System.nanoTime() - l1;
             camera.update(CamMoveInput.generate(), dt);
             if(!InputHandler.camMode) PlayerMoveInputState.update();
 
+            long l5 = System.nanoTime() - l1;
             camera.updateTargeted();
 
+            long l6 = System.nanoTime() - l1;
             playerState.update(dt);
 
+            long l7 = System.nanoTime() - l1;
             renderer.render(camera);
+            long l8 = System.nanoTime() - l1;
             glfwSwapBuffers(window); // swap the color buffers
 
+            long l9 = System.nanoTime() - l1;
             // Poll for window events. The key callback above will only be
             // invoked during this call.
+            Log.debug(String.format("%d,%d,%d,%d,%d,%d,%d,%d", l2, l3, l4, l5, l6, l7, l8, l9));
             glfwPollEvents();
         }
 

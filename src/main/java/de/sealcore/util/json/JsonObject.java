@@ -84,6 +84,10 @@ public class JsonObject
         return new JsonObject(node.get(identifier), mapper);
     }
 
+    public boolean keyExists(String identifier) {
+        return node.get(identifier) != null;
+    }
+
     public JsonArray getArray(String identifier)
     {
         //Try to get an array from the given identifier, may return null
@@ -93,7 +97,7 @@ public class JsonObject
     public int getInt(String identifier)
     {
         //Gets the value from the identifier and try's to parseInput it, assuming it's an int. If not, an exception get's thrown
-        return node.get(identifier).asInt(0);
+        return node.get(identifier).asInt(-1);
     }
 
     public String getString(String identifier)

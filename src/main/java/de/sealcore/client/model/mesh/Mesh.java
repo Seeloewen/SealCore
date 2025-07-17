@@ -1,18 +1,19 @@
 package de.sealcore.client.model.mesh;
 
+import de.sealcore.client.ui.rendering.abstractions.VertexArray;
 import de.sealcore.client.ui.rendering.abstractions.VertexArrayLayout;
 import de.sealcore.client.ui.rendering.abstractions.VertexBuffer;
+import de.sealcore.client.ui.rendering.abstractions.VertexBufferLayout;
 import org.joml.Matrix4f;
 
 public class Mesh {
 
 
-    private VertexBuffer buffer;
-    private final int size;
+    float[] vertices;
 
     public Mesh(MeshSide[] sides) {
 
-        float[] vertices = new float[36 * sides.length];
+        vertices = new float[36 * sides.length];
         for(int i = 0; i < sides.length; i++) {
             float[] sideVertices = sides[i].getVertices();
             for(int j = 0; j < 36; j++) {
@@ -20,20 +21,16 @@ public class Mesh {
             }
         }
 
-        VertexArrayLayout layout = new VertexArrayLayout().add(3).add(3);
-        buffer = new VertexBuffer(vertices, layout);
-        size = vertices.length;
+
 
     }
 
-    public int size() {
-        return size;
+    public float[] getVertices() {
+        return vertices;
     }
 
-
-    public void bind() {
-        buffer.bind();
+    public int getSize() {
+        return vertices.length;
     }
-
 
 }

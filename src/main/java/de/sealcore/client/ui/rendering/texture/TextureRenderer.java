@@ -36,8 +36,8 @@ public class TextureRenderer {
     public static void drawTexture(String id, Rectangle rec, float z) {
         var v = new float[5*6];
         put(rec.x1(), rec.y1(), z, 0f, 1f, v ,0);
-        put(rec.x2(), rec.y1(), z, 1f, 1f, v ,1);
-        put(rec.x1(), rec.y2(), z, 0f, 0f, v ,2);
+        put(rec.x2(), rec.y1(), z, 1f, 1f, v ,2);
+        put(rec.x1(), rec.y2(), z, 0f, 0f, v ,1);
         put(rec.x2(), rec.y1(), z, 1f, 1f, v ,3);
         put(rec.x1(), rec.y2(), z, 0f, 0f, v ,4);
         put(rec.x2(), rec.y2(), z, 1f, 0f, v ,5);
@@ -51,8 +51,8 @@ public class TextureRenderer {
     public static void drawTexture(String id, Rectangle rec, float s1, float t1, float s2, float t2, float z) {
         var v = new float[5*6];
         put(rec.x1(), rec.y1(), z, s1, t1, v ,0);
-        put(rec.x2(), rec.y1(), z, s2, t1, v ,1);
-        put(rec.x1(), rec.y2(), z, s1, t2, v ,2);
+        put(rec.x2(), rec.y1(), z, s2, t1, v ,2);
+        put(rec.x1(), rec.y2(), z, s1, t2, v ,1);
         put(rec.x2(), rec.y1(), z, s2, t1, v ,3);
         put(rec.x1(), rec.y2(), z, s1, t2, v ,4);
         put(rec.x2(), rec.y2(), z, s2, t2, v ,5);

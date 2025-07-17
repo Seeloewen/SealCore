@@ -77,7 +77,6 @@ public class LineRenderer {
         put(s.x, 0, s.z, v, 23);
 
         shader.use();
-        shader.setUniformMat4("model", position);
         buffer.bind();
         buffer.setVertices(v);
 

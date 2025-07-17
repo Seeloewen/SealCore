@@ -51,15 +51,15 @@ public class MeshState {
     }
 
     void render() {
-        var m = new Matrix4f()
+        var positionTrasform = new Matrix4f()
                 .translate((float) posX, (float) posY, (float) posZ)
                 .translate((float) (sizeX/2), (float) (sizeY/2), (float) (sizeZ/2))
                 .rotateZ((float) rotZ)
                 .translate((float) (-sizeX/2), (float) (-sizeY/2), (float) (-sizeZ/2));
         if(visible) {
-            MeshRenderer.render(meshID, m);
+            MeshRenderer.render(meshID, positionTrasform);
         }
-        LineRenderer.render(new Matrix4f().translate((float) posX, (float) posY, (float) posZ), new Vector3f((float) sizeX, (float) sizeY, (float) sizeZ));
+        //LineRenderer.render(new Matrix4f().translate((float) posX, (float) posY, (float) posZ), new Vector3f((float) sizeX, (float) sizeY, (float) sizeZ));
     }
 
 
