@@ -1,8 +1,9 @@
 Version 1.0.2 (17.07.2025)
++ Added nicknames and target identifier
 * Rebalanced Waves and added small boss waves
 * Inventory can now be closed with ESC
 * Massive rendering optimizations
-* Changed Render Distance to 6
+* Increased Render Distance to 6
 * Reduced default mouse sensitivity
 * Fixed player chunk loading on death
 * Fixed debug menu breaking when the waves start
