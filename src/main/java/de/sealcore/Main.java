@@ -12,8 +12,8 @@ import static org.lwjgl.glfw.GLFW.glfwInit;
 
 public class Main
 {
-    public static final String VERSION = "1.0.1";
-    public static final String BUILDDATE = "02.07.2025";
+    public static final String VERSION = "1.0.2";
+    public static final String BUILDDATE = "17.07.2025";
 
     public static boolean bypassMenu = false;
 
