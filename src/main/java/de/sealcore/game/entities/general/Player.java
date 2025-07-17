@@ -139,7 +139,7 @@ public class Player extends Entity{
     }
 
     public void updateLoadedChunks() {
-        int range = 10;
+        int range = 6;
         int c = blockToI(toBlock(posX), toBlock(posY));
         int cx = toX(c), cy = toY(c);
         int uy = cy + range + 1;
