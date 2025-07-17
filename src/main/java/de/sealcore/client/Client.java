@@ -20,6 +20,7 @@ import de.sealcore.networking.NetworkHandler;
 import de.sealcore.networking.NetworkType;
 import de.sealcore.networking.packets.PacketHandler;
 import de.sealcore.networking.packets.PlayerNamePacket;
+import de.sealcore.util.logging.Log;
 import de.sealcore.util.timing.DeltaTimer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;

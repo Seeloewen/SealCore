@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class MeshGenerator {
 
-    public static MeshSide[] generate(Builder b, float s) {
+    public static MeshSide[] generate(Builder b, float s, boolean topOnly, boolean skipBot) {
         ArrayList<MeshSide> sides = new ArrayList<>();
         for(int x = b.minX; x <= b.maxX; x++) {
             for(int y = b.minY; y <= b.maxY; y++) {
@@ -25,22 +25,22 @@ public class MeshGenerator {
                     var v7 = new MeshVertex(x*s, y*s+s, z*s+s);
 
                     float g = 0.1f;
-                    if(b.get(x+1, y, z) == null) {
+                    if(b.get(x+1, y, z) == null && !topOnly) {
                         sides.add(new MeshSide(v1, v2, v6, v5, c.scale(1-g)));
                     }
-                    if(b.get(x-1, y, z) == null) {
-                        sides.add(new MeshSide(v0, v3, v7, v4, c.scale(1-4*g)));
+                    if(b.get(x-1, y, z) == null && !topOnly) {
+                        sides.add(new MeshSide(v4, v7, v3, v0, c.scale(1-4*g)));
                     }
                     if(b.get(x, y, z+1) == null) {
                         sides.add(new MeshSide(v4, v5, v6, v7, c.scale(1)));
                     }
-                    if(b.get(x, y, z-1) == null) {
-                        sides.add(new MeshSide(v0, v1, v2, v3, c.scale(1-5*g)));
+                    if(b.get(x, y, z-1) == null && !topOnly) {
+                        sides.add(new MeshSide(v3, v2, v1, v0, c.scale(1-5*g)));
                     }
-                    if(b.get(x, y+1, z) == null) {
+                    if(b.get(x, y+1, z) == null && !topOnly) {
                         sides.add(new MeshSide(v2, v3, v7, v6, c.scale(1-2*g)));
                     }
-                    if(b.get(x, y-1, z) == null) {
+                    if(b.get(x, y-1, z) == null && !topOnly) {
                         sides.add(new MeshSide(v0, v1, v5, v4, c.scale(1-3*g)));
                     }
                 }
@@ -50,5 +50,6 @@ public class MeshGenerator {
         return sides.toArray(new MeshSide[0]);
 
     }
+
 
 }

@@ -23,8 +23,8 @@ public class PrimitiveRenderer {
     public static void drawRectangle(Rectangle rec, Color c, float z) {
         float[] vertices = new float[36];
         put(rec.x1(), rec.y1(), c, z, vertices, 0);
-        put(rec.x2(), rec.y1(), c, z, vertices, 1);
-        put(rec.x1(), rec.y2(), c, z, vertices, 2);
+        put(rec.x2(), rec.y1(), c, z, vertices, 2);
+        put(rec.x1(), rec.y2(), c, z, vertices, 1);
         put(rec.x2(), rec.y1(), c, z, vertices, 3);
         put(rec.x1(), rec.y2(), c, z, vertices, 4);
         put(rec.x2(), rec.y2(), c, z, vertices, 5);

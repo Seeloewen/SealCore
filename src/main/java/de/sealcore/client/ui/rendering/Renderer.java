@@ -55,6 +55,7 @@ public class Renderer {
 
 
         game.render();
+        MeshRenderer.flush();
 
         glClear(GL_DEPTH_BUFFER_BIT);
 

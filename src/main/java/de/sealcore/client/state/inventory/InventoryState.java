@@ -136,7 +136,12 @@ public class InventoryState
 
     public void render()
     {
-        PrimitiveRenderer.drawRectangle(new Rectangle(x, y, x + WIDTH, y + HEIGHT), new Color(70, 70, 70), 0.02f); //Inv Background
+        //Inv Background
+        PrimitiveRenderer.drawRectangle(
+                new Rectangle(x, y, x + WIDTH, y + HEIGHT),
+                new Color(70, 70, 70),
+                0.02f
+        );
         for (SlotState s : slots) if(!s.isHotbar) s.render(); //Slots (excluding hotbar)
         TextRenderer.drawString(x + 20, y + 13, 3, "Inventory", 0.01f);
     }
