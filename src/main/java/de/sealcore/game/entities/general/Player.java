@@ -19,6 +19,7 @@ import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 import static de.sealcore.util.MathUtil.*;
 import static de.sealcore.util.ChunkIndex.*;
@@ -40,9 +41,9 @@ public class Player extends Entity{
         sizeY = sizeX * 16.0/10;
         sizeZ = sizeX * 32.0/10;
 
+        loadedChunks = new HashSet<>();
         onDeath(-1);
 
-        loadedChunks = new HashSet<>();
         inventory = Server.game.inventoryManager.createInventory(clientID, MAT_SLOTS, WEAPON_SLOTS, AMMO_SLOTS, UNI_SLOTS);
     }
 
@@ -65,6 +66,11 @@ public class Player extends Entity{
         posY = clientID%2==1?-7:7;
 
         setHP(15);
+        for (Iterator<Integer> it = loadedChunks.iterator(); it.hasNext(); ) {
+            int id = it.next();
+            unload(ChunkIndex.toX(id), ChunkIndex.toY(id));
+        }
+        updateLoadedChunks();
     }
 
 

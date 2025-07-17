@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class MeshRenderer {
 
     static class Buffer {
-        static final int SIZE = 256;
+        static final int SIZE = 100;
         int count;
         float[] vertices;
 
