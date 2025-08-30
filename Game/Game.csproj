@@ -23,6 +23,7 @@
 	
 
 	<ItemGroup>
+	  <Folder Include="Source\Client\State\" />
 	  <Folder Include="Source\Server\" />
 	</ItemGroup>
 	
@@ -31,5 +32,18 @@
 	<ItemGroup>
 	  <PackageReference Include="OpenTK" Version="4.9.4" />
 	</ItemGroup>
+	
+	
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\test" />
+	  <None Remove="Resources\shaders\mesh\vertex.glsl" />
+	  <EmbeddedResource Include="Resources\shaders\mesh\vertex.glsl" />
+	  <None Remove="Resources\shaders\mesh\fragment.glsl" />
+	  <EmbeddedResource Include="Resources\shaders\mesh\fragment.glsl" />
+	</ItemGroup>
+	
+	
+
 
 </Project>

@@ -2,9 +2,9 @@
 using System.Net.Sockets;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using SealCore.client.rendering;
+using SealCore.Client.rendering;
 
-namespace SealCore.client
+namespace SealCore.Client
 {
     
     public unsafe class Client
@@ -21,20 +21,26 @@ namespace SealCore.client
             if(window == null) throw new Exception("Failed to create window");
             GLFW.MakeContextCurrent(window);
             GL.LoadBindings(new GLFWBindingsContext());
-            
-            
-            
-            
+
+            renderer = new Renderer();
+
         }
 
 
         public void Run()
         {
+            Cube cube = new Cube();
+            
+            GL.ClearColor(0.1f, 0.1f, 0.3f, 1.0f);
+            
             while (!GLFW.WindowShouldClose(window))
             {
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-                
-                
+
+
+
+                //renderer.primitiveRenderer.DrawRectangle();
+                renderer.meshRenderer.RenderCube(cube);
                 
                 GLFW.SwapBuffers(window);
                 GLFW.PollEvents();

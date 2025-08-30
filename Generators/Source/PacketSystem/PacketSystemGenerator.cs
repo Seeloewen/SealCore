@@ -178,7 +178,7 @@ namespace SealCore.Networking
                         server.AppendLine($"            {packet.name} packet = new {packet.name}();");
                         foreach (var field in packet.args)
                         {
-                            server.AppendLine($"            packet.{field.name} = token.Get<{field.type}>(\"{field.name}\");");
+                            server.AppendLine($"            packet.{field.name} = token.GetValue<{field.type}>(\"{field.name}\");");
                         }
                         server.AppendLine("            return packet;");
                         server.AppendLine("        }");
@@ -227,7 +227,7 @@ namespace SealCore.Networking
                         client.AppendLine($"            {packet.name} packet = new {packet.name}();");
                         foreach (var field in packet.args)
                         {
-                            client.AppendLine($"            packet.{field.name} = token.Get<{field.type}>(\"{field.name}\");");
+                            client.AppendLine($"            packet.{field.name} = token.GetValue<{field.type}>(\"{field.name}\");");
                         }
                         client.AppendLine("            return packet;");
                         client.AppendLine("        }");
@@ -239,14 +239,14 @@ namespace SealCore.Networking
 
                 client.AppendLine("        private Packet FromPacket(JsonToken token)");
                 client.AppendLine("        {");
-                client.AppendLine("            return token.Get<int>(\"packet_type\") switch");
+                client.AppendLine("            return token.GetValue<int>(\"packet_type\") switch");
                 client.AppendLine("            {");
                 server.AppendLine();
                 server.AppendLine();
 
                 server.AppendLine("        private Packet FromPacket(JsonToken token)");
                 server.AppendLine("        {");
-                server.AppendLine("            return token.Get<int>(\"packet_type\") switch");
+                server.AppendLine("            return token.GetValue<int>(\"packet_type\") switch");
                 server.AppendLine("            {");
                 foreach (var packet in packets)
                 {

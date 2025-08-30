@@ -1,7 +1,6 @@
 ﻿using System;
 
 using SealCore.Networking;
-using SealCore.client;
 
 namespace SealCore
 {
@@ -15,7 +14,7 @@ namespace SealCore
             switch (args[0].ToLower())
             {
                 case "client":
-                    Client client = new Client();
+                    var client = new Client.Client();
                     client.Run();
                     break;
                 case "server":
