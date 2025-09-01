@@ -2,7 +2,10 @@
 using System.Net.Sockets;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using SealCore.Client.Input;
 using SealCore.Client.rendering;
+using SealCore.Client.State;
+using SealCore.Client.Util;
 
 namespace SealCore.Client
 {
@@ -12,6 +15,8 @@ namespace SealCore.Client
         private TcpClient tcpClient { get; init; }
         private Renderer renderer { get; init; }
         private Window* window { get; init; }
+        private GameState gameState { get; init; }
+        private DeltaTimer deltaTimer { get; init; }
         
         public Client()
         {
@@ -22,7 +27,12 @@ namespace SealCore.Client
             GLFW.MakeContextCurrent(window);
             GL.LoadBindings(new GLFWBindingsContext());
 
+            deltaTimer = new DeltaTimer();
+            InputHandler.Init(window);
+            
             renderer = new Renderer();
+            
+            gameState = new GameState();
 
         }
 
@@ -37,13 +47,14 @@ namespace SealCore.Client
             {
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+                InputHandler.StartFrame();
+                
+                gameState.Update(deltaTimer.GetDeltaTime());
 
-
-                //renderer.primitiveRenderer.DrawRectangle();
+                gameState.Render(renderer);
                 renderer.meshRenderer.RenderCube(cube);
                 
                 GLFW.SwapBuffers(window);
-                GLFW.PollEvents();
             }
         }
 

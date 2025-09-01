@@ -9,6 +9,9 @@ public class MeshRenderer
     private Shader shader;
     private VertexArray vao;
 
+    private Matrix4 proj = Matrix4.CreatePerspectiveFieldOfView(1f, 16 / 9f, 0.1f, 100f);
+    private Matrix4 camera;
+    
     internal MeshRenderer()
     {
         shader = new Shader("mesh");
@@ -18,13 +21,17 @@ public class MeshRenderer
         });
     }
 
+    public void SetCamera(float x, float y, float z, float angleHor, float angleVer)
+    {
+        camera =  Matrix4.CreateTranslation(x, y, z)
+                          * Matrix4.CreateRotationZ(angleHor) * Matrix4.CreateRotationY(angleVer)
+                          * Matrix4.CreateRotationX(90* Single.Pi/180) * Matrix4.CreateRotationY(-90 * Single.Pi/180);
+    }
 
     public  void RenderCube(Cube cube)
     {
-        Matrix4 perspective = Matrix4.CreatePerspectiveFieldOfView(1f, 16/9f, 0.1f, 100f);
-        Matrix4 camera =  Matrix4.CreateTranslation(-5f, 0f, 0f) * Matrix4.CreateRotationX(90* Single.Pi/180) * Matrix4.CreateRotationY(-90 * Single.Pi/180);
         
-        shader.SetUniform("perspective",  perspective);
+        shader.SetUniform("perspective", proj);
         shader.SetUniform("camera", camera);
         shader.Use();
         
