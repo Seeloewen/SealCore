@@ -262,7 +262,7 @@ public class PathFinder
             if (canFocusCore)
             {
                 playerTarget = null;
-                return new Point(0, 0); //TODO: Actual coords of core
+                return new Point(0, 0);
             }
 
         }

@@ -48,7 +48,6 @@ public class Server
 
     private void loop()
     {
-        //DeltaTimer.start();
         while(true)
         {
             //Get amount of packets to handle at beginning of tick - only handle those packets
@@ -72,7 +71,6 @@ public class Server
             String input = scanner.nextLine();
 
             CommandHandler.parse(input);
-            //NetworkHandler.send(new ExamplePacket(input, 187));
         }
     }
 }
