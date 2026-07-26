@@ -4,6 +4,9 @@ import de.sealcore.client.Client;
 import de.sealcore.util.TypeParser;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 
 public class ConnectMenu extends JFrame
@@ -57,6 +60,16 @@ public class ConnectMenu extends JFrame
         btnCancel.setBounds(WIDTH - 250, HEIGHT - 100, 215, 40);
         btnCancel.setFont(new Font("Arial", Font.PLAIN, 18));
         btnCancel.addActionListener(e -> setVisible(false));
+
+        //Only allow input of a-z, A-Z and 0-9 in textbox
+        tbDisplayName.setDocument(new PlainDocument() {
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
+            {
+                if (str != null && str.matches("[a-zA-Z0-9]*")) {
+                    super.insertString(offs, str, a);
+                }
+            }
+        });
 
         add(btnCancel);
         add(btnConnect);
