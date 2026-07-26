@@ -8,10 +8,15 @@ import de.sealcore.util.logging.LogType;
 
 public class Commands
 {
-    //TODO: Handling of wrong/insufficient arguments
 
-    public static void handlePong(String[] args) //Args amount
+    public static void handlePong(String[] args)
     {
+        if(args.length == 0)
+        {
+            Log.error(LogType.MAIN, "Insufficient arguments: Please provide the amount of pongs you want to receive");
+            return;
+        }
+
         int amount = Integer.parseInt(args[0]);
 
         for(int i = 0; i < amount; i++)
@@ -28,12 +33,37 @@ public class Commands
 
     public static void handleAddItem(String[] args)
     {
-        Player p = Server.game.players.get(Integer.parseInt(args[0]));
-        String item = args[1];
-        int amount = Integer.parseInt(args[2]);
+        if(args.length != 3)
+        {
+            Log.error(LogType.MAIN, "Insufficient arguments: Please provide the player id, item and amount");
+            return;
+        }
 
-        p.inventory.add(item, amount);
+        try
+        {
+            Player p = Server.game.players.get(Integer.parseInt(args[0]));
+            String item = args[1];
+            int amount = Integer.parseInt(args[2]);
+
+            p.inventory.add(item, amount);
+            Log.info(LogType.MAIN, "Added item " + item + " to player " + p.getName());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    //TODO: /help command for list of commands
+    public static void handleHelpCommand()
+    {
+        Log.info(LogType.MAIN, """
+                List of commands:
+                /help - Displays all available commands
+                /ping [amount] - Returns x 'pong' entries
+                /debugrenderer - Starts displaying the debug renderer
+                /additem [player] [item] [amount] - Gives the specified item x times to a player
+                /start - Starts the waves
+                /pause - Pauses the waves""");
+
+    }
 }
