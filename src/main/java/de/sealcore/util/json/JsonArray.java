@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import de.sealcore.util.logging.Log;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -168,7 +167,6 @@ public class JsonArray extends JsonObject implements Iterable<Object>
         return objects.size();
     }
 
-    @NotNull
     public Iterator<Object> iterator()
     {
         //Allows iteration over the objects in the object list

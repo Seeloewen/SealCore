@@ -1,10 +1,10 @@
 group = "de.sealcore"
 version = "1.0.2"
 
-val lwjglVersion = "3.3.6"
-var jacksonDatabindVersion = "2.19.1"
-var jomlVersion = "1.10.8"
-var flatlafVersion = "3.6"
+val lwjglVersion = "3.4.2"
+var jacksonDatabindVersion = "2.22.1"
+var jomlVersion = "1.10.9"
+var flatlafVersion = "3.7.2"
 
 val lwjglNatives = "natives-windows"
 
