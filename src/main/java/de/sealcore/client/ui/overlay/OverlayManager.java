@@ -80,6 +80,14 @@ public class OverlayManager
 
     public static void handleKeyPress(int key)
     {
+        if(key == GLFW.GLFW_KEY_T) {
+            int stage = Client.instance.playerState.tutorialStage;
+            if(stage != -1) {
+                stage++;
+                if(stage >= TutorialOverlay.getCount()) stage = -1;
+                Client.instance.playerState.tutorialStage = stage;
+            }
+        }
         if (key == GLFW.GLFW_KEY_E)
         {
             showInventory = !showInventory;

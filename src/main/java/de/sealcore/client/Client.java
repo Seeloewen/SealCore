@@ -52,10 +52,10 @@ public class Client {
 
     public static void start(String ip, int port, String displayName)
     {
-        if(instance.init(ip, port, displayName)) instance.loop();
+        if(instance.init(ip, port, displayName, true)) instance.loop();
     }
 
-    private boolean init(String ip, int port, String displayName)
+    private boolean init(String ip, int port, String displayName, boolean tutorial)
     {
         failedConnectAttempts = 0;
         Client.instance = this;
@@ -105,7 +105,7 @@ public class Client {
 
         gameState = new GameState();
         inventoryState = new InventoryState(Player.WEAPON_SLOTS, Player.AMMO_SLOTS, Player.MAT_SLOTS, Player.UNI_SLOTS);
-        playerState = new PlayerState();
+        playerState = new PlayerState(tutorial);
 
         renderer = new Renderer(gameState);
 
