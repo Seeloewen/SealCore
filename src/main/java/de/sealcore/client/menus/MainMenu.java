@@ -2,14 +2,23 @@ package de.sealcore.client.menus;
 
 import de.sealcore.Main;
 import de.sealcore.util.ResourceManager;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainMenu extends JFrame
 {
     private final AboutMenu aboutMenu = new AboutMenu();
     public final ConnectMenu connectMenu = new ConnectMenu();
+    public final ServerBrowserMenu serverBrowserMenu = new ServerBrowserMenu(this);
 
     private final int WIDTH = 900;
     private final int HEIGHT = 500;
@@ -62,7 +71,7 @@ public class MainMenu extends JFrame
         //Play Button
         btnPlay.setBounds(260, 150, 350, 50);
         btnPlay.setFont(new Font("Arial", Font.PLAIN, 26));
-        btnPlay.addActionListener(e -> connectMenu.setVisible(true));
+        btnPlay.addActionListener(this::play);
 
         //About Button
         btnAbout.setBounds(260, 215, 350, 50);
@@ -83,5 +92,29 @@ public class MainMenu extends JFrame
         layeredPane.add(lblCopyright, Integer.valueOf(1));
 
         add(layeredPane);
+    }
+
+    private void play(ActionEvent e)
+    {
+        File f = new File("servers.txt");
+        if (f.exists())
+        {
+            //If the server browser file exists, show the server browser
+            try
+            {
+                Scanner sc = new Scanner(f);
+                serverBrowserMenu.url = sc.nextLine();
+                serverBrowserMenu.setVisible(true);
+                serverBrowserMenu.refresh(null);
+            }
+            catch(FileNotFoundException ex)
+            {
+                Log.error(LogType.NETWORKING, "Server browser file not found");
+            }
+        }
+        else //Just display the normal connection menu
+        {
+            connectMenu.setVisible(true);
+        }
     }
 }

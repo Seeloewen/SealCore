@@ -37,6 +37,12 @@ public class ConnectMenu extends JFrame
         setupUi();
     }
 
+    public void preFill(String ip, String port)
+    {
+        tbIp.setText(ip);
+        tbPort.setText(port);
+    }
+
     private void setupUi()
     {
         lblHeader.setBounds(20, 20, 300, 30);

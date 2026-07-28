@@ -5,6 +5,15 @@ import de.sealcore.util.json.JsonObject;
 import de.sealcore.util.logging.Log;
 import de.sealcore.util.logging.LogType;
 
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class NetworkHandler
 {
     public static TcpServer server;
@@ -129,5 +138,34 @@ public class NetworkHandler
     public static boolean isServer()
     {
         return server != null;
+    }
+
+    public static ArrayList<String> getServerList(String url)
+    {
+        ArrayList<String> servers = new ArrayList<String>();
+
+        try
+        {
+            //Send api request to webserver and get text file
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            String content = response.body();
+
+            //Split the result and read the lines into arraylist
+            String[] lines = content.split("\n");
+            servers.addAll(Arrays.asList(lines));
+
+            return servers;
+        }
+        catch(Exception ex)
+        {
+            Log.error(LogType.NETWORKING, "Could not connect to the server to retrieve server list: " + ex.getMessage());
+        }
+
+        return null;
     }
 }
