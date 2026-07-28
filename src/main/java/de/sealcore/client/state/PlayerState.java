@@ -5,6 +5,7 @@ import de.sealcore.client.Client;
 import de.sealcore.client.config.Blocks;
 import de.sealcore.client.config.Items;
 import de.sealcore.client.ui.Resolution;
+import de.sealcore.client.ui.overlay.TutorialOverlay;
 import de.sealcore.client.ui.rendering.primitives.PrimitiveRenderer;
 import de.sealcore.client.ui.rendering.primitives.Rectangle;
 import de.sealcore.client.ui.rendering.text.TextRenderer;
@@ -17,6 +18,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class PlayerState
 {
+    public int tutorialStage = -1;
 
     public String targetEntityName = "";
 
@@ -45,6 +47,10 @@ public class PlayerState
     public String text1 = "0:00";
     public String text2 = "Game started";
 
+    public PlayerState(boolean tutorial) {
+        if(tutorial) tutorialStage = 0;
+        TutorialOverlay.init();
+    }
 
     public void handleMousePress(int button)
     {
@@ -161,6 +167,8 @@ public class PlayerState
 
         //Targeted Entity
         if(!targetEntityName.isEmpty()) TextRenderer.drawString(Resolution.WIDTH / 2 - 150, 135, 3, "Target: " + targetEntityName, 0);
+
+        if(tutorialStage != -1) TutorialOverlay.render(tutorialStage);
 
         drawCrosshair();
     }
