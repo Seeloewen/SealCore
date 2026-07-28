@@ -12,7 +12,7 @@ import java.awt.*;
 public class ConnectMenu extends JFrame
 {
     private final int WIDTH = 500;
-    private final int HEIGHT = 298;
+    private final int HEIGHT = 330;
 
     private final JLabel lblHeader = new JLabel("Connect to server...");
     private final JLabel lblIp = new JLabel("IP:");
@@ -23,6 +23,7 @@ public class ConnectMenu extends JFrame
     private final JTextField tbDisplayName = new JTextField("");
     private final JButton btnCancel = new JButton("Cancel");
     private final JButton btnConnect = new JButton("Connect");
+    private final JCheckBox cbTutorial = new JCheckBox("Skip tutorial");
 
     public ConnectMenu()
     {
@@ -54,6 +55,9 @@ public class ConnectMenu extends JFrame
         tbPort.setBounds(80, 118, 385, 30);
         tbDisplayName.setBounds(80, 156, 385, 30);
 
+        cbTutorial.setBounds(20, 190, 385, 30);
+        cbTutorial.setFont(new Font("Arial", Font.PLAIN, 16));
+
         btnConnect.setBounds(20, HEIGHT - 100, 215, 40);
         btnConnect.setFont(new Font("Arial", Font.PLAIN, 18));
         btnConnect.addActionListener(e -> connect(tbIp.getText(), tbPort.getText(), tbDisplayName.getText()));
@@ -80,6 +84,7 @@ public class ConnectMenu extends JFrame
         add(tbIp);
         add(tbPort);
         add(tbDisplayName);
+        add(cbTutorial);
     }
 
     public void connect(String ip, String port, String displayName)
@@ -87,9 +92,9 @@ public class ConnectMenu extends JFrame
         setConnectingState(true);
 
         //Check if both an ip and a port were entered
-        if (ip.isEmpty() || port.isEmpty())
+        if (ip.isEmpty() || port.isEmpty() || displayName.isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Please enter both an ip and a port.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter an ip, a port and a name.", "Error", JOptionPane.ERROR_MESSAGE);
             setConnectingState(false);
             return;
         }
