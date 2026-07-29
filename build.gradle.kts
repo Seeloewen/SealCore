@@ -1,7 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 
 group = "de.sealcore"
-version = "1.0.2"
+version = "1.0.3"
 
 
 val lwjglVersion = "3.4.2"

@@ -26,7 +26,7 @@ public class MainMenu extends JFrame
     private final JLayeredPane layeredPane = new JLayeredPane();
     private final JLabel lblHeader = new JLabel("SealCore");
     private final JLabel lblVersion = new JLabel("Version " + Main.VERSION + " (" + Main.BUILDDATE + ")");
-    private final JLabel lblCopyright = new JLabel("(c) 2025 Seeloewen & CDLemmi");
+    private final JLabel lblCopyright = new JLabel("(c) 2025-2026 Seeloewen & CDLemmi");
     private final JButton btnPlay = new JButton("Play");
     private final JButton btnAbout = new JButton("About");
     private final JButton btnExit = new JButton("Exit");
@@ -64,7 +64,7 @@ public class MainMenu extends JFrame
         lblVersion.setForeground(new Color(255, 255, 255));
 
         //Developer Label
-        lblCopyright.setBounds(WIDTH - 350, HEIGHT - 120, 350, 100);
+        lblCopyright.setBounds(WIDTH - 400, HEIGHT - 120, 400, 100);
         lblCopyright.setFont(new Font("Arial", Font.PLAIN, 22));
         lblCopyright.setForeground(new Color(255, 255, 255));
 
