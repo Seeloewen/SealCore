@@ -1,6 +1,7 @@
 package de.sealcore.client.menus;
 
 import de.sealcore.client.Client;
+import de.sealcore.client.ui.overlay.TutorialOverlay;
 import de.sealcore.util.TypeParser;
 
 import javax.swing.*;
@@ -113,6 +114,7 @@ public class ConnectMenu extends JFrame
             return;
         }
 
+        TutorialOverlay.disabled = cbTutorial.isSelected();
         Client.start(ip, TypeParser.getInt(port), displayName);
     }
 
