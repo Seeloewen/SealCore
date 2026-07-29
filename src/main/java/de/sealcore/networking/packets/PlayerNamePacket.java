@@ -5,6 +5,8 @@ import de.sealcore.client.Client;
 import de.sealcore.server.Server;
 import de.sealcore.util.json.JsonArray;
 import de.sealcore.util.json.JsonObject;
+import de.sealcore.util.logging.Log;
+import de.sealcore.util.logging.LogType;
 
 import java.util.ArrayList;
 
@@ -45,6 +47,7 @@ public class PlayerNamePacket extends Packet
 
     public void onHandle()
     {
+        Log.info(LogType.NETWORKING, "Identified Player #" + getSender() + " as " + displayName);
         Server.game.players.get(getSender()).setName(displayName);
     }
 }
